@@ -163,6 +163,28 @@ result = complex_operation()  # 便于从本质上解决问题
 - 🔥 **禁止静默捕获异常** - 让错误traceback显示
 - 🔥 **禁止fallback方案** - 缺少属性直接报错
 
+### 📊 可视化规范
+
+**语言要求**：
+- 🔥 **所有图表文字使用英文** - 标题、轴标签、图例、注释全部使用English
+- 面向国际发表，确保学术论文可直接使用
+
+**样式要求**：
+- **DPI**: 300（出版质量）
+- **字体**: Sans-serif (DejaVu Sans 或类似)
+- **配色**: Seaborn "colorblind" 色盲友好调色板
+- **图片尺寸**: 默认 10x6 或 12x7 英寸
+- **网格**: 浅灰色虚线
+
+**脚本位置**: `scripts/visualization/`
+
+**输出位置**: `outputs/experiments/{experiment}/figures/`
+
+**命名规范**:
+- ✅ `fig1_performance_overview.png`
+- ✅ `fig2_token_efficiency.png`
+- ❌ `图1_性能对比.png` (禁止中文文件名)
+
 ---
 
 ## 🎮 MDP形式化规范
