@@ -1,0 +1,243 @@
+# OR-Debug-Bench GRPO Training Configuration
+# Research Direction: Direction A (OR-Debug-Bench)
+# Documentation: docs/plan/modules/05_TRAINING.md
+#
+# Purpose: Reinforcement Learning with Verifiable Rewards (RLVR)
+# using Group Relative Policy Optimization (GRPO) with Gurobi solver as reward oracle.
+#
+# Key Innovation: Solver-backed verifiable rewards
+# - No need for trained reward model
+# - Direct verification of solution correctness
+# - Automatic process reward from IIS size changes
+#
+# Usage:
+#   python scripts/train_grpo.py --config configs/training/grpo_config.yaml
+
+# =============================================================================
+# Model Configuration
+# =============================================================================
+model:
+  # Start from SFT checkpoint
+  base_model: outputs/sft_checkpoints/or-debug-qwen3-8b-sft
+
+  # Or start from base model (not recommended)
+  # base_model: Qwen/Qwen3-8B-Instruct
+
+  # Reference model for KL divergence
+  ref_model: outputs/sft_checkpoints/or-debug-qwen3-8b-sft
+  freeze_ref_model: true
+
+  # Tokenizer settings
+  tokenizer:
+    model_max_length: 4096
+    padding_side: right
+
+# =============================================================================
+# GRPO Algorithm Configuration
+# =============================================================================
+grpo:
+  # Group sampling
+  group_size: 4              # Number of trajectories per problem (G in paper)
+  num_groups_per_batch: 8    # Number of problems per batch
+
+  # KL divergence control
+  kl_coef: 0.01              # KL penalty coefficient (beta)
+  kl_target: null            # Adaptive KL target (optional)
+
+  # Advantage computation
+  advantage_normalization: true
+  advantage_clip: null       # Optional clipping
+
+  # Entropy bonus (exploration)
+  entropy_coef: 0.01
+
+# =============================================================================
+# Reward Configuration (Solver-backed RLVR)
+# =============================================================================
+reward:
+  # Outcome rewards
+  outcome:
+    success: 100.0           # Model becomes OPTIMAL
+    failure: -50.0           # Episode ends without success
+    timeout: -30.0           # Exceeded max steps
+
+  # Process rewards (per-step)
+  process:
+    iis_reduction: 10.0      # IIS size decreased
+    constraint_dropped: 5.0  # Successfully dropped a constraint
+    step_penalty: -1.0       # Per-step cost
+
+  # Optimality preservation bonus
+  optimality:
+    preserve_optimal: 20.0   # Solution matches ground truth
+    suboptimal_penalty: -10.0  # Solution differs significantly
+
+  # Faithfulness penalty
+  faithfulness:
+    diagnosis_mismatch: -20.0  # Diagnosis contradicts IIS
+
+  # Reward scaling
+  reward_scale: 1.0
+  reward_clip: [-100.0, 200.0]
+
+# =============================================================================
+# Environment Configuration
+# =============================================================================
+environment:
+  # Rollout settings
+  max_steps_per_episode: 10  # Limit rollout length
+
+  # Solver settings
+  solver:
+    type: gurobi
+    time_limit: 30           # Seconds per solve
+    verbose: false
+
+  # Dataset for training
+  dataset:
+    path: data/benchmarks/or_debug_bench_full
+    split: train             # Use train split
+    shuffle: true
+
+# =============================================================================
+# Training Hyperparameters
+# =============================================================================
+training:
+  # Batch settings (memory-constrained)
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 32  # Effective batch = 32
+
+  # Learning rate
+  learning_rate: 1.0e-5
+  lr_scheduler_type: cosine
+  warmup_ratio: 0.05
+
+  # Training duration
+  total_steps: 5000
+  eval_interval: 500
+  save_interval: 1000
+
+  # Optimization
+  optim: adamw_torch
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+
+  # Precision
+  bf16: true
+  fp16: false
+
+  # Logging
+  logging_steps: 10
+  log_reward_components: true
+
+  # Checkpointing
+  save_total_limit: 5
+  resume_from_checkpoint: null
+
+  # Random seed
+  seed: 42
+
+# =============================================================================
+# DeepSpeed Configuration (for multi-GPU)
+# =============================================================================
+deepspeed:
+  enabled: true
+  config:
+    zero_optimization:
+      stage: 2
+      offload_optimizer:
+        device: cpu
+        pin_memory: true
+      allgather_partitions: true
+      allgather_bucket_size: 5.0e8
+      reduce_scatter: true
+      reduce_bucket_size: 5.0e8
+      overlap_comm: true
+      contiguous_gradients: true
+
+    bf16:
+      enabled: true
+
+    gradient_accumulation_steps: auto
+    gradient_clipping: 1.0
+
+    train_batch_size: auto
+    train_micro_batch_size_per_gpu: auto
+
+# =============================================================================
+# Output Configuration
+# =============================================================================
+output:
+  dir: outputs/grpo_checkpoints
+  model_name: or-debug-qwen3-8b-grpo
+  hub_model_id: null
+  push_to_hub: false
+
+  # Trajectory logging
+  save_trajectories: true
+  trajectory_dir: outputs/grpo_trajectories
+
+# =============================================================================
+# Evaluation Configuration
+# =============================================================================
+evaluation:
+  # Evaluation dataset
+  dataset:
+    path: data/benchmarks/or_debug_bench_full
+    split: val               # Use validation split
+    limit: 200               # Quick evaluation
+
+  # Evaluation settings
+  max_steps: 20
+  temperature: 0.0           # Greedy for evaluation
+
+  # Metrics
+  metrics:
+    - recovery_rate
+    - rr_at_5
+    - rr_at_10
+    - avg_steps
+    - optimality_preservation
+    - diagnosis_accuracy
+
+  # Comparison baselines
+  baselines:
+    - HeuristicAgent
+    - GreedyDropAgent
+
+# =============================================================================
+# Quick Test Configuration
+# =============================================================================
+test:
+  model:
+    base_model: Qwen/Qwen3-8B-Instruct
+  grpo:
+    group_size: 2
+    num_groups_per_batch: 4
+  training:
+    per_device_train_batch_size: 1
+    gradient_accumulation_steps: 8
+    total_steps: 100
+    eval_interval: 50
+    logging_steps: 5
+  environment:
+    max_steps_per_episode: 5
+    dataset:
+      path: data/benchmarks/or_debug_bench_test_v2
+  output:
+    dir: outputs/grpo_test_checkpoints
+    model_name: or-debug-qwen3-8b-grpo-test
+
+# =============================================================================
+# Memory Estimation (for reference)
+# =============================================================================
+# Qwen3-8B GRPO Training (2x A800-80GB):
+#   - Policy model: ~16GB (bf16)
+#   - Reference model: ~16GB (bf16, frozen)
+#   - Optimizer states: ~32GB (full model, ZeRO-2 splits across GPUs)
+#   - Gradients: ~16GB
+#   - Activations: ~20-30GB (depends on rollout length)
+#   - Rollout buffer: ~5-10GB
+#   - Total per GPU: ~50-55GB with ZeRO-2
+#
+# Recommended: 2x A800-80GB or 4x A100-40GB

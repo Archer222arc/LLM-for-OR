@@ -1,0 +1,239 @@
+# OR-Debug-Bench SFT Training Configuration
+# Research Direction: Direction A (OR-Debug-Bench)
+# Documentation: docs/plan/modules/05_TRAINING.md
+#
+# Purpose: Train a smaller model (Qwen3-8B) to learn basic debugging patterns
+# from trajectories collected from stronger teacher models.
+#
+# Usage:
+#   python scripts/train_sft.py --config configs/training/sft_config.yaml
+
+# =============================================================================
+# Model Configuration
+# =============================================================================
+model:
+  # Base model to fine-tune
+  base_model: Qwen/Qwen3-8B-Instruct
+
+  # Alternative models (for experimentation)
+  # base_model: Qwen/Qwen2.5-7B-Instruct
+  # base_model: meta-llama/Llama-3.1-8B-Instruct
+  # base_model: deepseek-ai/DeepSeek-V2-Lite-Chat
+
+  # Tokenizer settings
+  tokenizer:
+    model_max_length: 4096
+    padding_side: right
+    truncation_side: right
+
+# =============================================================================
+# LoRA Configuration (Parameter-Efficient Fine-Tuning)
+# =============================================================================
+lora:
+  enabled: true
+  rank: 16                    # LoRA rank (r)
+  alpha: 32                   # LoRA alpha (scaling factor = alpha/rank)
+  dropout: 0.05               # LoRA dropout
+  target_modules:             # Modules to apply LoRA
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+  bias: none                  # Don't train bias
+  task_type: CAUSAL_LM
+
+# =============================================================================
+# Data Configuration
+# =============================================================================
+data:
+  # Training data (collected from teacher models)
+  train_path: data/training/sft_gpt4.json
+
+  # Validation data (optional, for monitoring)
+  val_path: null  # Will split from train if not provided
+  val_split: 0.05
+
+  # Data format
+  format: alpaca  # instruction, input, output format
+
+  # Filtering criteria
+  filter:
+    max_steps: 5            # Only trajectories with <= 5 steps
+    require_success: true   # Only successful trajectories
+    min_reasoning_length: 50  # Minimum chars in <think> block
+
+  # Target count
+  target_samples: 5000      # Target number of SFT samples
+
+# =============================================================================
+# Training Hyperparameters
+# =============================================================================
+training:
+  # Batch settings
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 4
+  gradient_accumulation_steps: 8  # Effective batch size = 32
+
+  # Learning rate schedule
+  learning_rate: 2.0e-4
+  lr_scheduler_type: cosine
+  warmup_ratio: 0.1
+
+  # Training duration
+  num_train_epochs: 3
+  max_steps: -1  # -1 means use num_train_epochs
+
+  # Optimization
+  optim: adamw_torch
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+
+  # Precision
+  bf16: true
+  fp16: false
+
+  # Logging
+  logging_steps: 10
+  eval_steps: 100
+  save_steps: 500
+  save_total_limit: 3
+
+  # Misc
+  seed: 42
+  dataloader_num_workers: 4
+  remove_unused_columns: false
+
+# =============================================================================
+# Output Configuration
+# =============================================================================
+output:
+  dir: outputs/sft_checkpoints
+  model_name: or-debug-qwen3-8b-sft
+  hub_model_id: null  # Set to push to HuggingFace Hub
+  push_to_hub: false
+
+# =============================================================================
+# Prompt Template
+# =============================================================================
+prompt_template:
+  # Alpaca-style template for OR debugging
+  template: |
+    Below is an instruction that describes an OR debugging task. Write a response that appropriately completes the request.
+
+    ### Instruction:
+    {instruction}
+
+    ### Input:
+    {input}
+
+    ### Response:
+    {output}
+
+  # System prompt (for chat models)
+  system_prompt: |
+    You are an expert Operations Research debugger. Your task is to diagnose and fix infeasible optimization models.
+
+    When debugging, you should:
+    1. Analyze the IIS (Irreducible Infeasible Subsystem) to identify conflicting constraints
+    2. Understand the semantic meaning of each constraint
+    3. Determine which constraint to drop or relax based on problem domain knowledge
+    4. Provide clear reasoning in <think></think> blocks before taking action
+
+    Available actions:
+    - GET_IIS: Compute the Irreducible Infeasible Subsystem
+    - DROP_CONSTRAINT(name): Remove a constraint from the model
+    - RELAX_CONSTRAINT(name, delta): Relax a constraint's bound by delta
+    - SUBMIT: Submit the repaired model
+
+# =============================================================================
+# Hardware Configuration
+# =============================================================================
+hardware:
+  # Single GPU settings (A800-80GB or similar)
+  single_gpu:
+    max_memory: 75GB
+    gradient_checkpointing: true
+
+  # Multi-GPU settings (for larger models)
+  multi_gpu:
+    strategy: ddp  # or fsdp
+    num_gpus: 1
+
+# =============================================================================
+# Evaluation Settings (during training)
+# =============================================================================
+evaluation:
+  # Evaluate on held-out problems during training
+  eval_during_training: true
+  eval_problems: 100  # Number of problems for quick eval
+  eval_max_steps: 10
+
+  # Metrics to track
+  metrics:
+    - recovery_rate
+    - avg_steps
+    - loss
+
+# =============================================================================
+# Teacher Model Settings (for data collection)
+# =============================================================================
+teacher:
+  # Models to collect trajectories from
+  models:
+    - name: gpt-4.1
+      provider: azure_openai
+      priority: 1
+    - name: o4-mini
+      provider: azure_openai
+      priority: 2
+    - name: HeuristicAgent
+      provider: baseline
+      priority: 3  # Fallback for quick collection
+
+  # Collection settings
+  collection:
+    max_steps: 5
+    temperature: 0.0
+    require_reasoning: true
+
+# =============================================================================
+# Quick Test Configuration (for debugging)
+# =============================================================================
+test:
+  model:
+    base_model: Qwen/Qwen3-8B-Instruct
+  lora:
+    enabled: true
+    rank: 8
+    alpha: 16
+  data:
+    train_path: data/training/sft_test.json
+    val_split: 0.1
+  training:
+    per_device_train_batch_size: 2
+    gradient_accumulation_steps: 4
+    num_train_epochs: 1
+    max_steps: 100
+    logging_steps: 5
+    eval_steps: 50
+    save_steps: 50
+  output:
+    dir: outputs/sft_test_checkpoints
+    model_name: or-debug-qwen3-8b-sft-test
+
+# =============================================================================
+# Memory Estimation (for reference)
+# =============================================================================
+# Qwen3-8B with LoRA (r=16):
+#   - Model weights: ~16GB (bf16)
+#   - LoRA parameters: ~0.1GB
+#   - Optimizer states: ~0.3GB (LoRA only)
+#   - Gradients: ~0.1GB
+#   - Activations: ~20-30GB (depends on batch size and sequence length)
+#   - Total: ~46-50GB
+#
+# Recommended: A800-80GB or A100-80GB
+# Alternative: 2x A100-40GB with DeepSpeed ZeRO-2

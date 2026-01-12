@@ -1,0 +1,42 @@
+# API Keys Configuration Template
+# Copy this file to api_keys.yaml and fill in your actual API keys
+# IMPORTANT: Add api_keys.yaml to .gitignore to avoid committing secrets
+
+openai:
+  # Get your API key from: https://platform.openai.com/api-keys
+  api_key: "sk-..."
+  organization: ""  # Optional
+
+anthropic:
+  # Get your API key from: https://console.anthropic.com/settings/keys
+  api_key: "sk-ant-..."
+
+# Azure OpenAI Configuration
+# Get credentials from Azure Portal: https://portal.azure.com
+# Resource → Keys and Endpoint
+azure_openai:
+  endpoint: "https://your-resource-name.openai.azure.com/"  # Required
+  api_key: "your-azure-api-key"  # Required
+  api_version: "2024-10-21"  # Recommended version
+  # Deployment mappings (deployment_name: model_name)
+  deployments:
+    gpt-4o-mini: "gpt-4o-mini"
+    gpt-4-1: "gpt-4.1"
+    deepseek-r1: "DeepSeek-R1"
+    qwen3-32b: "qwen3-32b"
+
+# Priority: Environment variables > Config file
+# Environment variable names:
+#   - Direct APIs: OPENAI_API_KEY, ANTHROPIC_API_KEY
+#   - Azure OpenAI: AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_KEY
+
+# Usage:
+#   # Direct OpenAI/Anthropic
+#   export OPENAI_API_KEY="sk-..."
+#   export ANTHROPIC_API_KEY="sk-ant-..."
+#
+#   # Azure OpenAI
+#   export AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com/"
+#   export AZURE_OPENAI_API_KEY="your-azure-key"
+#
+# Or edit this file and save as api_keys.yaml

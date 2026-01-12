@@ -1,0 +1,73 @@
+# =============================================================================
+# LLM-for-OR Conda 环境配置
+# =============================================================================
+# 项目: LLM-for-OR (NeurIPS 2026 Agentic OR/OM Research)
+# 最后更新: 2026-01-11
+#
+# 使用说明:
+#   创建环境: conda env create -f environment.yml
+#   激活环境: conda activate llm4or
+#   更新环境: conda env update -f environment.yml --prune
+#
+# 注意事项:
+#   - Python 3.11 是必需的 (gurobipy兼容性)
+#   - gurobipy需要有效的Gurobi许可证
+#   - Azure凭证需要通过环境变量或配置文件设置
+# =============================================================================
+
+name: llm4or
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Python版本 (固定3.11以确保gurobipy兼容)
+  - python=3.11
+
+  # 基础科学计算
+  - numpy>=2.0
+  - pyyaml>=6.0
+  - tqdm>=4.65
+
+  # pip安装的包
+  - pip
+  - pip:
+    # 优化求解器 (需要Gurobi许可证)
+    - gurobipy>=12.0.0
+
+    # 强化学习
+    - gymnasium>=1.0.0
+
+    # LLM APIs
+    - openai>=2.0.0
+    - anthropic>=0.70.0
+
+    # Azure AI Services
+    - azure-identity>=1.25.0
+    - azure-core>=1.37.0
+    - requests>=2.31.0
+
+    # HTTP客户端
+    - httpx>=0.28.0
+
+    # 数据验证
+    - pydantic>=2.0.0
+
+# =============================================================================
+# 环境变量设置示例 (可选)
+# =============================================================================
+# 创建环境后，设置以下环境变量:
+#
+# # Azure OpenAI Service
+# export AZURE_OPENAI_ENDPOINT="https://xxx.cognitiveservices.azure.com/"
+# export AZURE_OPENAI_API_KEY="your-api-key"
+#
+# # Azure AI Foundry (如果使用)
+# export AZURE_TENANT_ID="your-tenant-id"
+# export AZURE_CLIENT_ID="your-client-id"
+# export AZURE_CLIENT_SECRET="your-client-secret"
+#
+# # Gurobi (如果需要)
+# export GRB_LICENSE_FILE="/path/to/gurobi.lic"
+# =============================================================================

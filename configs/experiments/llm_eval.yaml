@@ -1,0 +1,62 @@
+# LLM Evaluation Experiment Configuration
+# Research Direction: Direction A (OR-Debug-Bench)
+# Created: 2026-01-11
+
+experiment:
+  name: "llm_eval_demo"
+  description: "Evaluate GPT-4 and Claude on OR debugging tasks"
+  output_dir: "outputs/experiments/llm_eval_20260111"
+
+benchmark:
+  dataset: "data/synthetic/debug_bench_v1/dataset.json"
+  max_steps: 20
+  n_episodes: 1
+  verbose: true
+
+agents:
+  # OpenAI GPT-4
+  - name: "gpt4"
+    type: "llm"
+    model: "gpt-4"
+    provider: "openai"
+    temperature: 0.0
+    max_retries: 3
+
+  # OpenAI GPT-3.5 Turbo
+  - name: "gpt3.5"
+    type: "llm"
+    model: "gpt-3.5-turbo"
+    provider: "openai"
+    temperature: 0.0
+    max_retries: 3
+
+  # Anthropic Claude 3 Sonnet
+  - name: "claude3-sonnet"
+    type: "llm"
+    model: "claude-3-sonnet-20240229"
+    provider: "anthropic"
+    temperature: 0.0
+    max_retries: 3
+
+  # Baseline: Heuristic Agent
+  - name: "heuristic"
+    type: "baseline"
+    class: "HeuristicAgent"
+
+  # Baseline: Random Agent
+  - name: "random"
+    type: "baseline"
+    class: "RandomAgent"
+    seed: 42
+
+evaluation:
+  metrics:
+    - recovery_rate
+    - avg_steps
+    - avg_reward
+    - success_rate
+    - step_efficiency
+
+  report_format: ["markdown", "json"]
+  save_trajectories: true
+  save_detailed_logs: false

@@ -1,0 +1,61 @@
+# =============================================================================
+# LLM-for-OR 依赖配置
+# =============================================================================
+# Python版本要求: 3.11 (gurobipy兼容性)
+# 最后更新: 2026-01-11
+#
+# 安装方式:
+#   conda: conda env create -f environment.yml
+#   pip:   pip install -r requirements.txt
+# =============================================================================
+
+# Core dependencies
+numpy>=2.0.0
+pyyaml>=6.0
+tqdm>=4.65.0
+
+# Optimization solvers
+gurobipy>=12.0.0  # 需要Gurobi许可证
+
+# Reinforcement Learning
+gymnasium>=1.0.0
+
+# LLM APIs
+openai>=2.0.0
+anthropic>=0.70.0
+
+# Azure AI Services
+azure-identity>=1.25.0
+azure-core>=1.37.0
+requests>=2.31.0
+
+# HTTP客户端
+httpx>=0.28.0
+
+# 数据验证
+pydantic>=2.0.0
+
+# =============================================================================
+# 可选依赖 (完整安装)
+# =============================================================================
+# pip install -r requirements.txt[full]
+
+# Machine Learning (可选)
+# torch>=2.0.0
+# transformers>=4.35.0
+
+# Visualization (可选)
+# matplotlib>=3.7.0
+# seaborn>=0.12.0
+
+# Testing (可选)
+# pytest>=7.4.0
+# pytest-cov>=4.1.0
+
+# Development (可选)
+# black>=23.0.0
+# mypy>=1.5.0
+
+# Jupyter (可选)
+# jupyter>=1.0.0
+# ipykernel>=6.25.0

@@ -1,0 +1,106 @@
+# LLM 多错误类型评估实验配置
+# 使用 debug_bench_v2 数据集，包含 Type A/D 问题
+# 创建于: 2026-01-11
+
+experiment:
+  name: "llm_eval_all_types"
+  description: "评估11个模型在多种错误类型上的表现"
+  output_dir: "outputs/experiments/llm_eval_all_types"
+
+# 基准测试配置
+benchmark:
+  dataset: "data/synthetic/debug_bench_v2/dataset.json"
+  max_steps: 20
+  n_episodes: 1
+  verbose: true
+
+# 模型配置 (复用 llm_eval_all_models 的11个模型)
+agents:
+  # ========== GPT 系列 ==========
+  - name: "gpt-4.1"
+    type: "llm"
+    model: "gpt-4.1"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "gpt-4.1-mini"
+    type: "llm"
+    model: "gpt-4.1-mini"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "gpt-5-mini"
+    type: "llm"
+    model: "gpt-5-mini"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "gpt-5-nano"
+    type: "llm"
+    model: "gpt-5-nano"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "gpt-5.2-chat"
+    type: "llm"
+    model: "gpt-5.2-chat"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  # ========== O系列 (推理模型) ==========
+  - name: "o1"
+    type: "llm"
+    model: "o1"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "o4-mini"
+    type: "llm"
+    model: "o4-mini"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  # ========== DeepSeek 系列 ==========
+  - name: "DeepSeek-R1-0528"
+    type: "llm"
+    model: "DeepSeek-R1-0528"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "DeepSeek-V3.2"
+    type: "llm"
+    model: "DeepSeek-V3.2"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  # ========== 其他模型 ==========
+  - name: "Kimi-K2-Thinking"
+    type: "llm"
+    model: "Kimi-K2-Thinking"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "Llama-3.3-70B-Instruct"
+    type: "llm"
+    model: "Llama-3.3-70B-Instruct"
+    provider: "azure_openai"
+    temperature: 0.0
+
+# 评估配置
+evaluation:
+  metrics:
+    - recovery_rate
+    - avg_steps
+    - avg_reward
+    - success_rate
+    - step_efficiency
+
+  report_format: ["markdown", "json"]
+  save_trajectories: true
+
+# 运行说明
+# 快速测试:
+#   python scripts/run_llm_experiment.py --config configs/experiments/llm_eval_all_types.yaml --limit 4 --parallel
+#
+# 完整评估:
+#   python scripts/run_llm_experiment.py --config configs/experiments/llm_eval_all_types.yaml --parallel --max-workers 6

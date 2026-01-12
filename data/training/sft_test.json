@@ -1,0 +1,1071 @@
+{
+  "metadata": {
+    "created": "2026-01-12T01:16:38.512862",
+    "dataset": "data/benchmarks/or_debug_bench_test_v2",
+    "agent": "heuristic",
+    "model": null,
+    "max_steps": 5,
+    "total_problems": 88,
+    "success_count": 88,
+    "fail_count": 0,
+    "success_rate": 1.0
+  },
+  "data": [
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_000\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c3', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4']\n\n## Model Structure\nConstraints: 9\nVariables: 6\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c3' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c3)",
+      "metadata": {
+        "problem_id": "lp_typeA_000",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_001\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c2', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7']\n\n## Model Structure\nConstraints: 6\nVariables: 9\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c2' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c2)",
+      "metadata": {
+        "problem_id": "lp_typeA_001",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_002\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c4', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x3', 'x4', 'x5']\n\n## Model Structure\nConstraints: 8\nVariables: 6\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c4' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c4)",
+      "metadata": {
+        "problem_id": "lp_typeA_002",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeA_003\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c3', 'c5', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4', 'x6', 'x7', 'x8', 'x10', 'x11', 'x12', 'x13']\n\n## Model Structure\nConstraints: 9\nVariables: 14\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 3 constraints.\nConstraint 'c3' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c3)",
+      "metadata": {
+        "problem_id": "mip_typeA_003",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeA_004\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c4', 'c_key_lower']\nConflicting Bounds: ['x0', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9', 'x10', 'x11']\n\n## Model Structure\nConstraints: 11\nVariables: 12\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c4' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c4)",
+      "metadata": {
+        "problem_id": "mip_typeA_004",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_005\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c5', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4']\n\n## Model Structure\nConstraints: 7\nVariables: 6\nConstraint Names: ['c0', 'c1', 'c2', 'c4', 'c5', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 2: The IIS contains 2 constraints.\nConstraint 'c5' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c5)",
+      "metadata": {
+        "problem_id": "lp_typeA_005",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 2,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_006\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c0', 'c1', 'c_key_upper']\nConflicting Bounds: ['x2', 'x3', 'x4']\n\n## Model Structure\nConstraints: 9\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 3 constraints.\nConstraint 'c0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c0)",
+      "metadata": {
+        "problem_id": "lp_typeA_006",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_007\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c5', 'c_key_lower']\nConflicting Bounds: ['x0', 'x2', 'x3', 'x4', 'x5', 'x6']\n\n## Model Structure\nConstraints: 9\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c5' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c5)",
+      "metadata": {
+        "problem_id": "lp_typeA_007",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeA_008\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c3', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9', 'x10', 'x11', 'x12', 'x13']\n\n## Model Structure\nConstraints: 7\nVariables: 14\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c3' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c3)",
+      "metadata": {
+        "problem_id": "mip_typeA_008",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_009\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c1', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3']\n\n## Model Structure\nConstraints: 5\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c1)",
+      "metadata": {
+        "problem_id": "lp_typeA_009",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_010\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c5', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x3', 'x4', 'x5']\n\n## Model Structure\nConstraints: 8\nVariables: 6\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c5' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c5)",
+      "metadata": {
+        "problem_id": "lp_typeA_010",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_011\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c2', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4', 'x5', 'x7']\n\n## Model Structure\nConstraints: 6\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c2' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c2)",
+      "metadata": {
+        "problem_id": "lp_typeA_011",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeA_015\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c4', 'c_key_lower']\nConflicting Bounds: ['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9', 'x10', 'x11']\n\n## Model Structure\nConstraints: 9\nVariables: 12\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c4' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c4)",
+      "metadata": {
+        "problem_id": "mip_typeA_015",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_016\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c4', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x4']\n\n## Model Structure\nConstraints: 8\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c4' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c4)",
+      "metadata": {
+        "problem_id": "lp_typeA_016",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_017\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c4', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4', 'x6', 'x7', 'x8']\n\n## Model Structure\nConstraints: 10\nVariables: 9\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c4' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c4)",
+      "metadata": {
+        "problem_id": "lp_typeA_017",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_019\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c3', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x3', 'x4', 'x5', 'x6']\n\n## Model Structure\nConstraints: 8\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c3' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c3)",
+      "metadata": {
+        "problem_id": "lp_typeA_019",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_021\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c4', 'c_key_lower']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x4', 'x5', 'x6', 'x7']\n\n## Model Structure\nConstraints: 7\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c4' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c4)",
+      "metadata": {
+        "problem_id": "lp_typeA_021",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_022\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c0', 'c1', 'c_key_upper']\nConflicting Bounds: ['x1', 'x2', 'x3', 'x4', 'x6', 'x7', 'x8', 'x9']\n\n## Model Structure\nConstraints: 6\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 3 constraints.\nConstraint 'c0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c0)",
+      "metadata": {
+        "problem_id": "lp_typeA_022",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_023\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c2', 'c_key_lower']\nConflicting Bounds: ['x0', 'x2', 'x3', 'x4']\n\n## Model Structure\nConstraints: 5\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c2' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c2)",
+      "metadata": {
+        "problem_id": "lp_typeA_023",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeA_024\nType: A\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['c6', 'c_key_lower']\nConflicting Bounds: ['x0', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8']\n\n## Model Structure\nConstraints: 10\nVariables: 9\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c_key_upper', 'c_key_lower']",
+      "output": "<think>\nStep 1: The IIS contains 2 constraints.\nConstraint 'c6' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(c6)",
+      "metadata": {
+        "problem_id": "lp_typeA_024",
+        "error_type": "A",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_025\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 6\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_025",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_026\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 9\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_026",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_027\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 9\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_027",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_028\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 10\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_028",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_029\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 11\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_029",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_030\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 9\nVariables: 9\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_030",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeB_031\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 8\nVariables: 15\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "mip_typeB_031",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_032\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 8\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_032",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_033\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 11\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_033",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeB_034\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 8\nVariables: 14\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "mip_typeB_034",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_035\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 8\nVariables: 9\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_035",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_036\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 10\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_036",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_037\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 10\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_037",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_038\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 11\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_038",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_039\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 6\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_039",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_040\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 11\nVariables: 6\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_040",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_041\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 7\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_041",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_042\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 8\nVariables: 9\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_042",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeB_043\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 14\nVariables: 14\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "mip_typeB_043",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_044\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 6\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_044",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_045\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 7\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_045",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_046\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 9\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_046",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_047\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 10\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_047",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeB_048\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 7\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "lp_typeB_048",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeB_049\nType: B\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_force_x0']\n\n## Model Structure\nConstraints: 9\nVariables: 14\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_force_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_force_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_force_x0)",
+      "metadata": {
+        "problem_id": "mip_typeB_049",
+        "error_type": "B",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_051\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 8\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_051",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_052\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 10\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_052",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_053\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 10\nVariables: 9\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_053",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_054\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 10\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_054",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_055\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 10\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 2: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_055",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 2,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_057\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x1']\nConflicting Bounds: ['x1']\n\n## Model Structure\nConstraints: 9\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x1', '_saboteur_lower_x1']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x1)",
+      "metadata": {
+        "problem_id": "lp_typeC_057",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_058\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 10\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_058",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_061\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 7\nVariables: 6\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_061",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_062\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 12\nVariables: 9\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_062",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_063\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x2']\nConflicting Bounds: ['x2']\n\n## Model Structure\nConstraints: 6\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower', '_saboteur_lower_x2']",
+      "output": "<think>\nStep 2: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x2' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x2)",
+      "metadata": {
+        "problem_id": "lp_typeC_063",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 2,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_064\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 11\nVariables: 6\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_064",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_065\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 7\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_065",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_067\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 8\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_067",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_069\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 7\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 2: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_069",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 2,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_070\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 9\nVariables: 6\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_saboteur_upper_x0', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_070",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_071\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x1']\nConflicting Bounds: ['x1']\n\n## Model Structure\nConstraints: 10\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower', '_saboteur_lower_x1']",
+      "output": "<think>\nStep 2: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x1)",
+      "metadata": {
+        "problem_id": "lp_typeC_071",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 2,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_073\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x0']\nConflicting Bounds: ['x0']\n\n## Model Structure\nConstraints: 8\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_saboteur_lower_x0']",
+      "output": "<think>\nStep 2: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x0' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x0)",
+      "metadata": {
+        "problem_id": "lp_typeC_073",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 2,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeC_074\nType: C\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_lower_x2']\nConflicting Bounds: ['x2']\n\n## Model Structure\nConstraints: 8\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_saboteur_lower_x2']",
+      "output": "<think>\nStep 2: The IIS contains 1 constraints.\nConstraint '_saboteur_lower_x2' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_lower_x2)",
+      "metadata": {
+        "problem_id": "lp_typeC_074",
+        "error_type": "C",
+        "difficulty": "easy",
+        "steps": 2,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeD_075\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 12\nVariables: 12\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "mip_typeD_075",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_076\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 9\nVariables: 12\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_076",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeD_077\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']\n\n## Model Structure\nConstraints: 19\nVariables: 16",
+      "output": "<think>\nStep 1: The IIS contains 6 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "mip_typeD_077",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_078\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']\n\n## Model Structure\nConstraints: 15\nVariables: 11\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 6 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_078",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_079\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']\n\n## Model Structure\nConstraints: 12\nVariables: 12\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 6 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_079",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeD_080\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_conflict_c7']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8']\n\n## Model Structure\nConstraints: 12\nVariables: 9\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c_key_upper', 'c_key_lower', '_saboteur_conflict_c7']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_conflict_c7' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_conflict_c7)",
+      "metadata": {
+        "problem_id": "mip_typeD_080",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_081\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_conflict_c2']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7']\n\n## Model Structure\nConstraints: 7\nVariables: 8\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_saboteur_conflict_c2']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_conflict_c2' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_conflict_c2)",
+      "metadata": {
+        "problem_id": "lp_typeD_081",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_082\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 9\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_082",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_083\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_conflict_c1']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9']\n\n## Model Structure\nConstraints: 8\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_saboteur_conflict_c1']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_conflict_c1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_conflict_c1)",
+      "metadata": {
+        "problem_id": "lp_typeD_083",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeD_084\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_conflict_c2']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9']\n\n## Model Structure\nConstraints: 8\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_saboteur_conflict_c2']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_conflict_c2' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_conflict_c2)",
+      "metadata": {
+        "problem_id": "mip_typeD_084",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_085\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_conflict_c3']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4', 'x5', 'x6']\n\n## Model Structure\nConstraints: 7\nVariables: 7\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_saboteur_conflict_c3']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_conflict_c3' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_conflict_c3)",
+      "metadata": {
+        "problem_id": "lp_typeD_085",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeD_086\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']\n\n## Model Structure\nConstraints: 14\nVariables: 15\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 6 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "mip_typeD_086",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_087\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 10\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_087",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_088\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']\n\n## Model Structure\nConstraints: 14\nVariables: 16\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 6 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_088",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_089\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 12\nVariables: 13\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_089",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_090\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 14\nVariables: 11\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_090",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeD_091\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 15\nVariables: 13\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "mip_typeD_091",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeD_092\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']\n\n## Model Structure\nConstraints: 14\nVariables: 18\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 6 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "mip_typeD_092",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_093\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 10\nVariables: 11\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_093",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_094\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 9\nVariables: 11\nConstraint Names: ['c0', 'c1', 'c2', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_094",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_095\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']\n\n## Model Structure\nConstraints: 13\nVariables: 12\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_constr_4', '_chain_constr_5', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 6 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_095",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_096\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_conflict_c4']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4']\n\n## Model Structure\nConstraints: 9\nVariables: 5\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c_key_upper', 'c_key_lower', '_saboteur_conflict_c4']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_conflict_c4' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_conflict_c4)",
+      "metadata": {
+        "problem_id": "lp_typeD_096",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_097\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 10\nVariables: 9\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_097",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: mip_typeD_098\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_saboteur_conflict_c5']\nConflicting Bounds: ['x0', 'x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9']\n\n## Model Structure\nConstraints: 14\nVariables: 10\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c_key_upper', 'c_key_lower', '_saboteur_conflict_c5']",
+      "output": "<think>\nStep 1: The IIS contains 1 constraints.\nConstraint '_saboteur_conflict_c5' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_saboteur_conflict_c5)",
+      "metadata": {
+        "problem_id": "mip_typeD_098",
+        "error_type": "D",
+        "difficulty": "hard",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    },
+    {
+      "instruction": "Debug the infeasible optimization model and provide the action to fix it.",
+      "input": "## Problem\nID: lp_typeD_099\nType: D\n\n## Current State\nStatus: INFEASIBLE\n\n## IIS (Irreducible Infeasible Subsystem)\nConflicting Constraints: ['_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']\n\n## Model Structure\nConstraints: 11\nVariables: 11\nConstraint Names: ['c0', 'c1', 'c2', 'c3', 'c4', 'c_key_upper', 'c_key_lower', '_chain_constr_1', '_chain_constr_2', '_chain_constr_3', '_chain_cycle']",
+      "output": "<think>\nStep 1: The IIS contains 4 constraints.\nConstraint '_chain_constr_1' is identified as problematic.\nDropping this constraint should resolve the conflict.\n</think>\n\nAction: DROP_CONSTRAINT(_chain_constr_1)",
+      "metadata": {
+        "problem_id": "lp_typeD_099",
+        "error_type": "D",
+        "difficulty": "medium",
+        "steps": 1,
+        "agent": "SFT-Teacher-Heuristic"
+      }
+    }
+  ]
+}

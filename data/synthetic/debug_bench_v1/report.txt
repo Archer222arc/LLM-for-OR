@@ -1,0 +1,17 @@
+============================================================
+Dataset Report: debug_bench_v1
+============================================================
+
+Created: 2026-01-11T14:13:32.979002
+Total Problems: 20
+Failed: 0
+
+Error Type Distribution:
+  Type D: 20
+
+Initial Status Distribution:
+  INFEASIBLE: 20
+
+Problem Size:
+  Variables: min=6, max=14, avg=8.9
+  Constraints: min=4, max=12, avg=6.5

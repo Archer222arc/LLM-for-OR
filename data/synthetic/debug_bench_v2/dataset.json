@@ -1,0 +1,661 @@
+{
+  "dataset_name": "debug_bench_v2",
+  "description": "Synthetic OR debugging benchmark generated with SaboteurAgent",
+  "created_at": "2026-01-11T21:39:46.545071",
+  "num_problems": 21,
+  "num_failed": 59,
+  "error_types": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "problem_types": [
+    "lp",
+    "mip"
+  ],
+  "seed": 42,
+  "problems": [
+    {
+      "problem_id": "lp_typeA_002",
+      "model_file": "models/lp_typeA_002.mps",
+      "problem_nl": "Linear programming problem lp_typeA_002 with 7 variables and 6 constraints. Contains a Constraint Direction Error that makes the model infeasible.",
+      "error_type": "A",
+      "error_description": "",
+      "ground_truth_fix": "Change c1 from >= back to <=",
+      "target_name": "c1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 7,
+      "n_constraints": 6,
+      "iis_constraints": [
+        "c1",
+        "c3",
+        "c4"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x2",
+        "x3",
+        "x4",
+        "x5"
+      ],
+      "iis_size": 8,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.459432"
+    },
+    {
+      "problem_id": "mip_typeD_060",
+      "model_file": "models/mip_typeD_060.mps",
+      "problem_nl": "Linear programming problem mip_typeD_060 with 11 variables and 12 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c5",
+      "target_name": "_saboteur_conflict_c5",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 11,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_saboteur_conflict_c5"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8",
+        "x9",
+        "x10"
+      ],
+      "iis_size": 12,
+      "problem_type": "mip",
+      "created_at": "2026-01-11T21:39:46.525033"
+    },
+    {
+      "problem_id": "lp_typeD_061",
+      "model_file": "models/lp_typeD_061.mps",
+      "problem_nl": "Linear programming problem lp_typeD_061 with 8 variables and 9 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c6",
+      "target_name": "_saboteur_conflict_c6",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 8,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_saboteur_conflict_c6"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7"
+      ],
+      "iis_size": 9,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.526135"
+    },
+    {
+      "problem_id": "mip_typeD_062",
+      "model_file": "models/mip_typeD_062.mps",
+      "problem_nl": "Linear programming problem mip_typeD_062 with 15 variables and 11 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c4",
+      "target_name": "_saboteur_conflict_c4",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 15,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_saboteur_conflict_c4"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8",
+        "x9",
+        "x10",
+        "x11",
+        "x12",
+        "x13",
+        "x14"
+      ],
+      "iis_size": 16,
+      "problem_type": "mip",
+      "created_at": "2026-01-11T21:39:46.528468"
+    },
+    {
+      "problem_id": "lp_typeD_063",
+      "model_file": "models/lp_typeD_063.mps",
+      "problem_nl": "Linear programming problem lp_typeD_063 with 10 variables and 7 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c0",
+      "target_name": "_saboteur_conflict_c0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 10,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_saboteur_conflict_c0"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8",
+        "x9"
+      ],
+      "iis_size": 11,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.529499"
+    },
+    {
+      "problem_id": "lp_typeD_064",
+      "model_file": "models/lp_typeD_064.mps",
+      "problem_nl": "Linear programming problem lp_typeD_064 with 6 variables and 6 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c3",
+      "target_name": "_saboteur_conflict_c3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 6,
+      "n_constraints": 6,
+      "iis_constraints": [
+        "_saboteur_conflict_c3"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5"
+      ],
+      "iis_size": 7,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.530271"
+    },
+    {
+      "problem_id": "lp_typeD_065",
+      "model_file": "models/lp_typeD_065.mps",
+      "problem_nl": "Linear programming problem lp_typeD_065 with 5 variables and 7 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c5",
+      "target_name": "_saboteur_conflict_c5",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 5,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_saboteur_conflict_c5"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4"
+      ],
+      "iis_size": 6,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.530916"
+    },
+    {
+      "problem_id": "lp_typeD_066",
+      "model_file": "models/lp_typeD_066.mps",
+      "problem_nl": "Linear programming problem lp_typeD_066 with 5 variables and 4 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c0",
+      "target_name": "_saboteur_conflict_c0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 5,
+      "n_constraints": 4,
+      "iis_constraints": [
+        "_saboteur_conflict_c0"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4"
+      ],
+      "iis_size": 6,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.531394"
+    },
+    {
+      "problem_id": "lp_typeD_067",
+      "model_file": "models/lp_typeD_067.mps",
+      "problem_nl": "Linear programming problem lp_typeD_067 with 5 variables and 9 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c6",
+      "target_name": "_saboteur_conflict_c6",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 5,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_saboteur_conflict_c6"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4"
+      ],
+      "iis_size": 6,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.532083"
+    },
+    {
+      "problem_id": "lp_typeD_068",
+      "model_file": "models/lp_typeD_068.mps",
+      "problem_nl": "Linear programming problem lp_typeD_068 with 9 variables and 6 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c3",
+      "target_name": "_saboteur_conflict_c3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 9,
+      "n_constraints": 6,
+      "iis_constraints": [
+        "_saboteur_conflict_c3"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8"
+      ],
+      "iis_size": 10,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.532859"
+    },
+    {
+      "problem_id": "mip_typeD_069",
+      "model_file": "models/mip_typeD_069.mps",
+      "problem_nl": "Linear programming problem mip_typeD_069 with 15 variables and 8 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c1",
+      "target_name": "_saboteur_conflict_c1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 15,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_saboteur_conflict_c1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8",
+        "x9",
+        "x10",
+        "x11",
+        "x12",
+        "x13",
+        "x14"
+      ],
+      "iis_size": 16,
+      "problem_type": "mip",
+      "created_at": "2026-01-11T21:39:46.535039"
+    },
+    {
+      "problem_id": "lp_typeD_070",
+      "model_file": "models/lp_typeD_070.mps",
+      "problem_nl": "Linear programming problem lp_typeD_070 with 6 variables and 4 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c1",
+      "target_name": "_saboteur_conflict_c1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 6,
+      "n_constraints": 4,
+      "iis_constraints": [
+        "_saboteur_conflict_c1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5"
+      ],
+      "iis_size": 7,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.535595"
+    },
+    {
+      "problem_id": "lp_typeD_071",
+      "model_file": "models/lp_typeD_071.mps",
+      "problem_nl": "Linear programming problem lp_typeD_071 with 7 variables and 5 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c0",
+      "target_name": "_saboteur_conflict_c0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 7,
+      "n_constraints": 5,
+      "iis_constraints": [
+        "_saboteur_conflict_c0"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6"
+      ],
+      "iis_size": 8,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.536163"
+    },
+    {
+      "problem_id": "lp_typeD_072",
+      "model_file": "models/lp_typeD_072.mps",
+      "problem_nl": "Linear programming problem lp_typeD_072 with 6 variables and 9 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c4",
+      "target_name": "_saboteur_conflict_c4",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 6,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_saboteur_conflict_c4"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5"
+      ],
+      "iis_size": 7,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.536849"
+    },
+    {
+      "problem_id": "mip_typeD_073",
+      "model_file": "models/mip_typeD_073.mps",
+      "problem_nl": "Linear programming problem mip_typeD_073 with 9 variables and 12 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c4",
+      "target_name": "_saboteur_conflict_c4",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 9,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_saboteur_conflict_c4"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8"
+      ],
+      "iis_size": 10,
+      "problem_type": "mip",
+      "created_at": "2026-01-11T21:39:46.538562"
+    },
+    {
+      "problem_id": "lp_typeD_074",
+      "model_file": "models/lp_typeD_074.mps",
+      "problem_nl": "Linear programming problem lp_typeD_074 with 10 variables and 4 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c2",
+      "target_name": "_saboteur_conflict_c2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 10,
+      "n_constraints": 4,
+      "iis_constraints": [
+        "_saboteur_conflict_c2"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8",
+        "x9"
+      ],
+      "iis_size": 11,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.539316"
+    },
+    {
+      "problem_id": "lp_typeD_075",
+      "model_file": "models/lp_typeD_075.mps",
+      "problem_nl": "Linear programming problem lp_typeD_075 with 7 variables and 4 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c1",
+      "target_name": "_saboteur_conflict_c1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 7,
+      "n_constraints": 4,
+      "iis_constraints": [
+        "_saboteur_conflict_c1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6"
+      ],
+      "iis_size": 8,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.539884"
+    },
+    {
+      "problem_id": "lp_typeD_076",
+      "model_file": "models/lp_typeD_076.mps",
+      "problem_nl": "Linear programming problem lp_typeD_076 with 10 variables and 5 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c1",
+      "target_name": "_saboteur_conflict_c1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 10,
+      "n_constraints": 5,
+      "iis_constraints": [
+        "_saboteur_conflict_c1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8",
+        "x9"
+      ],
+      "iis_size": 11,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.540656"
+    },
+    {
+      "problem_id": "lp_typeD_077",
+      "model_file": "models/lp_typeD_077.mps",
+      "problem_nl": "Linear programming problem lp_typeD_077 with 9 variables and 8 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c0",
+      "target_name": "_saboteur_conflict_c0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 9,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_saboteur_conflict_c0"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8"
+      ],
+      "iis_size": 10,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.541621"
+    },
+    {
+      "problem_id": "lp_typeD_078",
+      "model_file": "models/lp_typeD_078.mps",
+      "problem_nl": "Linear programming problem lp_typeD_078 with 8 variables and 9 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c1",
+      "target_name": "_saboteur_conflict_c1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 8,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_saboteur_conflict_c1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7"
+      ],
+      "iis_size": 9,
+      "problem_type": "lp",
+      "created_at": "2026-01-11T21:39:46.542777"
+    },
+    {
+      "problem_id": "mip_typeD_079",
+      "model_file": "models/mip_typeD_079.mps",
+      "problem_nl": "Linear programming problem mip_typeD_079 with 11 variables and 11 constraints. Contains a Conflicting Constraint that makes the model infeasible.",
+      "error_type": "D",
+      "error_description": "",
+      "ground_truth_fix": "Remove contradicting constraint _saboteur_conflict_c9",
+      "target_name": "_saboteur_conflict_c9",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "n_variables": 11,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_saboteur_conflict_c9"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8",
+        "x9",
+        "x10"
+      ],
+      "iis_size": 12,
+      "problem_type": "mip",
+      "created_at": "2026-01-11T21:39:46.545043"
+    }
+  ]
+}

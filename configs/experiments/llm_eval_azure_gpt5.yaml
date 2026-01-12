@@ -1,0 +1,47 @@
+experiment:
+  name: "llm_eval_azure_gpt5"
+  description: "评估GPT-5系列模型在OR调试任务上的表现"
+  output_dir: "outputs/experiments/llm_eval_azure_gpt5_20260111"
+
+benchmark:
+  dataset: "data/synthetic/debug_bench_v1/dataset.json"
+  max_steps: 20
+  n_episodes: 1
+  verbose: true
+
+agents:
+  # GPT-5 系列
+  - name: "gpt5-mini"
+    type: "llm"
+    model: "gpt-5-mini"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "gpt5-nano"
+    type: "llm"
+    model: "gpt-5-nano"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  # 基线对比 (GPT-4o-mini)
+  - name: "gpt4o-mini"
+    type: "llm"
+    model: "gpt-4o-mini"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  # Heuristic基线
+  - name: "heuristic"
+    type: "baseline"
+    class: "HeuristicAgent"
+
+evaluation:
+  metrics:
+    - recovery_rate
+    - avg_steps
+    - avg_reward
+    - success_rate
+    - step_efficiency
+
+  report_format: ["markdown", "json"]
+  save_trajectories: true

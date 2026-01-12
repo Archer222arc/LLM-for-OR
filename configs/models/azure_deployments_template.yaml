@@ -1,0 +1,207 @@
+# =============================================================================
+# Azure 模型部署配置模板
+# =============================================================================
+#
+# 项目: LLM-for-OR (NeurIPS 2026 Agentic OR/OM Research)
+# 文档: docs/modules/config_loader.md
+# 最后更新: 2026-01-11
+#
+# 使用说明:
+#   1. 复制此文件为 azure_deployments.yaml
+#      cp configs/models/azure_deployments_template.yaml configs/models/azure_deployments.yaml
+#   2. 填写实际的 API key 和 endpoint
+#   3. azure_deployments.yaml 已在 .gitignore 中，不会提交到git
+#
+# 支持的Provider类型:
+#   - azure_openai: Azure OpenAI Service / Azure AI Services
+#   - azure_foundry: Azure AI Foundry (MaaS)
+#
+# 配置加载优先级 (从高到低):
+#   1. 环境变量 (AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_KEY)
+#   2. 部署级别配置 (deployments.xxx.api_version, deployments.xxx.endpoint)
+#   3. 默认配置 (default_endpoint, default_api_key, api_version)
+#
+# API版本说明:
+#   - 标准模型: 2024-10-21
+#   - O系列推理模型: 2024-12-01-preview (需要单独指定)
+#   - GPT-5系列: 需要使用 max_completion_tokens 而非 max_tokens
+#
+# =============================================================================
+
+azure:
+  # 默认配置 (可被环境变量覆盖)
+  default_endpoint: "https://eastus.api.cognitive.microsoft.com/"
+  default_api_key: "YOUR_API_KEY_HERE"  # 填写实际API key
+  api_version: "2024-10-21"
+
+  # 部署清单 (仅包含Azure OpenAI Service支持的模型)
+  deployments:
+    # OpenAI 系列 (kind=OpenAI)
+    gpt-4o-mini:
+      deployment_name: "gpt-4o-mini"
+      model_name: "gpt-4o-mini"
+      provider_type: "azure_openai"
+      region: "eastus"
+      enabled: true
+      description: "OpenAI GPT-4o mini (经济型)"
+
+    gpt-4o:
+      deployment_name: "gpt-4o"
+      model_name: "gpt-4o"
+      provider_type: "azure_openai"
+      region: "eastus"
+      enabled: true
+      description: "OpenAI GPT-4o (标准)"
+
+    gpt-4-1:
+      deployment_name: "gpt-4-1"
+      model_name: "gpt-4.1"
+      provider_type: "azure_openai"
+      region: "eastus"
+      enabled: true
+      description: "OpenAI GPT-4.1 (最新最强)"
+
+    o1:
+      deployment_name: "o1"
+      model_name: "o1"
+      provider_type: "azure_openai"
+      region: "eastus"
+      enabled: true
+      description: "OpenAI o1 (推理专用)"
+
+    # GPT-5 系列 (kind=OpenAI, SKU=GlobalStandard)
+    gpt-5-mini:
+      deployment_name: "gpt-5-mini"
+      model_name: "gpt-5-mini"
+      provider_type: "azure_openai"
+      region: "eastus"
+      enabled: true
+      description: "OpenAI GPT-5 mini (新一代经济型)"
+
+    gpt-5-nano:
+      deployment_name: "gpt-5-nano"
+      model_name: "gpt-5-nano"
+      provider_type: "azure_openai"
+      region: "eastus"
+      enabled: true
+      description: "OpenAI GPT-5 nano (超轻量级)"
+
+  # ========== Azure AI Foundry (MaaS) 配置 ==========
+  # 注意: 以下模型需要使用Azure AI Foundry部署
+  # 需要先创建AI Foundry Hub和Project，然后在Portal部署模型
+
+  foundry:
+    # 认证配置 (Service Principal)
+    auth:
+      method: "service_principal"
+      tenant_id: "${AZURE_TENANT_ID}"  # 从环境变量读取
+      client_id: "${AZURE_CLIENT_ID}"  # 从环境变量读取
+      client_secret: "${AZURE_CLIENT_SECRET}"  # 从环境变量读取
+
+    # 区域Hub配置
+    hubs:
+      eastus2:
+        resource_group: "rg-llm-for-or"
+        workspace_name: "foundry-eastus2"
+        subscription_id: "${AZURE_SUBSCRIPTION_ID}"
+        region: "eastus2"
+        description: "Claude系列专用Hub (East US 2)"
+
+      eastus:
+        resource_group: "rg-llm-for-or"
+        workspace_name: "foundry-eastus"
+        subscription_id: "${AZURE_SUBSCRIPTION_ID}"
+        region: "eastus"
+        description: "DeepSeek系列专用Hub (East US)"
+
+      swedencentral:
+        resource_group: "rg-llm-for-or"
+        workspace_name: "foundry-sweden"
+        subscription_id: "${AZURE_SUBSCRIPTION_ID}"
+        region: "swedencentral"
+        description: "Qwen系列专用Hub (Sweden Central)"
+
+    # Foundry部署清单
+    deployments:
+      # Claude系列 (East US 2 - Serverless API)
+      claude-opus-4.5:
+        provider_type: "azure_foundry"
+        hub: "eastus2"
+        model_id: "Anthropic.Claude-Opus-4-5"
+        deployment_type: "serverless"
+        endpoint: "https://{workspace_name}.{region}.inference.ai.azure.com"
+        enabled: false  # 需要在Portal部署后启用
+        pricing:
+          input_token_price: "$15/1M tokens"
+          output_token_price: "$75/1M tokens"
+        quota:
+          tpm: 80000
+          rpm: 600
+
+      claude-sonnet-4.5:
+        provider_type: "azure_foundry"
+        hub: "eastus2"
+        model_id: "Anthropic.Claude-Sonnet-4-5"
+        deployment_type: "serverless"
+        endpoint: "https://{workspace_name}.{region}.inference.ai.azure.com"
+        enabled: false
+        pricing:
+          input_token_price: "$3/1M tokens"
+          output_token_price: "$15/1M tokens"
+        quota:
+          tpm: 160000
+          rpm: 1200
+
+      claude-haiku-4.5:
+        provider_type: "azure_foundry"
+        hub: "eastus2"
+        model_id: "Anthropic.Claude-Haiku-4-5"
+        deployment_type: "serverless"
+        endpoint: "https://{workspace_name}.{region}.inference.ai.azure.com"
+        enabled: false
+        pricing:
+          input_token_price: "$0.25/1M tokens"
+          output_token_price: "$1.25/1M tokens"
+
+      # DeepSeek系列 (East US - Global Standard)
+      deepseek-r1:
+        provider_type: "azure_foundry"
+        hub: "eastus"
+        model_id: "DeepSeek.DeepSeek-R1"
+        deployment_type: "global_standard"
+        endpoint: "https://{workspace_name}.{region}.inference.ai.azure.com"
+        enabled: false
+        pricing:
+          input_token_price: "$0.55/1M tokens"
+          output_token_price: "$2.19/1M tokens"
+        quota:
+          tpm: 150000
+          rpm: 1000
+
+      deepseek-v3.2:
+        provider_type: "azure_foundry"
+        hub: "eastus"
+        model_id: "DeepSeek.DeepSeek-V3-2"
+        deployment_type: "global_standard"
+        endpoint: "https://{workspace_name}.{region}.inference.ai.azure.com"
+        enabled: false
+        pricing:
+          input_token_price: "$0.27/1M tokens"
+          output_token_price: "$1.10/1M tokens"
+
+      # Qwen系列 (Sweden Central - Serverless API)
+      qwen3-72b:
+        provider_type: "azure_foundry"
+        hub: "swedencentral"
+        model_id: "Qwen.Qwen3-72B-Instruct"
+        deployment_type: "serverless"
+        endpoint: "https://{workspace_name}.{region}.inference.ai.azure.com"
+        enabled: false
+
+# 配置优先级 (从高到低):
+#   Azure OpenAI:
+#     1. 环境变量: AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_KEY
+#     2. 本地配置文件: configs/models/azure_deployments.yaml
+#   Azure Foundry:
+#     1. 环境变量: AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET
+#     2. 本地配置文件: configs/models/azure_deployments.yaml

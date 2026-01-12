@@ -1,0 +1,66 @@
+experiment:
+  name: "llm_eval_foundry_all"
+  description: "评估所有Azure AI Foundry模型(6个)在OR调试任务上的表现"
+  output_dir: "outputs/experiments/llm_eval_foundry_all_20260111"
+
+benchmark:
+  dataset: "data/synthetic/debug_bench_v1/dataset.json"
+  max_steps: 20
+  n_episodes: 1
+  verbose: true
+
+agents:
+  # Claude系列 (East US 2) - 3个模型
+  - name: "claude-opus-4.5"
+    type: "llm"
+    model: "claude-opus-4.5"
+    provider: "azure_foundry"
+    temperature: 0.0
+
+  - name: "claude-sonnet-4.5"
+    type: "llm"
+    model: "claude-sonnet-4.5"
+    provider: "azure_foundry"
+    temperature: 0.0
+
+  - name: "claude-haiku-4.5"
+    type: "llm"
+    model: "claude-haiku-4.5"
+    provider: "azure_foundry"
+    temperature: 0.0
+
+  # DeepSeek系列 (East US) - 2个模型
+  - name: "deepseek-r1"
+    type: "llm"
+    model: "deepseek-r1"
+    provider: "azure_foundry"
+    temperature: 0.0
+
+  - name: "deepseek-v3.2"
+    type: "llm"
+    model: "deepseek-v3.2"
+    provider: "azure_foundry"
+    temperature: 0.0
+
+  # Qwen系列 (Sweden Central) - 1个模型
+  - name: "qwen3-72b"
+    type: "llm"
+    model: "qwen3-72b"
+    provider: "azure_foundry"
+    temperature: 0.0
+
+  # 基线对比
+  - name: "heuristic"
+    type: "baseline"
+    class: "HeuristicAgent"
+
+evaluation:
+  metrics:
+    - recovery_rate
+    - avg_steps
+    - avg_reward
+    - success_rate
+    - step_efficiency
+
+  report_format: ["markdown", "json"]
+  save_trajectories: true

@@ -1,0 +1,87 @@
+NAME lp_typeD_837
+OBJSENSE MAX
+ROWS
+ N  OBJ
+ L  c0      
+ L  c1      
+ G  c2      
+ G  c3      
+ G  c4      
+ L  c_key_upper
+ G  c_key_lower
+ G  _chain_constr_1
+ G  _chain_constr_2
+ G  _chain_constr_3
+ G  _chain_cycle
+COLUMNS
+    x0        OBJ       5.2691936933300376e-01
+    x0        c0        1.0138875515135879e+00
+    x0        c1        1.2846088125472845e+00
+    x0        c2        5.4631954101858649e-01
+    x0        c3        1.3297925030480688e+00
+    x0        c4        1.7092328747910652e+00
+    x0        c_key_upper  1.5035514395643130e+00
+    x0        c_key_lower  1.5035514395643130e+00
+    x1        OBJ       9.7207021903717050e-01
+    x1        c0        5.0857636467768064e-01
+    x1        c1        8.2641393557531417e-01
+    x1        c2        1.5687783070089680e+00
+    x1        c3        1.3205195337130538e+00
+    x1        c4        1.99137754069278
+    x1        c_key_upper  1.2358365401125724e+00
+    x1        c_key_lower  1.2358365401125724e+00
+    x2        OBJ       1.0542902062123323e+00
+    x2        c0        6.5801631112189773e-01
+    x2        c1        1.9795454416797842e+00
+    x2        c2        1.7970524182882146e+00
+    x2        c3        1.3507262120593468e+00
+    x2        c4        1.8365231416008863e+00
+    x2        c_key_upper  1.9499947166594147e+00
+    x2        c_key_lower  1.9499947166594147e+00
+    x3        OBJ       6.3879554110302861e-01
+    x3        c0        1.7602723133785338e+00
+    x3        c1        1.0887956762403423e+00
+    x3        c2        9.6621946304713346e-01
+    x3        c3        8.1629376487488425e-01
+    x3        c4        1.5408187220284790e+00
+    x3        c_key_upper  1.7689725220439370e+00
+    x3        c_key_lower  1.7689725220439370e+00
+    x4        OBJ       1.3840954391973268e+00
+    x4        c0        1.4925696929293224e+00
+    x4        c1        1.0818801175810462e+00
+    x4        c2        9.9606599547910724e-01
+    x4        c3        1.9798478485429358e+00
+    x4        c4        1.2835261603669161e+00
+    x4        c_key_upper  1.6650719065279078e+00
+    x4        c_key_lower  1.6650719065279078e+00
+    _chain_var_0  _chain_constr_1  -1
+    _chain_var_0  _chain_cycle  1
+    _chain_var_1  _chain_constr_1  1
+    _chain_var_1  _chain_constr_2  -1
+    _chain_var_2  _chain_constr_2  1
+    _chain_var_2  _chain_constr_3  -1
+    _chain_var_3  _chain_constr_3  1
+    _chain_var_3  _chain_cycle  -1
+RHS
+    RHS1      c0        2.4108187954636310e+01
+    RHS1      c1        3.4951341399602533e+01
+    RHS1      c2        8.9230761283809
+    RHS1      c3        9.8671171380544731e+00
+    RHS1      c4        1.1719999072768271e+01
+    RHS1      c_key_upper  4.0617135624540722e+01
+    RHS1      c_key_lower  2.0308567812270361e+01
+    RHS1      _chain_constr_1  10
+    RHS1      _chain_constr_2  10
+    RHS1      _chain_constr_3  10
+    RHS1      _chain_cycle  10
+BOUNDS
+ UP BND1      x0        10
+ UP BND1      x1        10
+ UP BND1      x2        10
+ UP BND1      x3        10
+ UP BND1      x4        10
+ UP BND1      _chain_var_0  100
+ UP BND1      _chain_var_1  100
+ UP BND1      _chain_var_2  100
+ UP BND1      _chain_var_3  100
+ENDATA

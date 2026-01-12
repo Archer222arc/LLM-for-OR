@@ -1,0 +1,35 @@
+============================================================
+Dataset Report: or_debug_bench_v1
+============================================================
+
+Created: 2026-01-12T00:45:39.119877
+Total Problems: 901
+Failed: 99
+Use Robust Methods: True
+
+Success Rates by Type:
+  Type A: 88.0% (220/250)
+  Type B: 100.0% (250/250)
+  Type C: 72.4% (181/250)
+  Type D: 100.0% (250/250)
+
+Error Type Distribution:
+  Type A: 220
+  Type B: 250
+  Type C: 181
+  Type D: 250
+
+Difficulty Distribution:
+  easy: 443 (49.2%)
+  hard: 323 (35.8%)
+  medium: 135 (15.0%)
+
+Initial Status Distribution:
+  INFEASIBLE: 901
+
+IIS Size:
+  min=1, max=16, avg=4.5
+
+Problem Size:
+  Variables: min=5, max=15, avg=8.3
+  Constraints: min=5, max=20, avg=9.9

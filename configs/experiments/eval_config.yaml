@@ -1,0 +1,114 @@
+# OR-Debug-Bench Evaluation Configuration
+# Research Direction: Direction A (OR-Debug-Bench)
+# Documentation: docs/plan/modules/04_EVAL.md
+
+# Dataset configuration
+dataset:
+  path: data/benchmarks/or_debug_bench_full
+  # For testing, use: data/benchmarks/or_debug_bench_test_v2
+
+# Evaluation settings
+evaluation:
+  max_steps: 20
+  n_episodes: 1
+  verbose: true
+
+# Output configuration
+output:
+  dir: outputs/eval_results
+  format: json
+  save_trajectories: false  # Set to true for detailed analysis
+
+# Agent configurations
+# Supported providers: azure_openai, openai, anthropic, azure_foundry
+agents:
+  # Baseline agents (no API required)
+  - name: HeuristicAgent
+    type: baseline
+    class: HeuristicAgent
+
+  - name: GreedyDropAgent
+    type: baseline
+    class: GreedyDropAgent
+
+  - name: RandomAgent
+    type: baseline
+    class: RandomAgent
+    seed: 42
+
+  # GPT models (Azure OpenAI)
+  - name: gpt-4.1
+    type: llm
+    model: gpt-4.1
+    provider: azure_openai
+    temperature: 0.0
+
+  - name: gpt-4.1-mini
+    type: llm
+    model: gpt-4.1-mini
+    provider: azure_openai
+    temperature: 0.0
+
+  - name: gpt-5-mini
+    type: llm
+    model: gpt-5-mini
+    provider: azure_openai
+    temperature: 0.0
+
+  # Reasoning models (Azure OpenAI)
+  - name: o1
+    type: llm
+    model: o1
+    provider: azure_openai
+    temperature: 1.0  # o1 requires temperature=1
+
+  - name: o4-mini
+    type: llm
+    model: o4-mini
+    provider: azure_openai
+    temperature: 1.0
+
+  # DeepSeek models (Azure OpenAI)
+  - name: DeepSeek-R1
+    type: llm
+    model: DeepSeek-R1-0528
+    provider: azure_openai
+    temperature: 0.0
+
+  - name: DeepSeek-V3.2
+    type: llm
+    model: DeepSeek-V3.2
+    provider: azure_openai
+    temperature: 0.0
+
+# Quick test configuration (use with --config-section test)
+test:
+  dataset:
+    path: data/benchmarks/or_debug_bench_test_v2
+  evaluation:
+    max_steps: 10
+  agents:
+    - name: HeuristicAgent
+      type: baseline
+      class: HeuristicAgent
+    - name: gpt-4.1-mini
+      type: llm
+      model: gpt-4.1-mini
+      provider: azure_openai
+      temperature: 0.0
+
+# Model categories for analysis
+model_categories:
+  reasoning:
+    - o1
+    - o4-mini
+    - DeepSeek-R1
+  general:
+    - gpt-4.1
+    - gpt-4.1-mini
+    - gpt-5-mini
+    - DeepSeek-V3.2
+  baseline:
+    - HeuristicAgent
+    - GreedyDropAgent
+    - RandomAgent

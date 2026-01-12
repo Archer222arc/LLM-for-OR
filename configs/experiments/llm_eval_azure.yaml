@@ -1,0 +1,75 @@
+# Azure OpenAI LLM Evaluation Experiment Configuration
+# Research Direction: Direction A (OR-Debug-Bench)
+# Created: 2026-01-11
+
+experiment:
+  name: "llm_eval_azure"
+  description: "Evaluate Azure OpenAI models on OR debugging tasks"
+  output_dir: "outputs/experiments/llm_eval_azure_20260111"
+
+benchmark:
+  dataset: "data/synthetic/debug_bench_v1/dataset.json"
+  max_steps: 20
+  n_episodes: 1
+  verbose: true
+
+agents:
+  # ===== Azure OpenAI Models =====
+
+  # GPT-4o-mini (Economical)
+  - name: "gpt4o-mini-azure"
+    type: "llm"
+    model: "gpt-4o-mini"
+    provider: "azure_openai"
+    azure_deployment: "gpt-4o-mini"  # Must match your deployment name
+    temperature: 0.0
+    max_retries: 3
+
+  # GPT-4.1 (Latest, High Performance)
+  - name: "gpt4-1-azure"
+    type: "llm"
+    model: "gpt-4.1"
+    provider: "azure_openai"
+    azure_deployment: "gpt-4-1"
+    temperature: 0.0
+    max_retries: 3
+
+  # o1 (Reasoning Specialist)
+  - name: "o1-azure"
+    type: "llm"
+    model: "o1"
+    provider: "azure_openai"
+    azure_deployment: "o1"
+    temperature: 1.0  # o1 requires higher temperature
+    max_retries: 3
+
+  # ===== Baseline Agents =====
+
+  - name: "heuristic"
+    type: "baseline"
+    class: "HeuristicAgent"
+
+  - name: "random"
+    type: "baseline"
+    class: "RandomAgent"
+    seed: 42
+
+evaluation:
+  metrics:
+    - recovery_rate
+    - avg_steps
+    - avg_reward
+    - success_rate
+    - step_efficiency
+
+  report_format: ["markdown", "json"]
+  save_trajectories: true
+  save_detailed_logs: false
+
+# Notes:
+# 1. Ensure Azure OpenAI resource is created before running
+# 2. Set environment variables:
+#    export AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com/"
+#    export AZURE_OPENAI_API_KEY="your-api-key"
+# 3. azure_deployment must match the deployment name in Azure Portal
+# 4. Comment out models you haven't deployed

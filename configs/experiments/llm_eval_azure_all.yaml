@@ -1,0 +1,65 @@
+experiment:
+  name: "llm_eval_azure_all"
+  description: "评估所有Azure OpenAI模型(6个)在OR调试任务上的表现"
+  output_dir: "outputs/experiments/llm_eval_azure_all_20260111"
+
+benchmark:
+  dataset: "data/synthetic/debug_bench_v1/dataset.json"
+  max_steps: 20
+  n_episodes: 1
+  verbose: true
+
+agents:
+  # OpenAI 系列 (4个模型) - 使用本地配置，无需指定azure_endpoint和azure_deployment
+  - name: "gpt4o-mini"
+    type: "llm"
+    model: "gpt-4o-mini"  # 直接使用配置文件中的key
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "gpt4o"
+    type: "llm"
+    model: "gpt-4o"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "gpt4-1"
+    type: "llm"
+    model: "gpt-4-1"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "o1"
+    type: "llm"
+    model: "o1"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  # GPT-5 系列 (2个模型)
+  - name: "gpt5-mini"
+    type: "llm"
+    model: "gpt-5-mini"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  - name: "gpt5-nano"
+    type: "llm"
+    model: "gpt-5-nano"
+    provider: "azure_openai"
+    temperature: 0.0
+
+  # 基线对比
+  - name: "heuristic"
+    type: "baseline"
+    class: "HeuristicAgent"
+
+evaluation:
+  metrics:
+    - recovery_rate
+    - avg_steps
+    - avg_reward
+    - success_rate
+    - step_efficiency
+
+  report_format: ["markdown", "json"]
+  save_trajectories: true
