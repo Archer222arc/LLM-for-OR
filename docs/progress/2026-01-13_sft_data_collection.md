@@ -71,12 +71,51 @@ Key functions:
 
 ---
 
-## Next Steps
+## Training Environment Setup (Updated)
 
-1. Research SFT training framework (LLaMA-Factory, etc.)
-2. Convert data format for chosen framework
-3. Fine-tune Qwen3-8B with LoRA on A800
+### Deep Research Results
+- Framework: **LLaMA-Factory** (Qwen3原生支持, ACL 2024)
+- LoRA配置: rank=32, alpha=64, target=all (7层)
+- DeepSpeed: **ZeRO-2** (不是ZeRO-3，避免LoRA梯度问题)
+- 训练时间: 25-40分钟 (2×A800)
+
+详见: `docs/research/sft_research.md`
+
+### Created Files
+
+| File | Description |
+|------|-------------|
+| `scripts/training/convert_to_qwen_chat.py` | Alpaca → Qwen Chat格式转换 |
+| `configs/training/qwen3_or_debug_lora.yaml` | LLaMA-Factory训练配置 |
+| `configs/training/ds_config_zero2.json` | DeepSpeed ZeRO-2配置 |
+| `configs/training/dataset_info.json` | 数据集注册 |
+
+### Converted Data
+
+| File | Samples | Description |
+|------|---------|-------------|
+| `sft_qwen_chat.train.jsonl` | 696 | GPT-5.2-chat训练集 |
+| `sft_qwen_chat.val.jsonl` | 78 | 验证集 |
+| `sft_combined.jsonl` | 5,216 | 全部数据 (GPT + Heuristic) |
+
+### Training Command (VM)
+```bash
+# Install dependencies
+pip install llamafactory deepspeed
+
+# Train on 2×A800
+CUDA_VISIBLE_DEVICES=0,1 llamafactory-cli train configs/training/qwen3_or_debug_lora.yaml
+```
 
 ---
 
-*Related: [05_TRAINING.md](../plan/modules/05_TRAINING.md)*
+## Next Steps
+
+1. Transfer to VM with A800 GPUs
+2. Run SFT training (~30 minutes)
+3. Evaluate fine-tuned model on OR-Debug-Bench
+4. Proceed to GRPO/RLVR training
+
+---
+
+*Related: [05_TRAINING.md](../plan/modules/05_TRAINING.md), [sft_research.md](../research/sft_research.md)*

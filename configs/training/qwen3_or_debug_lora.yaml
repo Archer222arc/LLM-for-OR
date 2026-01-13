@@ -1,0 +1,75 @@
+# =============================================================================
+# Qwen3-8B LoRA Fine-tuning Configuration for OR-Debug-Bench
+# =============================================================================
+# Framework: LLaMA-Factory
+# Research: docs/research/sft_research.md
+# Hardware: 2x A800 80GB (160GB total)
+# Expected training time: 25-40 minutes
+#
+# Usage:
+#   CUDA_VISIBLE_DEVICES=0,1 llamafactory-cli train configs/training/qwen3_or_debug_lora.yaml
+#
+# Dry run (test config):
+#   llamafactory-cli train configs/training/qwen3_or_debug_lora.yaml --dry_run
+# =============================================================================
+
+# Model
+model_name_or_path: Qwen/Qwen3-8B-Instruct
+template: qwen3                    # Enables thinking mode with <think> tags
+trust_remote_code: true
+
+# Fine-tuning type
+finetuning_type: lora
+
+# LoRA Configuration (from research: rank 32 optimal for 8B + 5K samples)
+lora_rank: 32
+lora_alpha: 64                     # 2x rank
+lora_target: all                   # All 7 linear layers: q,k,v,o_proj + gate,up,down_proj
+lora_dropout: 0.05
+
+# Dataset
+dataset: or_debug_sft_train        # Train split (696 samples from GPT-5.2-chat)
+eval_dataset: or_debug_sft_val     # Val split (78 samples)
+dataset_dir: configs/training      # Directory containing dataset_info.json
+cutoff_len: 650                    # Input ~500 + Output ~150
+
+# Training hyperparameters
+num_train_epochs: 3
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 4     # Effective batch size = 4 * 4 * 2 GPUs = 32
+learning_rate: 2.0e-4
+lr_scheduler_type: cosine
+warmup_ratio: 0.05
+weight_decay: 0.01
+max_grad_norm: 1.0
+
+# Precision and Memory
+bf16: true
+flash_attn: fa2                    # Flash Attention 2
+gradient_checkpointing: true
+deepspeed: configs/training/ds_config_zero2.json
+
+# Output
+output_dir: outputs/sft/qwen3_or_debug
+overwrite_output_dir: true
+
+# Logging
+logging_steps: 10
+report_to: none                    # Set to "wandb" for W&B logging
+
+# Checkpointing
+save_strategy: steps
+save_steps: 100
+save_total_limit: 3
+
+# Evaluation
+eval_strategy: steps
+eval_steps: 100
+per_device_eval_batch_size: 4
+
+# Reproducibility
+seed: 42
+data_seed: 42
+
+# Disable native thinking mode (we provide custom <think> tags)
+# Note: Applied via tokenizer.apply_chat_template(enable_thinking=False)
