@@ -3,40 +3,62 @@
 SFT Data Collection Script for OR-Debug-Bench.
 
 Collects successful debugging trajectories from strong models (teacher models)
-for supervised fine-tuning of smaller models.
+for supervised fine-tuning of smaller models (e.g., Qwen3-8B).
 
 Research Direction: Direction A (OR-Debug-Bench)
 Documentation: docs/plan/modules/05_TRAINING.md
 
+Key Components:
+    - collect_trajectory: Run agent on problem, extract successful trajectory
+    - format_state_for_sft: Convert DebugState to SFT input format
+    - format_action_for_sft: Convert Action to SFT output with <think> tags
+    - save_result_incremental: Thread-safe JSON append with file locking
+
+Features:
+    - Parallel collection with --workers N (ThreadPoolExecutor)
+    - Incremental by default (auto-resume if output file exists)
+    - Use --overwrite to start fresh
+    - Each result saved immediately (fcntl file locking)
+
+Output Format:
+    {
+        "instruction": "Debug the infeasible optimization model...",
+        "input": "## Problem\\nID: ...\\n## IIS\\n...",
+        "output": "<think>\\nStep N: reasoning...\\n</think>\\n\\nAction: ...",
+        "metadata": {"problem_id": ..., "error_type": ..., "steps": ...}
+    }
+
 Usage:
-    # Collect from HeuristicAgent (as baseline)
-    python scripts/training/collect_sft_data.py \
-        --agent heuristic \
-        --dataset data/benchmarks/or_debug_bench_full \
+    # Collect from HeuristicAgent (baseline, fast)
+    python scripts/training/collect_sft_data.py \\
+        --agent heuristic \\
+        --dataset data/benchmarks/or_debug_bench_full \\
         --output data/training/sft_heuristic.json
 
-    # Collect from LLM (requires API)
-    python scripts/training/collect_sft_data.py \
-        --model gpt-4.1 \
-        --dataset data/benchmarks/or_debug_bench_full \
-        --output data/training/sft_gpt4.json \
-        --max_steps 5
+    # Collect from LLM with parallelism (auto-resumes if file exists)
+    python scripts/training/collect_sft_data.py \\
+        --agent llm \\
+        --model gpt-5.2-chat \\
+        --dataset data/benchmarks/or_debug_bench_full \\
+        --output data/training/sft_gpt52chat.json \\
+        --max_steps 5 \\
+        --workers 4
 
-Example SFT data format:
-    {
-        "instruction": "Debug the infeasible optimization model.",
-        "input": "Model: [code]\\nStatus: INFEASIBLE\\nIIS: [c1, c2]",
-        "output": "<think>\\n1. Analysis...\\n</think>\\n\\nAction: DROP_CONSTRAINT c1"
-    }
+    # Overwrite existing file
+    python scripts/training/collect_sft_data.py \\
+        --agent llm --model gpt-5.2-chat ... --overwrite
 """
 
 import argparse
+import fcntl
 import json
 import os
 import sys
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent
@@ -48,7 +70,7 @@ from src.environments import SolverDebugEnv, DebugState, Action
 from src.evaluation import BenchmarkProblem, EpisodeResult
 
 
-def load_dataset(dataset_path: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
+def load_dataset(dataset_path: str, limit: Optional[int] = None, offset: int = 0) -> Tuple[List[Dict[str, Any]], Path]:
     """Load dataset and return problem metadata."""
     dataset_path = Path(dataset_path)
     if dataset_path.is_dir():
@@ -60,6 +82,12 @@ def load_dataset(dataset_path: str, limit: Optional[int] = None) -> List[Dict[st
         dataset = json.load(f)
 
     problems = dataset.get('problems', [])
+
+    # Apply offset first
+    if offset > 0:
+        problems = problems[offset:]
+
+    # Then apply limit
     if limit:
         problems = problems[:limit]
 
@@ -87,16 +115,7 @@ def create_agent(agent_type: str, model: Optional[str] = None) -> Any:
 
 
 def format_state_for_sft(state: DebugState, problem_meta: Dict[str, Any]) -> str:
-    """
-    Format state as input for SFT.
-
-    Args:
-        state: Current environment state
-        problem_meta: Problem metadata from dataset
-
-    Returns:
-        Formatted input string
-    """
+    """Format state as input for SFT."""
     lines = [
         f"## Problem",
         f"ID: {problem_meta.get('problem_id', 'unknown')}",
@@ -131,19 +150,7 @@ def format_action_for_sft(
     next_state: DebugState,
     step: int,
 ) -> str:
-    """
-    Format action and reasoning as output for SFT.
-
-    Args:
-        action: Action taken
-        state: State before action
-        next_state: State after action
-        step: Step number
-
-    Returns:
-        Formatted output string with reasoning
-    """
-    # Generate reasoning based on action
+    """Format action and reasoning as output for SFT."""
     reasoning_lines = []
 
     if action.action_type.value == 'get_iis':
@@ -170,10 +177,8 @@ def format_action_for_sft(
     else:
         reasoning_lines.append(f"Step {step}: Taking action {action.action_type.value}")
 
-    # Format output
     reasoning = "\n".join(reasoning_lines)
 
-    # Format action string
     action_str = action.action_type.value.upper()
     if action.target:
         if action.value is not None:
@@ -182,7 +187,6 @@ def format_action_for_sft(
             action_str = f"{action_str}({action.target})"
 
     output = f"<think>\n{reasoning}\n</think>\n\nAction: {action_str}"
-
     return output
 
 
@@ -192,19 +196,7 @@ def collect_trajectory(
     agent: Any,
     max_steps: int = 5,
 ) -> Optional[Dict[str, Any]]:
-    """
-    Collect a single successful trajectory.
-
-    Args:
-        problem_meta: Problem metadata
-        dataset_dir: Dataset directory path
-        agent: Agent to use
-        max_steps: Maximum steps for success
-
-    Returns:
-        SFT data dict if successful, None otherwise
-    """
-    # Load model
+    """Collect a single successful trajectory."""
     model_path = Path(problem_meta['model_file'])
     if not model_path.is_absolute():
         model_path = dataset_dir / model_path
@@ -217,14 +209,12 @@ def collect_trajectory(
         env = SolverDebugEnv(
             solver,
             problem_nl=problem_meta.get('problem_nl', ''),
-            max_steps=max_steps + 5  # Allow some buffer
+            max_steps=max_steps + 5
         )
 
-        # Reset
         state, _ = env.reset()
         agent.reset()
 
-        # Collect trajectory
         trajectory = []
         step = 0
 
@@ -240,21 +230,17 @@ def collect_trajectory(
             })
 
             if next_state.is_optimal():
-                # Success!
                 break
 
             state = next_state
             step += 1
 
-        # Check if successful within max_steps
         if not trajectory or not trajectory[-1]['next_state'].is_optimal():
             return None
 
         if len(trajectory) > max_steps:
             return None
 
-        # Format as SFT data
-        # For now, we'll format the final action that led to success
         final_step = trajectory[-1]
         input_text = format_state_for_sft(final_step['state'], problem_meta)
         output_text = format_action_for_sft(
@@ -278,8 +264,47 @@ def collect_trajectory(
         }
 
     except Exception as e:
-        print(f"Error processing {problem_meta.get('problem_id')}: {e}")
+        # Silently fail for individual problems
         return None
+
+
+def init_output_file(output_path: Path, metadata: Dict[str, Any]):
+    """Initialize output JSON file with metadata."""
+    output = {
+        'metadata': metadata,
+        'data': [],
+    }
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(output, f, indent=2, ensure_ascii=False)
+
+
+def save_result_incremental(result: Dict[str, Any], output_path: Path):
+    """Thread-safe incremental save to JSON file."""
+    with open(output_path, 'r+', encoding='utf-8') as f:
+        fcntl.flock(f, fcntl.LOCK_EX)
+        try:
+            data = json.load(f)
+            data['data'].append(result)
+            # Update counts in metadata
+            data['metadata']['success_count'] = len(data['data'])
+            f.seek(0)
+            json.dump(data, f, indent=2, ensure_ascii=False)
+            f.truncate()
+        finally:
+            fcntl.flock(f, fcntl.LOCK_UN)
+
+
+def load_completed_ids(output_path: Path) -> set:
+    """Load already completed problem IDs from output file."""
+    if not output_path.exists():
+        return set()
+    try:
+        with open(output_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return {d['metadata']['problem_id'] for d in data.get('data', [])}
+    except (json.JSONDecodeError, KeyError):
+        return set()
 
 
 def main():
@@ -288,108 +313,123 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
-    parser.add_argument(
-        '--dataset',
-        type=str,
-        required=True,
-        help='Path to dataset directory'
-    )
-    parser.add_argument(
-        '--output',
-        type=str,
-        required=True,
-        help='Output JSON file path'
-    )
-    parser.add_argument(
-        '--agent',
-        type=str,
-        default='heuristic',
-        choices=['heuristic', 'greedy', 'llm'],
-        help='Agent type to use'
-    )
-    parser.add_argument(
-        '--model',
-        type=str,
-        help='LLM model name (required if agent=llm)'
-    )
-    parser.add_argument(
-        '--max_steps',
-        type=int,
-        default=5,
-        help='Maximum steps for successful trajectory'
-    )
-    parser.add_argument(
-        '--limit',
-        type=int,
-        help='Limit number of problems'
-    )
-    parser.add_argument(
-        '--quiet',
-        action='store_true',
-        help='Reduce output'
-    )
+    parser.add_argument('--dataset', type=str, required=True, help='Path to dataset directory')
+    parser.add_argument('--output', type=str, required=True, help='Output JSON file path')
+    parser.add_argument('--agent', type=str, default='heuristic', choices=['heuristic', 'greedy', 'llm'])
+    parser.add_argument('--model', type=str, help='LLM model name (required if agent=llm)')
+    parser.add_argument('--max_steps', type=int, default=5, help='Maximum steps for successful trajectory')
+    parser.add_argument('--limit', type=int, help='Limit number of problems')
+    parser.add_argument('--offset', type=int, default=0, help='Skip first N problems')
+    parser.add_argument('--workers', type=int, default=1, help='Number of parallel workers')
+    parser.add_argument('--overwrite', action='store_true', help='Overwrite existing output file (default: incremental)')
+    parser.add_argument('--quiet', action='store_true', help='Reduce output')
 
     args = parser.parse_args()
+    output_path = Path(args.output)
 
     # Load dataset
-    problems, dataset_dir = load_dataset(args.dataset, limit=args.limit)
-    print(f"Loaded {len(problems)} problems from {args.dataset}")
+    problems, dataset_dir = load_dataset(args.dataset, limit=args.limit, offset=args.offset)
+    total_problems = len(problems)
+    print(f"Loaded {total_problems} problems from {args.dataset}")
 
-    # Create agent
-    agent = create_agent(args.agent, args.model)
-    print(f"Using agent: {agent.name}")
-
-    # Collect trajectories
-    sft_data = []
-    success_count = 0
-    fail_count = 0
-
-    for i, problem_meta in enumerate(problems):
-        if not args.quiet and (i + 1) % 100 == 0:
-            print(f"Progress: {i+1}/{len(problems)} (success={success_count}, fail={fail_count})")
-
-        result = collect_trajectory(
-            problem_meta,
-            dataset_dir,
-            agent,
-            max_steps=args.max_steps,
-        )
-
-        if result:
-            sft_data.append(result)
-            success_count += 1
+    # Incremental collection by default (resume if file exists)
+    completed_ids = set()
+    if output_path.exists() and not args.overwrite:
+        # Auto-resume: load completed IDs and skip them
+        completed_ids = load_completed_ids(output_path)
+        if completed_ids:
+            original_count = len(problems)
+            problems = [p for p in problems if p['problem_id'] not in completed_ids]
+            print(f"Auto-resume: {len(completed_ids)} completed, {len(problems)} remaining (of {original_count})")
+            if not problems:
+                print("All problems already completed!")
+                return 0
         else:
-            fail_count += 1
-
-    # Save results
-    output_path = Path(args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    output = {
-        'metadata': {
+            print(f"Output file exists but empty, continuing collection")
+    else:
+        # Initialize new output file (overwrite if --overwrite specified)
+        if output_path.exists() and args.overwrite:
+            print(f"Overwriting existing file: {output_path}")
+        init_output_file(output_path, {
             'created': datetime.now().isoformat(),
             'dataset': args.dataset,
             'agent': args.agent,
             'model': args.model,
             'max_steps': args.max_steps,
-            'total_problems': len(problems),
-            'success_count': success_count,
-            'fail_count': fail_count,
-            'success_rate': success_count / len(problems) if problems else 0,
-        },
-        'data': sft_data,
-    }
+            'total_problems': total_problems,
+            'success_count': 0,
+            'fail_count': 0,
+        })
 
-    with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(output, f, indent=2, ensure_ascii=False)
+    print(f"Using {args.workers} worker(s)")
 
+    # Thread-local storage for agents
+    thread_local = threading.local()
+
+    def get_agent():
+        if not hasattr(thread_local, 'agent'):
+            thread_local.agent = create_agent(args.agent, args.model)
+        return thread_local.agent
+
+    # Progress tracking
+    progress_lock = threading.Lock()
+    success_count = [0]
+    fail_count = [0]
+
+    def worker_task(problem_meta: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Worker function for parallel collection."""
+        agent = get_agent()
+        result = collect_trajectory(problem_meta, dataset_dir, agent, max_steps=args.max_steps)
+
+        with progress_lock:
+            if result:
+                success_count[0] += 1
+                save_result_incremental(result, output_path)
+            else:
+                fail_count[0] += 1
+
+            total = success_count[0] + fail_count[0]
+            if not args.quiet and total % 20 == 0:
+                print(f"Progress: {total}/{len(problems)} (success={success_count[0]}, fail={fail_count[0]})")
+
+        return result
+
+    # Run collection
+    if args.workers > 1:
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
+            futures = [executor.submit(worker_task, p) for p in problems]
+            for future in as_completed(futures):
+                try:
+                    future.result()
+                except Exception as e:
+                    if not args.quiet:
+                        print(f"Worker error: {e}")
+    else:
+        agent = create_agent(args.agent, args.model)
+        print(f"Using agent: {agent.name}")
+
+        for i, problem_meta in enumerate(problems):
+            result = collect_trajectory(problem_meta, dataset_dir, agent, max_steps=args.max_steps)
+
+            if result:
+                success_count[0] += 1
+                save_result_incremental(result, output_path)
+            else:
+                fail_count[0] += 1
+
+            if not args.quiet and (i + 1) % 100 == 0:
+                print(f"Progress: {i+1}/{len(problems)} (success={success_count[0]}, fail={fail_count[0]})")
+
+    # Final summary
     print(f"\n{'='*60}")
     print(f"SFT Data Collection Complete")
     print(f"{'='*60}")
-    print(f"Total problems:  {len(problems)}")
-    print(f"Successful:      {success_count} ({success_count/len(problems)*100:.1f}%)")
-    print(f"Failed:          {fail_count}")
-    print(f"Output saved to: {output_path}")
+    print(f"Problems processed: {len(problems)}")
+    print(f"Successful:         {success_count[0]} ({success_count[0]/len(problems)*100:.1f}%)" if problems else "N/A")
+    print(f"Failed:             {fail_count[0]}")
+    print(f"Output saved to:    {output_path}")
+    if completed_ids:
+        print(f"Total in file:      {len(completed_ids) + success_count[0]}")
     print(f"{'='*60}")
 
     return 0
