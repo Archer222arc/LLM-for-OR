@@ -7,12 +7,17 @@ Documentation: docs/plan/modules/05_TRAINING.md
 Key Components:
     - gurobi_reward_func: Main reward function for TRL GRPOTrainer
     - Composite reward: outcome + process + faithfulness
+    - Full Gurobi verification for accurate outcome reward
 
 Example:
     >>> from src.training.gurobi_rewards import gurobi_reward_func
     >>> trainer = GRPOTrainer(reward_funcs=gurobi_reward_func, ...)
+
+    # Enable full solver verification (slower but accurate)
+    >>> set_use_solver_verification(True)
 """
 
+import os
 import sys
 from pathlib import Path
 from typing import List, Optional, Dict, Any
@@ -25,6 +30,21 @@ sys.path.insert(0, str(project_root))
 from src.training.action_parser import ActionParser, ParsedAction, extract_diagnosis
 
 logger = logging.getLogger(__name__)
+
+# Global flag for solver verification mode
+_USE_SOLVER_VERIFICATION = False
+
+
+def set_use_solver_verification(enabled: bool):
+    """Enable/disable full Gurobi solver verification for outcome reward."""
+    global _USE_SOLVER_VERIFICATION
+    _USE_SOLVER_VERIFICATION = enabled
+    logger.info(f"Solver verification {'enabled' if enabled else 'disabled'}")
+
+
+def get_use_solver_verification() -> bool:
+    """Check if solver verification is enabled."""
+    return _USE_SOLVER_VERIFICATION
 
 
 # Reward configuration (matches RewardConfig in environments/reward.py)
@@ -158,34 +178,121 @@ def _compute_outcome_reward(
     """
     Compute outcome reward using Gurobi solver verification.
 
-    For full verification, this would:
-    1. Load the MIP model
-    2. Apply the action
-    3. Re-solve and check status
-
-    Currently uses a simplified heuristic based on action quality.
+    Two modes:
+    1. Full verification (USE_SOLVER_VERIFICATION=True):
+       - Load MIP model, apply action, re-solve
+       - Return +100 for OPTIMAL, -50 for INFEASIBLE
+    2. Heuristic mode (USE_SOLVER_VERIFICATION=False):
+       - Quick estimate based on action type
+       - Used for fast iteration during development
     """
-    # Simplified outcome estimation without full Gurobi execution
-    # (Full execution is expensive during RL training)
+    if _USE_SOLVER_VERIFICATION and model_file:
+        return _compute_outcome_reward_with_solver(parsed, model_file)
+    else:
+        return _compute_outcome_reward_heuristic(parsed)
+
+
+def _compute_outcome_reward_with_solver(
+    parsed: ParsedAction,
+    model_file: str
+) -> float:
+    """
+    Full Gurobi verification for accurate outcome reward.
+
+    This is the core implementation for Novelty 3 (Solver as RLVR Oracle).
+    """
+    try:
+        import gurobipy as gp
+    except ImportError:
+        logger.warning("Gurobi not available, falling back to heuristic")
+        return _compute_outcome_reward_heuristic(parsed)
+
+    if not os.path.exists(model_file):
+        logger.warning(f"Model file not found: {model_file}")
+        return _compute_outcome_reward_heuristic(parsed)
 
     action_type = parsed.action_type
 
+    # Only verify repair actions (RELAX_CONSTRAINT, DROP_CONSTRAINT)
+    if action_type not in ["RELAX_CONSTRAINT", "DROP_CONSTRAINT"]:
+        return _compute_outcome_reward_heuristic(parsed)
+
+    try:
+        # 1. Load model with suppressed output
+        with gp.Env(empty=True) as env:
+            env.setParam("OutputFlag", 0)
+            env.setParam("LogToConsole", 0)
+            env.start()
+            m = gp.read(model_file, env)
+
+        # 2. Apply action
+        if action_type == "RELAX_CONSTRAINT":
+            constr = m.getConstrByName(parsed.target)
+            if constr is None:
+                logger.debug(f"Constraint not found: {parsed.target}")
+                return REWARD_CONFIG["failure_reward"]
+            # Relax by delta (default 1.0 if not specified)
+            delta = parsed.delta if parsed.delta else 1.0
+            constr.RHS += delta
+
+        elif action_type == "DROP_CONSTRAINT":
+            constr = m.getConstrByName(parsed.target)
+            if constr is None:
+                logger.debug(f"Constraint not found: {parsed.target}")
+                return REWARD_CONFIG["failure_reward"]
+            m.remove(constr)
+
+        # 3. Re-solve
+        m.update()
+        m.setParam("TimeLimit", 10)  # 10 second timeout
+        m.optimize()
+
+        # 4. Check status and return appropriate reward
+        if m.status == gp.GRB.OPTIMAL:
+            logger.debug(f"Action led to OPTIMAL: {parsed.action_type}({parsed.target})")
+            return REWARD_CONFIG["success_reward"]  # +100
+        elif m.status == gp.GRB.INFEASIBLE:
+            logger.debug(f"Action still INFEASIBLE: {parsed.action_type}({parsed.target})")
+            return REWARD_CONFIG["failure_reward"]  # -50
+        elif m.status == gp.GRB.TIME_LIMIT:
+            logger.debug("Solver timeout, assuming progress made")
+            return 10.0  # Partial credit
+        else:
+            logger.debug(f"Unexpected status: {m.status}")
+            return 0.0
+
+    except gp.GurobiError as e:
+        logger.warning(f"Gurobi error: {e}")
+        return REWARD_CONFIG["syntax_error_reward"]
+    except Exception as e:
+        logger.warning(f"Error in solver verification: {e}")
+        return _compute_outcome_reward_heuristic(parsed)
+
+
+def _compute_outcome_reward_heuristic(parsed: ParsedAction) -> float:
+    """
+    Quick heuristic estimate for outcome reward (no solver execution).
+
+    Used when:
+    - Solver verification is disabled
+    - Model file is not available
+    - For fast development iteration
+    """
+    action_type = parsed.action_type
+
     if action_type == "SUBMIT":
-        # SUBMIT is terminal - reward depends on model state
-        # Without execution, assume moderate success
         return 0.0  # Neutral - actual outcome unknown
 
     elif action_type in ["RELAX_CONSTRAINT", "DROP_CONSTRAINT"]:
-        # Repair actions - potentially good progress
         if parsed.target:
             return 20.0  # Partial credit for valid repair action
-
-    elif action_type == "GET_IIS":
-        # Diagnosis action - small positive for gathering info
         return 5.0
 
+    elif action_type == "GET_IIS":
+        return 5.0  # Small positive for gathering info
+
     elif action_type in ["CHECK_SLACK", "RESET"]:
-        return 0.0  # Neutral
+        return 0.0
 
     return 0.0
 

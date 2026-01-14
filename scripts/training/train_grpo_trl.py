@@ -29,7 +29,11 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from trl import GRPOTrainer, GRPOConfig
 from peft import LoraConfig
 
-from src.training.gurobi_rewards import gurobi_reward_func
+from src.training.gurobi_rewards import (
+    gurobi_reward_func,
+    set_use_solver_verification,
+    get_use_solver_verification,
+)
 
 
 def parse_args():
@@ -66,8 +70,21 @@ def parse_args():
     parser.add_argument("--max_completion_length", type=int, default=512, help="Max completion tokens")
 
     # GRPO specific
-    parser.add_argument("--beta", type=float, default=0.0, help="KL penalty coefficient")
+    parser.add_argument("--beta", type=float, default=0.1, help="KL penalty coefficient (default: 0.1)")
     parser.add_argument("--scale_rewards", type=str, default="batch", help="Reward scaling method")
+    parser.add_argument(
+        "--temperature",
+        type=float,
+        default=0.7,
+        help="Sampling temperature for generation diversity (default: 0.7)"
+    )
+
+    # Solver verification
+    parser.add_argument(
+        "--use_solver_verification",
+        action="store_true",
+        help="Enable full Gurobi solver verification for accurate outcome reward"
+    )
 
     # LoRA config (for independent training from base model, use larger rank)
     parser.add_argument("--lora_r", type=int, default=16, help="LoRA rank (use 64 for base model)")
@@ -95,9 +112,18 @@ def main():
     print(f"Effective batch: {args.batch_size * args.gradient_accumulation}")
     print(f"Num generations: {args.num_generations}")
     print(f"Learning rate: {args.learning_rate}")
+    print(f"Temperature: {args.temperature}")
     print(f"Beta (KL): {args.beta}")
     print(f"LoRA rank: {args.lora_r}, alpha: {args.lora_alpha}")
+    print(f"Solver verification: {args.use_solver_verification}")
     print("=" * 60)
+
+    # Enable solver verification if requested
+    if args.use_solver_verification:
+        set_use_solver_verification(True)
+        print("\n[INFO] Full Gurobi solver verification ENABLED")
+        print("  - Outcome reward: +100 (OPTIMAL), -50 (INFEASIBLE)")
+        print("  - This provides accurate success/failure signals")
 
     # Check CUDA
     print(f"\nCUDA available: {torch.cuda.is_available()}")
@@ -132,6 +158,7 @@ def main():
         # GRPO settings
         num_generations=args.num_generations,
         max_completion_length=args.max_completion_length,
+        temperature=args.temperature,  # Sampling temperature for diversity
 
         # Learning
         learning_rate=args.learning_rate,
