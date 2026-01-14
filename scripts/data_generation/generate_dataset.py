@@ -6,22 +6,31 @@ Documentation: docs/directions/A_OR_Debug_Bench/A3_Data_Generation.md
 
 This script generates synthetic OR debugging datasets by:
 1. Creating simple feasible LP/MIP optimization models
-2. Using SaboteurAgent to inject controlled errors (Type A-D)
+2. Using SaboteurAgent to inject controlled errors (Type A-F)
 3. Saving models as MPS files and metadata as JSON
 4. Generating dataset statistics and validation reports
 
+Error Types:
+    - A-D: Standard errors (single-fix, IIS visible)
+    - E: Multi-Constraint Conflict (requires 2+ fixes)
+    - F: Hidden Dependency (root cause not in IIS)
+
 Usage:
-    # Generate 20 problems with all error types
+    # Generate 20 problems with standard error types
     python scripts/data_generation/generate_dataset.py --n_problems 20 --output data/synthetic/debug_bench_v1
 
-    # Generate specific error types
-    python scripts/data_generation/generate_dataset.py --error_types A,D --n_per_type 5
+    # Generate with hard problems (Type E/F)
+    python scripts/data_generation/generate_dataset.py --error_types A,B,C,D,E,F --n_problems 60
+
+    # Generate only hard problems
+    python scripts/data_generation/generate_dataset.py --error_types E,F --n_problems 20
 
     # Validate existing dataset
     python scripts/data_generation/generate_dataset.py --validate data/synthetic/debug_bench_v1/dataset.json
 
 Author: Ruicheng Ao
 Created: 2026-01-11
+Updated: 2026-01-14 (Added Type E/F support)
 """
 
 import argparse
@@ -300,14 +309,27 @@ def generate_problem_description(
         "A": "Constraint Direction Error",
         "B": "Variable Type Error",
         "C": "Logic Error (Missing Term)",
-        "D": "Conflicting Constraint"
+        "D": "Conflicting Constraint",
+        "E": "Multi-Constraint Conflict (requires 2+ fixes)",
+        "F": "Hidden Dependency (root cause not directly visible)"
     }
 
-    return (
-        f"Linear programming problem {problem_id} with {n_vars} variables "
-        f"and {n_constraints} constraints. Contains a {error_names.get(error_type, 'Unknown')} "
-        f"that makes the model infeasible."
-    )
+    error_name = error_names.get(error_type, 'Unknown')
+
+    # Type E/F are harder problems
+    if error_type in ["E", "F"]:
+        return (
+            f"Linear programming problem {problem_id} with {n_vars} variables "
+            f"and {n_constraints} constraints. Contains a {error_name} "
+            f"that makes the model infeasible. This is a challenging problem "
+            f"requiring multi-step reasoning to diagnose and fix."
+        )
+    else:
+        return (
+            f"Linear programming problem {problem_id} with {n_vars} variables "
+            f"and {n_constraints} constraints. Contains a {error_name} "
+            f"that makes the model infeasible."
+        )
 
 
 def generate_dataset(
@@ -568,7 +590,13 @@ def main():
         "--error_types",
         type=str,
         default="A,B,C,D",
-        help="Comma-separated error types (default: A,B,C,D)"
+        help="Comma-separated error types (default: A,B,C,D). Use A,B,C,D,E,F for all types including hard problems."
+    )
+
+    parser.add_argument(
+        "--include_hard",
+        action="store_true",
+        help="Include hard problem types (E: Multi-Constraint, F: Hidden Dependency)"
     )
 
     parser.add_argument(
@@ -623,6 +651,11 @@ def main():
 
     # 生成模式
     error_types = args.error_types.split(',')
+
+    # 如果指定include_hard，添加E和F类型
+    if args.include_hard and 'E' not in error_types:
+        error_types.extend(['E', 'F'])
+
     problem_types = args.problem_types.split(',')
 
     dataset = generate_dataset(

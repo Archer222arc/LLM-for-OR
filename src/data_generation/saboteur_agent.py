@@ -6,7 +6,13 @@ Documentation: docs/directions/A_OR_Debug_Bench/A3_Data_Generation.md
 
 Key Components:
     - SaboteurAgent: Main class for error injection
-    - Four error types: A (bound), B (variable), C (logic), D (conflict)
+    - Six error types:
+        - A (bound): Flip constraint direction
+        - B (variable): Change variable type
+        - C (logic): Remove/modify coefficients
+        - D (conflict): Add contradicting constraint
+        - E (multi-constraint): Requires 2+ fixes simultaneously
+        - F (hidden dependency): Root cause not directly in IIS
 
 Example:
     >>> from src.solvers import GurobiSolver
@@ -67,7 +73,7 @@ class SaboteurAgent:
         Inject a specific type of error.
 
         Args:
-            error_type: One of "A", "B", "C", "D"
+            error_type: One of "A", "B", "C", "D", "E", "F"
 
         Returns:
             InjectionResult with details of the injection
@@ -77,21 +83,29 @@ class SaboteurAgent:
             "B": self.inject_type_b,
             "C": self.inject_type_c,
             "D": self.inject_type_d,
+            "E": self.inject_type_e,
+            "F": self.inject_type_f,
         }
 
         if error_type not in type_map:
-            raise ValueError(f"Unknown error type: {error_type}. Must be A, B, C, or D")
+            raise ValueError(f"Unknown error type: {error_type}. Must be A, B, C, D, E, or F")
 
         return type_map[error_type]()
 
-    def inject_random_error(self) -> InjectionResult:
+    def inject_random_error(self, include_hard: bool = False) -> InjectionResult:
         """
         Inject a random error type.
+
+        Args:
+            include_hard: If True, include Type E and F (harder problems)
 
         Returns:
             InjectionResult with details of the injection
         """
-        error_type = random.choice(["A", "B", "C", "D"])
+        if include_hard:
+            error_type = random.choice(["A", "B", "C", "D", "E", "F"])
+        else:
+            error_type = random.choice(["A", "B", "C", "D"])
         return self.inject_error(error_type)
 
     def inject_error_robust(self, error_type: str) -> InjectionResult:
@@ -102,7 +116,7 @@ class SaboteurAgent:
         selection strategies (slack-based, sensitivity analysis, etc.)
 
         Args:
-            error_type: One of "A", "B", "C", "D"
+            error_type: One of "A", "B", "C", "D", "E", "F"
 
         Returns:
             InjectionResult with details of the injection
@@ -112,21 +126,29 @@ class SaboteurAgent:
             "B": self.inject_type_b_robust,
             "C": self.inject_type_c_robust,
             "D": self.inject_type_d_robust,
+            "E": self.inject_type_e_robust,
+            "F": self.inject_type_f_robust,
         }
 
         if error_type not in type_map:
-            raise ValueError(f"Unknown error type: {error_type}. Must be A, B, C, or D")
+            raise ValueError(f"Unknown error type: {error_type}. Must be A, B, C, D, E, or F")
 
         return type_map[error_type]()
 
-    def inject_random_error_robust(self) -> InjectionResult:
+    def inject_random_error_robust(self, include_hard: bool = False) -> InjectionResult:
         """
         Inject a random error type using robust methods.
+
+        Args:
+            include_hard: If True, include Type E and F (harder problems)
 
         Returns:
             InjectionResult with details of the injection
         """
-        error_type = random.choice(["A", "B", "C", "D"])
+        if include_hard:
+            error_type = random.choice(["A", "B", "C", "D", "E", "F"])
+        else:
+            error_type = random.choice(["A", "B", "C", "D"])
         return self.inject_error_robust(error_type)
 
     # =========================================================================
@@ -1141,6 +1163,332 @@ class SaboteurAgent:
                 "chain_vars": [v.VarName for v in chain_vars],
                 "chain_constrs": [c.ConstrName for c in chain_constrs],
                 "conflict_type": "chain"
+            },
+            difficulty=difficulty,
+            iis_size=iis_size,
+            iis_constraints=iis_constraints,
+            iis_bounds=iis_bounds,
+            original_objective=original_objective
+        )
+
+        self._injection_history.append(result)
+        return result
+
+    # =========================================================================
+    # Type E: Multi-Constraint Conflict (requires 2+ fixes)
+    # =========================================================================
+
+    def inject_type_e(self) -> InjectionResult:
+        """
+        Type E: Create multi-constraint conflict requiring 2+ fixes.
+
+        This creates a situation where fixing just one constraint is not enough.
+        Two or more constraints must be modified together to restore feasibility.
+
+        Strategy:
+        1. Create two tight constraints that share variables
+        2. Both constraints need relaxation - fixing one alone fails
+
+        Returns:
+            InjectionResult with injection details
+        """
+        return self.inject_type_e_robust()
+
+    def inject_type_e_robust(self) -> InjectionResult:
+        """
+        Type E Robust: Multi-constraint conflict with guaranteed 2+ fixes needed.
+
+        Creates interlocked constraints:
+        - Constraint E1: x + y <= small_value
+        - Constraint E2: x + y >= large_value
+        - Both must be fixed (can't satisfy both)
+
+        Returns:
+            InjectionResult with injection details
+        """
+        # Get original objective before modification
+        original_state = self._solver.solve()
+        original_objective = original_state.objective if original_state.status == "OPTIMAL" else None
+
+        if original_state.status != "OPTIMAL":
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_E,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "Original model not optimal"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Find two variables with non-zero optimal values
+        vars_with_value = []
+        for v in self._model.getVars():
+            try:
+                if abs(v.X) > 0.01:
+                    vars_with_value.append((v, v.X))
+            except gp.GurobiError:
+                pass
+
+        if len(vars_with_value) < 2:
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_E,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "Not enough variables with non-zero values"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Select two variables
+        var1, val1 = vars_with_value[0]
+        var2, val2 = vars_with_value[1]
+        sum_val = val1 + val2
+
+        # Create conflicting constraints:
+        # E1: var1 + var2 <= sum_val - margin (tight upper)
+        # E2: var1 + var2 >= sum_val + margin (tight lower)
+        # These two together are infeasible!
+        margin = max(1.0, abs(sum_val) * 0.1)
+
+        constr_e1_name = f"_multi_constr_upper_{var1.VarName}_{var2.VarName}"
+        constr_e2_name = f"_multi_constr_lower_{var1.VarName}_{var2.VarName}"
+
+        # Upper constraint: sum <= small_value
+        upper_rhs = sum_val - margin
+        constr_e1 = self._model.addConstr(
+            var1 + var2 <= upper_rhs,
+            name=constr_e1_name
+        )
+
+        # Lower constraint: sum >= large_value
+        lower_rhs = sum_val + margin
+        constr_e2 = self._model.addConstr(
+            var1 + var2 >= lower_rhs,
+            name=constr_e2_name
+        )
+
+        self._model.update()
+        state = self._solver.solve()
+
+        if state.status not in ["INFEASIBLE", "INF_OR_UNBD"]:
+            # Remove constraints and fail
+            self._model.remove(constr_e1)
+            self._model.remove(constr_e2)
+            self._model.update()
+
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_E,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status=state.status,
+                ground_truth_fix="",
+                metadata={"reason": "Constraints did not cause infeasibility"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Get IIS info
+        iis_constraints, iis_bounds, iis_size = self._compute_iis_info(self._model)
+        difficulty = Difficulty.HARD  # Type E is always hard
+
+        # Ground truth fix requires modifying BOTH constraints
+        fix = (
+            f"Remove BOTH constraints: {constr_e1_name} AND {constr_e2_name}. "
+            f"Fixing only one will not restore feasibility."
+        )
+
+        result = InjectionResult(
+            success=True,
+            error_type=ErrorType.TYPE_E,
+            target_name=f"{constr_e1_name},{constr_e2_name}",
+            original_value="No conflict",
+            modified_value=f"sum <= {upper_rhs} AND sum >= {lower_rhs}",
+            solver_status="INFEASIBLE",
+            ground_truth_fix=fix,
+            metadata={
+                "constraint_1": constr_e1_name,
+                "constraint_2": constr_e2_name,
+                "variables": [var1.VarName, var2.VarName],
+                "original_sum": sum_val,
+                "upper_rhs": upper_rhs,
+                "lower_rhs": lower_rhs,
+                "num_fixes_required": 2,
+            },
+            difficulty=difficulty,
+            iis_size=iis_size,
+            iis_constraints=iis_constraints,
+            iis_bounds=iis_bounds,
+            original_objective=original_objective
+        )
+
+        self._injection_history.append(result)
+        return result
+
+    # =========================================================================
+    # Type F: Hidden Dependency (root cause not directly in IIS)
+    # =========================================================================
+
+    def inject_type_f(self) -> InjectionResult:
+        """
+        Type F: Create hidden dependency where root cause is not in IIS.
+
+        The IIS shows symptoms but not the root cause. The model needs to
+        reason about WHY the IIS constraints conflict.
+
+        Strategy:
+        1. Create an auxiliary variable with a derived bound
+        2. Add constraint using auxiliary var that causes conflict
+        3. The IIS shows the derived constraint, not the root cause bound
+
+        Returns:
+            InjectionResult with injection details
+        """
+        return self.inject_type_f_robust()
+
+    def inject_type_f_robust(self) -> InjectionResult:
+        """
+        Type F Robust: Hidden dependency with indirect causation.
+
+        Creates structure:
+        - aux_var defined by: aux = expr(original_vars)
+        - root_cause: aux >= large_value (the actual error)
+        - symptom: Uses aux in way that conflicts with original constraints
+        - IIS shows symptom constraints, not the root cause
+
+        Returns:
+            InjectionResult with injection details
+        """
+        # Get original objective before modification
+        original_state = self._solver.solve()
+        original_objective = original_state.objective if original_state.status == "OPTIMAL" else None
+
+        if original_state.status != "OPTIMAL":
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_F,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "Original model not optimal"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Find a variable with bounded optimal value
+        target_var = None
+        target_val = None
+        for v in self._model.getVars():
+            try:
+                if 0.1 < abs(v.X) < 100:  # Reasonable range
+                    target_var = v
+                    target_val = v.X
+                    break
+            except gp.GurobiError:
+                pass
+
+        if target_var is None:
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_F,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "No suitable variable found"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Create auxiliary variable
+        aux_var_name = f"_hidden_aux_{target_var.VarName}"
+        aux_var = self._model.addVar(lb=-gp.GRB.INFINITY, ub=gp.GRB.INFINITY, name=aux_var_name)
+        self._model.update()
+
+        # Define aux_var = target_var (linking constraint - this shows in IIS)
+        linking_name = f"_hidden_link_{target_var.VarName}"
+        linking_constr = self._model.addConstr(
+            aux_var == target_var,
+            name=linking_name
+        )
+
+        # ROOT CAUSE: Set impossible bound on aux_var
+        # If target_val = 5, require aux >= 100 (impossible since aux == target)
+        impossible_bound = abs(target_val) * 20 + 50
+        root_cause_name = f"_hidden_root_{target_var.VarName}"
+        root_cause_constr = self._model.addConstr(
+            aux_var >= impossible_bound,
+            name=root_cause_name
+        )
+
+        self._model.update()
+        state = self._solver.solve()
+
+        if state.status not in ["INFEASIBLE", "INF_OR_UNBD"]:
+            # Clean up and fail
+            self._model.remove(linking_constr)
+            self._model.remove(root_cause_constr)
+            self._model.remove(aux_var)
+            self._model.update()
+
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_F,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status=state.status,
+                ground_truth_fix="",
+                metadata={"reason": "Hidden dependency did not cause infeasibility"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Get IIS info
+        iis_constraints, iis_bounds, iis_size = self._compute_iis_info(self._model)
+        difficulty = Difficulty.HARD  # Type F is always hard
+
+        # The IIS will likely show the linking constraint and original bounds
+        # but the ROOT CAUSE is the impossible bound on aux_var
+        fix = (
+            f"The root cause is constraint '{root_cause_name}' which requires "
+            f"{aux_var_name} >= {impossible_bound}, but {aux_var_name} is linked to "
+            f"{target_var.VarName} (optimal value ~{target_val:.2f}). "
+            f"Remove or relax '{root_cause_name}'."
+        )
+
+        # Check if root cause is visible in IIS
+        root_cause_in_iis = root_cause_name in iis_constraints
+
+        result = InjectionResult(
+            success=True,
+            error_type=ErrorType.TYPE_F,
+            target_name=root_cause_name,
+            original_value=f"{target_var.VarName} = {target_val:.2f}",
+            modified_value=f"{aux_var_name} >= {impossible_bound}",
+            solver_status="INFEASIBLE",
+            ground_truth_fix=fix,
+            metadata={
+                "root_cause_constraint": root_cause_name,
+                "linking_constraint": linking_name,
+                "auxiliary_variable": aux_var_name,
+                "original_variable": target_var.VarName,
+                "original_value": target_val,
+                "impossible_bound": impossible_bound,
+                "root_cause_in_iis": root_cause_in_iis,
+                "reasoning_required": not root_cause_in_iis,
             },
             difficulty=difficulty,
             iis_size=iis_size,

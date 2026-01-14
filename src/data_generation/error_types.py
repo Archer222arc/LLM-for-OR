@@ -34,12 +34,16 @@ class ErrorType(Enum):
     Type B: Variable Error - Changing variable type (INTEGER ↔ CONTINUOUS)
     Type C: Logic Error - Removing terms from constraint expressions
     Type D: Conflict Error - Adding contradicting constraints
+    Type E: Multi-Constraint Conflict - Requires fixing 2+ constraints
+    Type F: Hidden Dependency - Root cause not directly in IIS
     """
 
     TYPE_A = "A"  # Bound Error: Flip constraint sense
     TYPE_B = "B"  # Variable Error: Change variable type
     TYPE_C = "C"  # Logic Error: Remove expression term
     TYPE_D = "D"  # Conflict Error: Add contradicting constraint
+    TYPE_E = "E"  # Multi-Constraint: Multiple fixes required
+    TYPE_F = "F"  # Hidden Dependency: Indirect root cause
 
     @property
     def description(self) -> str:
@@ -49,6 +53,8 @@ class ErrorType(Enum):
             "B": "Variable Error - Variable type modification (INTEGER ↔ CONTINUOUS)",
             "C": "Logic Error - Expression term removal",
             "D": "Conflict Error - Contradicting constraint addition",
+            "E": "Multi-Constraint Conflict - Requires fixing 2+ constraints",
+            "F": "Hidden Dependency - Root cause not directly visible in IIS",
         }
         return descriptions[self.value]
 
