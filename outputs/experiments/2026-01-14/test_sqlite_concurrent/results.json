@@ -1,0 +1,276 @@
+{
+  "timestamp": "2026-01-14T07:38:54.399935",
+  "database": "outputs/experiments/2026-01-14/test_sqlite_concurrent/results.db",
+  "models": {
+    "qwen3_or_debug_merged": {
+      "summary": {
+        "model_name": "qwen3_or_debug_merged",
+        "n_episodes": 10,
+        "recovery_rate": 1.0,
+        "avg_steps": 3.7,
+        "median_steps": 1.0,
+        "avg_reward": 199.8,
+        "step_efficiency": 54.0,
+        "success_avg_steps": 3.7,
+        "rr_at_5": 0.9,
+        "rr_at_10": 0.9,
+        "rr_at_15": 0.9,
+        "rr_at_20": 1.0,
+        "optimality_preservation": null,
+        "diagnosis_accuracy": 0.5833333333333334,
+        "faithfulness": 0.5833333333333334,
+        "diagnosis_precision": 0.8235294117647058,
+        "agent_config": "{\"model\": \"/data/qwen3_or_debug_merged\", \"model_name\": \"qwen3_or_debug_merged\", \"dataset\": \"data/benchmarks/or_debug_bench_full\", \"limit\": 10, \"temperature\": 0.0, \"backend\": \"sglang\", \"sglang_url\": \"http://localhost:30000/v1\", \"concurrency\": 4, \"timestamp\": \"2026-01-14T07:38:04.402163\"}",
+        "elapsed_seconds": 49.933459997177124,
+        "timestamp": "2026-01-14T07:38:54.399736",
+        "avg_tokens": 3287.5,
+        "avg_input_tokens": 2216.7,
+        "avg_output_tokens": 1070.8,
+        "avg_reasoning_tokens": 0.0,
+        "tokens_per_step": 888.5135135135135,
+        "token_efficiency": 0.3041825095057034,
+        "avg_api_calls": 0.0,
+        "avg_wall_clock": 8.304442977905273
+      },
+      "per_problem_results": [
+        {
+          "problem_id": "lp_typeA_002",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 1,
+          "total_reward": 169.0,
+          "diagnosed_constraints": [
+            "c_key_lower"
+          ],
+          "ground_truth_iis": [
+            "c3",
+            "c4",
+            "c_key_lower"
+          ],
+          "original_objective": 29.149671940865357,
+          "recovered_objective": null,
+          "total_tokens": 977,
+          "total_input_tokens": 563,
+          "total_output_tokens": 414,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 3.3747079372406006
+        },
+        {
+          "problem_id": "lp_typeA_003",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 5,
+          "total_reward": 205.0,
+          "diagnosed_constraints": [
+            "c_key_lower",
+            "c6",
+            "c_key_lower"
+          ],
+          "ground_truth_iis": [
+            "c6",
+            "c_key_lower"
+          ],
+          "original_objective": 57.41374073931735,
+          "recovered_objective": null,
+          "total_tokens": 4452,
+          "total_input_tokens": 3068,
+          "total_output_tokens": 1384,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 11.01695966720581
+        },
+        {
+          "problem_id": "lp_typeA_005",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 19,
+          "total_reward": 216.0,
+          "diagnosed_constraints": [
+            "c_key_upper",
+            "c1",
+            "c_key_lower",
+            "c_key_upper",
+            "c_key_lower",
+            "c_key_upper",
+            "c3",
+            "c3",
+            "c_key_upper",
+            "c2"
+          ],
+          "ground_truth_iis": [
+            "c0",
+            "c1",
+            "c_key_upper"
+          ],
+          "original_objective": 26.92875036608909,
+          "recovered_objective": null,
+          "total_tokens": 17748,
+          "total_input_tokens": 11488,
+          "total_output_tokens": 6260,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 47.661954164505005
+        },
+        {
+          "problem_id": "lp_typeA_006",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 1,
+          "total_reward": 209.0,
+          "diagnosed_constraints": [
+            "c_key_lower"
+          ],
+          "ground_truth_iis": [
+            "c3",
+            "c_key_lower"
+          ],
+          "original_objective": 64.23460189863226,
+          "recovered_objective": null,
+          "total_tokens": 903,
+          "total_input_tokens": 568,
+          "total_output_tokens": 335,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 2.608741044998169
+        },
+        {
+          "problem_id": "lp_typeA_009",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 1,
+          "total_reward": 179.0,
+          "diagnosed_constraints": [
+            "c_key_lower"
+          ],
+          "ground_truth_iis": [
+            "c1",
+            "c_key_lower"
+          ],
+          "original_objective": 41.53232132587267,
+          "recovered_objective": null,
+          "total_tokens": 830,
+          "total_input_tokens": 551,
+          "total_output_tokens": 279,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 2.209435224533081
+        },
+        {
+          "problem_id": "lp_typeA_010",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 1,
+          "total_reward": 209.0,
+          "diagnosed_constraints": [
+            "c_key_lower"
+          ],
+          "ground_truth_iis": [
+            "c4",
+            "c_key_lower"
+          ],
+          "original_objective": 52.214981692371644,
+          "recovered_objective": null,
+          "total_tokens": 659,
+          "total_input_tokens": 576,
+          "total_output_tokens": 83,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 0.6729366779327393
+        },
+        {
+          "problem_id": "lp_typeA_011",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 4,
+          "total_reward": 191.0,
+          "diagnosed_constraints": [
+            "c_key_lower",
+            "c4"
+          ],
+          "ground_truth_iis": [
+            "c4",
+            "c_key_lower"
+          ],
+          "original_objective": 48.85478529702524,
+          "recovered_objective": null,
+          "total_tokens": 3216,
+          "total_input_tokens": 2377,
+          "total_output_tokens": 839,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 6.42966365814209
+        },
+        {
+          "problem_id": "mip_typeA_000",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 3,
+          "total_reward": 202.0,
+          "diagnosed_constraints": [
+            "c_key_upper",
+            "c1"
+          ],
+          "ground_truth_iis": [
+            "c1",
+            "c2",
+            "c_key_upper"
+          ],
+          "original_objective": 59.77750230362778,
+          "recovered_objective": null,
+          "total_tokens": 2616,
+          "total_input_tokens": 1812,
+          "total_output_tokens": 804,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 6.467041492462158
+        },
+        {
+          "problem_id": "mip_typeA_004",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 1,
+          "total_reward": 209.0,
+          "diagnosed_constraints": [
+            "c9"
+          ],
+          "ground_truth_iis": [
+            "c9",
+            "c_key_lower"
+          ],
+          "original_objective": 62.92457481240032,
+          "recovered_objective": null,
+          "total_tokens": 809,
+          "total_input_tokens": 588,
+          "total_output_tokens": 221,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 1.8629040718078613
+        },
+        {
+          "problem_id": "mip_typeA_008",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 1,
+          "total_reward": 209.0,
+          "diagnosed_constraints": [
+            "c_key_upper"
+          ],
+          "ground_truth_iis": [
+            "c0",
+            "c1",
+            "c_key_upper"
+          ],
+          "original_objective": 59.56488878763827,
+          "recovered_objective": null,
+          "total_tokens": 665,
+          "total_input_tokens": 576,
+          "total_output_tokens": 89,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 0.7400858402252197
+        }
+      ]
+    }
+  }
+}

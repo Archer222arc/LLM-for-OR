@@ -1,0 +1,97 @@
+{
+  "model": "/data/qwen3_grpo_independent_merged",
+  "model_name": "qwen3_grpo_independent_merged",
+  "dataset": "data/benchmarks/or_debug_bench_full",
+  "results": [
+    {
+      "problem_id": "mip_typeA_000",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 12,
+      "total_reward": 193.0,
+      "success_at_step": 12,
+      "diagnosed_constraints": [
+        "c_key_upper",
+        "c_key_upper"
+      ],
+      "ground_truth_iis": [
+        "c1",
+        "c2",
+        "c_key_upper"
+      ],
+      "total_tokens": 13629,
+      "wall_clock_seconds": 215.25109338760376
+    },
+    {
+      "problem_id": "lp_typeA_002",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 14,
+      "total_reward": 156.0,
+      "success_at_step": 14,
+      "diagnosed_constraints": [
+        "c_key_lower"
+      ],
+      "ground_truth_iis": [
+        "c3",
+        "c4",
+        "c_key_lower"
+      ],
+      "total_tokens": 15767,
+      "wall_clock_seconds": 256.21232509613037
+    },
+    {
+      "problem_id": "lp_typeA_003",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 3,
+      "total_reward": 197.0,
+      "success_at_step": 3,
+      "diagnosed_constraints": [
+        "c_key_lower"
+      ],
+      "ground_truth_iis": [
+        "c6",
+        "c_key_lower"
+      ],
+      "total_tokens": 3266,
+      "wall_clock_seconds": 53.66086268424988
+    },
+    {
+      "problem_id": "mip_typeA_004",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 11,
+      "total_reward": 199.0,
+      "success_at_step": 11,
+      "diagnosed_constraints": [
+        "c9"
+      ],
+      "ground_truth_iis": [
+        "c9",
+        "c_key_lower"
+      ],
+      "total_tokens": 12514,
+      "wall_clock_seconds": 198.9741108417511
+    },
+    {
+      "problem_id": "lp_typeA_005",
+      "success": false,
+      "final_status": "INFEASIBLE",
+      "steps": 20,
+      "total_reward": -60.0,
+      "success_at_step": null,
+      "diagnosed_constraints": [
+        "c_key_upper",
+        "c_key_upper"
+      ],
+      "ground_truth_iis": [
+        "c0",
+        "c1",
+        "c_key_upper"
+      ],
+      "total_tokens": 22121,
+      "wall_clock_seconds": 356.6511402130127
+    }
+  ]
+}

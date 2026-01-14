@@ -100,7 +100,6 @@ dmypy.json
 .LSOverride
 
 # Project specific
-outputs/
 logs/
 tmp/
 

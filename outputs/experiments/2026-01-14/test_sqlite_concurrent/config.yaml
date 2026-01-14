@@ -1,0 +1,9 @@
+backend: sglang
+concurrency: 4
+dataset: data/benchmarks/or_debug_bench_full
+limit: 10
+model: /data/qwen3_or_debug_merged
+model_name: qwen3_or_debug_merged
+sglang_url: http://localhost:30000/v1
+temperature: 0.0
+timestamp: '2026-01-14T07:38:04.402163'

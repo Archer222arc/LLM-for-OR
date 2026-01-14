@@ -1,0 +1,218 @@
+{
+  "model": "/data/qwen3_or_debug_merged",
+  "model_name": "qwen3_or_debug_merged",
+  "dataset": "/home/Archer/LLM-for-OR/data/benchmarks/or_debug_bench_full",
+  "num_problems": 10,
+  "elapsed_seconds": 344.18131375312805,
+  "summary": {
+    "n_episodes": 10,
+    "recovery_rate": 1.0,
+    "avg_steps": 2.6,
+    "median_steps": 1.0,
+    "avg_reward": 194.9,
+    "step_efficiency": 74.96153846153847,
+    "success_avg_steps": 2.6,
+    "rr_at_5": 0.9,
+    "rr_at_10": 1.0,
+    "rr_at_15": 1.0,
+    "rr_at_20": 1.0,
+    "diagnosis_accuracy": 0.5416666666666666,
+    "faithfulness": 0.5416666666666666,
+    "diagnosis_precision": 1.0,
+    "avg_tokens": 2307.9,
+    "avg_input_tokens": 1568.7,
+    "avg_output_tokens": 739.2,
+    "avg_reasoning_tokens": 0.0,
+    "tokens_per_step": 887.6538461538462,
+    "token_efficiency": 0.43329433684301744,
+    "avg_api_calls": 0.0,
+    "avg_wall_clock": 34.41777677536011,
+    "rr_at_5k_tokens": 0.9,
+    "rr_at_10k_tokens": 1.0,
+    "rr_at_20k_tokens": 1.0,
+    "rr_at_50k_tokens": 1.0
+  },
+  "results": [
+    {
+      "problem_id": "mip_typeA_000",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 1,
+      "total_reward": 199.0,
+      "success_at_step": 1,
+      "diagnosed_constraints": [
+        "c_key_upper"
+      ],
+      "ground_truth_iis": [
+        "c1",
+        "c2",
+        "c_key_upper"
+      ],
+      "total_tokens": 877,
+      "wall_clock_seconds": 14.03563404083252
+    },
+    {
+      "problem_id": "lp_typeA_002",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 5,
+      "total_reward": 175.0,
+      "success_at_step": 5,
+      "diagnosed_constraints": [
+        "c_key_lower",
+        "c3",
+        "c_key_lower"
+      ],
+      "ground_truth_iis": [
+        "c3",
+        "c4",
+        "c_key_lower"
+      ],
+      "total_tokens": 4192,
+      "wall_clock_seconds": 55.41316890716553
+    },
+    {
+      "problem_id": "lp_typeA_003",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 10,
+      "total_reward": 210.0,
+      "success_at_step": 10,
+      "diagnosed_constraints": [
+        "c_key_lower",
+        "c_key_lower",
+        "c6",
+        "c_key_lower",
+        "c_key_lower"
+      ],
+      "ground_truth_iis": [
+        "c6",
+        "c_key_lower"
+      ],
+      "total_tokens": 9542,
+      "wall_clock_seconds": 147.33153295516968
+    },
+    {
+      "problem_id": "mip_typeA_004",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 2,
+      "total_reward": 208.0,
+      "success_at_step": 2,
+      "diagnosed_constraints": [
+        "c_key_lower"
+      ],
+      "ground_truth_iis": [
+        "c9",
+        "c_key_lower"
+      ],
+      "total_tokens": 2114,
+      "wall_clock_seconds": 42.95318818092346
+    },
+    {
+      "problem_id": "lp_typeA_005",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 3,
+      "total_reward": 162.0,
+      "success_at_step": 3,
+      "diagnosed_constraints": [
+        "c_key_upper",
+        "c0"
+      ],
+      "ground_truth_iis": [
+        "c0",
+        "c1",
+        "c_key_upper"
+      ],
+      "total_tokens": 2462,
+      "wall_clock_seconds": 35.38759207725525
+    },
+    {
+      "problem_id": "lp_typeA_006",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 1,
+      "total_reward": 209.0,
+      "success_at_step": 1,
+      "diagnosed_constraints": [
+        "c_key_lower"
+      ],
+      "ground_truth_iis": [
+        "c3",
+        "c_key_lower"
+      ],
+      "total_tokens": 921,
+      "wall_clock_seconds": 16.398035049438477
+    },
+    {
+      "problem_id": "mip_typeA_008",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 1,
+      "total_reward": 209.0,
+      "success_at_step": 1,
+      "diagnosed_constraints": [
+        "c_key_upper"
+      ],
+      "ground_truth_iis": [
+        "c0",
+        "c1",
+        "c_key_upper"
+      ],
+      "total_tokens": 665,
+      "wall_clock_seconds": 4.160139083862305
+    },
+    {
+      "problem_id": "lp_typeA_009",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 1,
+      "total_reward": 179.0,
+      "success_at_step": 1,
+      "diagnosed_constraints": [
+        "c_key_lower"
+      ],
+      "ground_truth_iis": [
+        "c1",
+        "c_key_lower"
+      ],
+      "total_tokens": 842,
+      "wall_clock_seconds": 13.489112377166748
+    },
+    {
+      "problem_id": "lp_typeA_010",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 1,
+      "total_reward": 209.0,
+      "success_at_step": 1,
+      "diagnosed_constraints": [
+        "c_key_lower"
+      ],
+      "ground_truth_iis": [
+        "c4",
+        "c_key_lower"
+      ],
+      "total_tokens": 659,
+      "wall_clock_seconds": 3.8882362842559814
+    },
+    {
+      "problem_id": "lp_typeA_011",
+      "success": true,
+      "final_status": "OPTIMAL",
+      "steps": 1,
+      "total_reward": 189.0,
+      "success_at_step": 1,
+      "diagnosed_constraints": [
+        "c_key_lower"
+      ],
+      "ground_truth_iis": [
+        "c4",
+        "c_key_lower"
+      ],
+      "total_tokens": 805,
+      "wall_clock_seconds": 11.121128797531128
+    }
+  ]
+}

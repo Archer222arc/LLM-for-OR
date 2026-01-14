@@ -1,0 +1,634 @@
+/home/Archer/miniforge3/lib/python3.12/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+`torch_dtype` is deprecated! Use `dtype` instead!
+============================================================
+Local Model Evaluation on OR-Debug-Bench
+============================================================
+Model: /data/qwen3_or_debug_grpo_merged
+Dataset: data/benchmarks/or_debug_bench_full
+Limit: 200
+Temperature: 0.0
+============================================================
+Loading model from /data/qwen3_or_debug_grpo_merged...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  1.88it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.87it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.87it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.58it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.27it/s]
+Model loaded: qwen3
+Restricted license - for non-production use only - expires 2027-11-29
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_000.mps
+Reading time = 0.00 seconds
+mip_typeA_000: 11 rows, 9 columns, 99 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_002.mps
+Reading time = 0.00 seconds
+lp_typeA_002: 9 rows, 6 columns, 54 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_003.mps
+Reading time = 0.00 seconds
+lp_typeA_003: 9 rows, 9 columns, 81 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_004.mps
+Reading time = 0.00 seconds
+mip_typeA_004: 12 rows, 10 columns, 120 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_005.mps
+Reading time = 0.00 seconds
+lp_typeA_005: 6 rows, 5 columns, 30 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_006.mps
+Reading time = 0.00 seconds
+lp_typeA_006: 6 rows, 10 columns, 60 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_008.mps
+Reading time = 0.00 seconds
+mip_typeA_008: 8 rows, 10 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_009.mps
+Reading time = 0.00 seconds
+lp_typeA_009: 5 rows, 7 columns, 35 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_010.mps
+Reading time = 0.00 seconds
+lp_typeA_010: 8 rows, 10 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_011.mps
+Reading time = 0.00 seconds
+lp_typeA_011: 8 rows, 8 columns, 64 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_012.mps
+Reading time = 0.00 seconds
+lp_typeA_012: 9 rows, 9 columns, 81 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_015.mps
+Reading time = 0.00 seconds
+lp_typeA_015: 9 rows, 7 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_016.mps
+Reading time = 0.00 seconds
+lp_typeA_016: 6 rows, 6 columns, 36 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_017.mps
+Reading time = 0.00 seconds
+lp_typeA_017: 10 rows, 5 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_018.mps
+Reading time = 0.00 seconds
+lp_typeA_018: 10 rows, 7 columns, 70 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_019.mps
+Reading time = 0.00 seconds
+mip_typeA_019: 7 rows, 12 columns, 84 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_020.mps
+Reading time = 0.00 seconds
+mip_typeA_020: 13 rows, 12 columns, 156 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_021.mps
+Reading time = 0.00 seconds
+lp_typeA_021: 10 rows, 8 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_022.mps
+Reading time = 0.00 seconds
+mip_typeA_022: 7 rows, 11 columns, 77 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_023.mps
+Reading time = 0.00 seconds
+lp_typeA_023: 6 rows, 6 columns, 36 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_024.mps
+Reading time = 0.00 seconds
+lp_typeA_024: 10 rows, 5 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_025.mps
+Reading time = 0.00 seconds
+lp_typeA_025: 5 rows, 7 columns, 35 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_026.mps
+Reading time = 0.00 seconds
+lp_typeA_026: 10 rows, 7 columns, 70 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_027.mps
+Reading time = 0.00 seconds
+mip_typeA_027: 14 rows, 13 columns, 182 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_028.mps
+Reading time = 0.00 seconds
+lp_typeA_028: 9 rows, 5 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_029.mps
+Reading time = 0.00 seconds
+lp_typeA_029: 6 rows, 9 columns, 54 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_030.mps
+Reading time = 0.00 seconds
+lp_typeA_030: 5 rows, 8 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_031.mps
+Reading time = 0.00 seconds
+lp_typeA_031: 5 rows, 8 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_032.mps
+Reading time = 0.00 seconds
+mip_typeA_032: 14 rows, 8 columns, 112 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_033.mps
+Reading time = 0.00 seconds
+lp_typeA_033: 8 rows, 9 columns, 72 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_035.mps
+Reading time = 0.00 seconds
+mip_typeA_035: 7 rows, 10 columns, 70 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_036.mps
+Reading time = 0.00 seconds
+lp_typeA_036: 10 rows, 9 columns, 90 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_038.mps
+Reading time = 0.00 seconds
+lp_typeA_038: 7 rows, 5 columns, 35 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_039.mps
+Reading time = 0.00 seconds
+mip_typeA_039: 13 rows, 8 columns, 104 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_041.mps
+Reading time = 0.00 seconds
+lp_typeA_041: 5 rows, 6 columns, 30 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_043.mps
+Reading time = 0.00 seconds
+mip_typeA_043: 9 rows, 9 columns, 81 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_045.mps
+Reading time = 0.00 seconds
+lp_typeA_045: 5 rows, 8 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_046.mps
+Reading time = 0.00 seconds
+lp_typeA_046: 5 rows, 8 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_049.mps
+Reading time = 0.00 seconds
+lp_typeA_049: 10 rows, 8 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_050.mps
+Reading time = 0.00 seconds
+lp_typeA_050: 6 rows, 9 columns, 54 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_051.mps
+Reading time = 0.00 seconds
+mip_typeA_051: 9 rows, 11 columns, 99 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_052.mps
+Reading time = 0.00 seconds
+lp_typeA_052: 7 rows, 7 columns, 49 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_053.mps
+Reading time = 0.00 seconds
+lp_typeA_053: 8 rows, 7 columns, 56 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_054.mps
+Reading time = 0.00 seconds
+lp_typeA_054: 9 rows, 6 columns, 54 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_055.mps
+Reading time = 0.00 seconds
+mip_typeA_055: 9 rows, 8 columns, 72 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_056.mps
+Reading time = 0.00 seconds
+lp_typeA_056: 7 rows, 7 columns, 49 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_057.mps
+Reading time = 0.00 seconds
+lp_typeA_057: 10 rows, 5 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_059.mps
+Reading time = 0.00 seconds
+lp_typeA_059: 8 rows, 6 columns, 48 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_060.mps
+Reading time = 0.00 seconds
+lp_typeA_060: 8 rows, 6 columns, 48 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_061.mps
+Reading time = 0.00 seconds
+mip_typeA_061: 14 rows, 15 columns, 210 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_062.mps
+Reading time = 0.00 seconds
+mip_typeA_062: 14 rows, 12 columns, 168 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_063.mps
+Reading time = 0.00 seconds
+mip_typeA_063: 10 rows, 15 columns, 150 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_064.mps
+Reading time = 0.00 seconds
+lp_typeA_064: 10 rows, 6 columns, 60 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_065.mps
+Reading time = 0.00 seconds
+lp_typeA_065: 8 rows, 5 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_066.mps
+Reading time = 0.00 seconds
+lp_typeA_066: 6 rows, 10 columns, 60 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_067.mps
+Reading time = 0.00 seconds
+lp_typeA_067: 5 rows, 6 columns, 30 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_068.mps
+Reading time = 0.00 seconds
+lp_typeA_068: 5 rows, 8 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_069.mps
+Reading time = 0.00 seconds
+lp_typeA_069: 6 rows, 7 columns, 42 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_070.mps
+Reading time = 0.00 seconds
+lp_typeA_070: 7 rows, 7 columns, 49 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_071.mps
+Reading time = 0.00 seconds
+lp_typeA_071: 9 rows, 6 columns, 54 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_072.mps
+Reading time = 0.00 seconds
+lp_typeA_072: 8 rows, 10 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_073.mps
+Reading time = 0.00 seconds
+lp_typeA_073: 9 rows, 9 columns, 81 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_074.mps
+Reading time = 0.00 seconds
+lp_typeA_074: 8 rows, 8 columns, 64 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_075.mps
+Reading time = 0.00 seconds
+mip_typeA_075: 12 rows, 9 columns, 108 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_076.mps
+Reading time = 0.00 seconds
+mip_typeA_076: 9 rows, 12 columns, 108 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_078.mps
+Reading time = 0.00 seconds
+mip_typeA_078: 7 rows, 12 columns, 84 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_079.mps
+Reading time = 0.00 seconds
+lp_typeA_079: 9 rows, 10 columns, 90 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_081.mps
+Reading time = 0.00 seconds
+mip_typeA_081: 14 rows, 9 columns, 126 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_082.mps
+Reading time = 0.00 seconds
+lp_typeA_082: 5 rows, 9 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_083.mps
+Reading time = 0.00 seconds
+lp_typeA_083: 6 rows, 6 columns, 36 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_084.mps
+Reading time = 0.00 seconds
+lp_typeA_084: 7 rows, 8 columns, 56 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_085.mps
+Reading time = 0.00 seconds
+mip_typeA_085: 12 rows, 15 columns, 180 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_086.mps
+Reading time = 0.00 seconds
+lp_typeA_086: 9 rows, 7 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_087.mps
+Reading time = 0.00 seconds
+lp_typeA_087: 10 rows, 6 columns, 60 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_088.mps
+Reading time = 0.00 seconds
+lp_typeA_088: 8 rows, 7 columns, 56 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_089.mps
+Reading time = 0.00 seconds
+lp_typeA_089: 7 rows, 9 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_090.mps
+Reading time = 0.00 seconds
+lp_typeA_090: 6 rows, 5 columns, 30 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_091.mps
+Reading time = 0.00 seconds
+lp_typeA_091: 9 rows, 7 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_093.mps
+Reading time = 0.00 seconds
+lp_typeA_093: 8 rows, 9 columns, 72 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_094.mps
+Reading time = 0.00 seconds
+lp_typeA_094: 6 rows, 7 columns, 42 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_095.mps
+Reading time = 0.00 seconds
+lp_typeA_095: 6 rows, 9 columns, 54 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_096.mps
+Reading time = 0.00 seconds
+lp_typeA_096: 7 rows, 5 columns, 35 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_097.mps
+Reading time = 0.00 seconds
+lp_typeA_097: 9 rows, 7 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_098.mps
+Reading time = 0.00 seconds
+lp_typeA_098: 7 rows, 5 columns, 35 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_099.mps
+Reading time = 0.00 seconds
+lp_typeA_099: 9 rows, 10 columns, 90 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_100.mps
+Reading time = 0.00 seconds
+lp_typeA_100: 6 rows, 8 columns, 48 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_101.mps
+Reading time = 0.00 seconds
+lp_typeA_101: 10 rows, 5 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_102.mps
+Reading time = 0.00 seconds
+lp_typeA_102: 5 rows, 9 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_103.mps
+Reading time = 0.00 seconds
+mip_typeA_103: 10 rows, 9 columns, 90 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_104.mps
+Reading time = 0.00 seconds
+lp_typeA_104: 7 rows, 8 columns, 56 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_105.mps
+Reading time = 0.00 seconds
+mip_typeA_105: 7 rows, 9 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_106.mps
+Reading time = 0.00 seconds
+lp_typeA_106: 9 rows, 5 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_107.mps
+Reading time = 0.00 seconds
+lp_typeA_107: 6 rows, 7 columns, 42 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_108.mps
+Reading time = 0.00 seconds
+lp_typeA_108: 9 rows, 5 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_109.mps
+Reading time = 0.00 seconds
+lp_typeA_109: 10 rows, 6 columns, 60 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_110.mps
+Reading time = 0.00 seconds
+lp_typeA_110: 10 rows, 8 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_111.mps
+Reading time = 0.00 seconds
+lp_typeA_111: 5 rows, 7 columns, 35 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_112.mps
+Reading time = 0.00 seconds
+mip_typeA_112: 8 rows, 10 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_113.mps
+Reading time = 0.00 seconds
+lp_typeA_113: 6 rows, 6 columns, 36 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_114.mps
+Reading time = 0.00 seconds
+mip_typeA_114: 9 rows, 11 columns, 99 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_115.mps
+Reading time = 0.00 seconds
+lp_typeA_115: 8 rows, 5 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_116.mps
+Reading time = 0.00 seconds
+mip_typeA_116: 14 rows, 9 columns, 126 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_117.mps
+Reading time = 0.00 seconds
+lp_typeA_117: 6 rows, 7 columns, 42 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_118.mps
+Reading time = 0.00 seconds
+lp_typeA_118: 10 rows, 7 columns, 70 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_119.mps
+Reading time = 0.00 seconds
+mip_typeA_119: 11 rows, 10 columns, 110 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_121.mps
+Reading time = 0.00 seconds
+lp_typeA_121: 10 rows, 10 columns, 100 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_122.mps
+Reading time = 0.00 seconds
+lp_typeA_122: 9 rows, 5 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_123.mps
+Reading time = 0.00 seconds
+lp_typeA_123: 10 rows, 5 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_124.mps
+Reading time = 0.00 seconds
+mip_typeA_124: 9 rows, 10 columns, 90 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_125.mps
+Reading time = 0.00 seconds
+lp_typeA_125: 7 rows, 7 columns, 49 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_126.mps
+Reading time = 0.00 seconds
+lp_typeA_126: 5 rows, 9 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_128.mps
+Reading time = 0.00 seconds
+lp_typeA_128: 8 rows, 5 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_129.mps
+Reading time = 0.00 seconds
+lp_typeA_129: 9 rows, 5 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_131.mps
+Reading time = 0.00 seconds
+lp_typeA_131: 5 rows, 6 columns, 30 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_132.mps
+Reading time = 0.00 seconds
+lp_typeA_132: 9 rows, 5 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_134.mps
+Reading time = 0.00 seconds
+mip_typeA_134: 11 rows, 12 columns, 132 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_135.mps
+Reading time = 0.00 seconds
+mip_typeA_135: 13 rows, 14 columns, 182 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_136.mps
+Reading time = 0.00 seconds
+lp_typeA_136: 9 rows, 7 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_137.mps
+Reading time = 0.00 seconds
+lp_typeA_137: 5 rows, 8 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_138.mps
+Reading time = 0.00 seconds
+lp_typeA_138: 5 rows, 10 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_139.mps
+Reading time = 0.00 seconds
+lp_typeA_139: 6 rows, 8 columns, 48 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_140.mps
+Reading time = 0.00 seconds
+lp_typeA_140: 8 rows, 10 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_141.mps
+Reading time = 0.00 seconds
+lp_typeA_141: 10 rows, 5 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_143.mps
+Reading time = 0.00 seconds
+mip_typeA_143: 14 rows, 12 columns, 168 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_145.mps
+Reading time = 0.00 seconds
+lp_typeA_145: 8 rows, 6 columns, 48 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_146.mps
+Reading time = 0.00 seconds
+lp_typeA_146: 10 rows, 7 columns, 70 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_147.mps
+Reading time = 0.00 seconds
+mip_typeA_147: 14 rows, 13 columns, 182 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_148.mps
+Reading time = 0.00 seconds
+mip_typeA_148: 11 rows, 12 columns, 132 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_149.mps
+Reading time = 0.00 seconds
+mip_typeA_149: 13 rows, 11 columns, 143 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_150.mps
+Reading time = 0.00 seconds
+lp_typeA_150: 10 rows, 10 columns, 100 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_151.mps
+Reading time = 0.00 seconds
+lp_typeA_151: 9 rows, 5 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_152.mps
+Reading time = 0.00 seconds
+mip_typeA_152: 12 rows, 12 columns, 144 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_153.mps
+Reading time = 0.00 seconds
+lp_typeA_153: 10 rows, 7 columns, 70 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_154.mps
+Reading time = 0.00 seconds
+lp_typeA_154: 8 rows, 9 columns, 72 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_155.mps
+Reading time = 0.00 seconds
+mip_typeA_155: 14 rows, 15 columns, 210 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_156.mps
+Reading time = 0.00 seconds
+lp_typeA_156: 5 rows, 7 columns, 35 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_157.mps
+Reading time = 0.00 seconds
+lp_typeA_157: 9 rows, 7 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_158.mps
+Reading time = 0.00 seconds
+lp_typeA_158: 8 rows, 8 columns, 64 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_159.mps
+Reading time = 0.00 seconds
+lp_typeA_159: 8 rows, 6 columns, 48 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_160.mps
+Reading time = 0.00 seconds
+lp_typeA_160: 6 rows, 7 columns, 42 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_161.mps
+Reading time = 0.00 seconds
+mip_typeA_161: 13 rows, 14 columns, 182 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_162.mps
+Reading time = 0.00 seconds
+lp_typeA_162: 9 rows, 7 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_163.mps
+Reading time = 0.00 seconds
+mip_typeA_163: 12 rows, 12 columns, 144 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_165.mps
+Reading time = 0.00 seconds
+mip_typeA_165: 9 rows, 11 columns, 99 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_166.mps
+Reading time = 0.00 seconds
+mip_typeA_166: 11 rows, 8 columns, 88 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_167.mps
+Reading time = 0.00 seconds
+lp_typeA_167: 10 rows, 5 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_168.mps
+Reading time = 0.00 seconds
+lp_typeA_168: 7 rows, 6 columns, 42 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_169.mps
+Reading time = 0.00 seconds
+lp_typeA_169: 9 rows, 7 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_170.mps
+Reading time = 0.00 seconds
+lp_typeA_170: 8 rows, 8 columns, 64 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_171.mps
+Reading time = 0.00 seconds
+lp_typeA_171: 10 rows, 7 columns, 70 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_172.mps
+Reading time = 0.00 seconds
+lp_typeA_172: 8 rows, 10 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_173.mps
+Reading time = 0.00 seconds
+mip_typeA_173: 8 rows, 13 columns, 104 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_174.mps
+Reading time = 0.00 seconds
+lp_typeA_174: 5 rows, 5 columns, 25 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_175.mps
+Reading time = 0.00 seconds
+lp_typeA_175: 7 rows, 8 columns, 56 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_176.mps
+Reading time = 0.00 seconds
+lp_typeA_176: 8 rows, 7 columns, 56 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_177.mps
+Reading time = 0.00 seconds
+lp_typeA_177: 8 rows, 7 columns, 56 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_178.mps
+Reading time = 0.00 seconds
+mip_typeA_178: 8 rows, 12 columns, 96 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_179.mps
+Reading time = 0.00 seconds
+mip_typeA_179: 8 rows, 8 columns, 64 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_181.mps
+Reading time = 0.00 seconds
+lp_typeA_181: 8 rows, 5 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_182.mps
+Reading time = 0.00 seconds
+lp_typeA_182: 5 rows, 9 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_183.mps
+Reading time = 0.00 seconds
+mip_typeA_183: 8 rows, 14 columns, 112 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_184.mps
+Reading time = 0.00 seconds
+lp_typeA_184: 5 rows, 6 columns, 30 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_185.mps
+Reading time = 0.00 seconds
+mip_typeA_185: 14 rows, 14 columns, 196 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_186.mps
+Reading time = 0.00 seconds
+lp_typeA_186: 5 rows, 8 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_187.mps
+Reading time = 0.00 seconds
+lp_typeA_187: 8 rows, 9 columns, 72 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_188.mps
+Reading time = 0.00 seconds
+mip_typeA_188: 14 rows, 14 columns, 196 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_189.mps
+Reading time = 0.00 seconds
+lp_typeA_189: 5 rows, 10 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_190.mps
+Reading time = 0.00 seconds
+mip_typeA_190: 10 rows, 13 columns, 130 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_191.mps
+Reading time = 0.00 seconds
+mip_typeA_191: 10 rows, 10 columns, 100 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_192.mps
+Reading time = 0.00 seconds
+mip_typeA_192: 8 rows, 11 columns, 88 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_193.mps
+Reading time = 0.00 seconds
+lp_typeA_193: 8 rows, 5 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_194.mps
+Reading time = 0.00 seconds
+lp_typeA_194: 10 rows, 9 columns, 90 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_195.mps
+Reading time = 0.00 seconds
+mip_typeA_195: 12 rows, 8 columns, 96 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_196.mps
+Reading time = 0.00 seconds
+lp_typeA_196: 5 rows, 8 columns, 40 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_197.mps
+Reading time = 0.00 seconds
+lp_typeA_197: 5 rows, 10 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_198.mps
+Reading time = 0.00 seconds
+lp_typeA_198: 5 rows, 9 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_199.mps
+Reading time = 0.00 seconds
+mip_typeA_199: 9 rows, 13 columns, 117 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_200.mps
+Reading time = 0.00 seconds
+lp_typeA_200: 10 rows, 7 columns, 70 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_202.mps
+Reading time = 0.00 seconds
+lp_typeA_202: 6 rows, 8 columns, 48 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_203.mps
+Reading time = 0.00 seconds
+lp_typeA_203: 9 rows, 5 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_204.mps
+Reading time = 0.00 seconds
+mip_typeA_204: 14 rows, 11 columns, 154 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_205.mps
+Reading time = 0.00 seconds
+lp_typeA_205: 8 rows, 8 columns, 64 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_207.mps
+Reading time = 0.00 seconds
+lp_typeA_207: 10 rows, 9 columns, 90 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_209.mps
+Reading time = 0.00 seconds
+lp_typeA_209: 5 rows, 9 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_210.mps
+Reading time = 0.00 seconds
+lp_typeA_210: 5 rows, 5 columns, 25 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_211.mps
+Reading time = 0.00 seconds
+lp_typeA_211: 8 rows, 9 columns, 72 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_212.mps
+Reading time = 0.00 seconds
+lp_typeA_212: 5 rows, 10 columns, 50 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_213.mps
+Reading time = 0.00 seconds
+mip_typeA_213: 8 rows, 11 columns, 88 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_214.mps
+Reading time = 0.00 seconds
+lp_typeA_214: 8 rows, 9 columns, 72 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_215.mps
+Reading time = 0.00 seconds
+lp_typeA_215: 9 rows, 5 columns, 45 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_216.mps
+Reading time = 0.00 seconds
+lp_typeA_216: 10 rows, 8 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_217.mps
+Reading time = 0.00 seconds
+lp_typeA_217: 10 rows, 8 columns, 80 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_218.mps
+Reading time = 0.00 seconds
+mip_typeA_218: 12 rows, 8 columns, 96 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_219.mps
+Reading time = 0.00 seconds
+lp_typeA_219: 6 rows, 10 columns, 60 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_221.mps
+Reading time = 0.00 seconds
+lp_typeA_221: 9 rows, 7 columns, 63 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_222.mps
+Reading time = 0.00 seconds
+mip_typeA_222: 14 rows, 8 columns, 112 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_223.mps
+Reading time = 0.00 seconds
+lp_typeA_223: 6 rows, 7 columns, 42 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_224.mps
+Reading time = 0.00 seconds
+lp_typeA_224: 9 rows, 6 columns, 54 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/mip_typeA_225.mps
+Reading time = 0.00 seconds
+mip_typeA_225: 7 rows, 8 columns, 56 nonzeros
+Read MPS format model from file data/benchmarks/or_debug_bench_full/models/lp_typeA_226.mps
+Reading time = 0.00 seconds
+lp_typeA_226: 10 rows, 5 columns, 50 nonzeros
+Loaded 200 problems
+Remaining problems to evaluate: 200
+Evaluating:   0%|          | 0/200 [00:00<?, ?it/s]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating:   0%|          | 1/200 [00:11<36:49, 11.10s/it]Evaluating:   1%|          | 2/200 [00:54<1:39:38, 30.19s/it]Evaluating:   2%|▏         | 3/200 [02:50<3:47:58, 69.43s/it]Evaluating:   2%|▏         | 4/200 [03:24<3:00:39, 55.31s/it]Evaluating:   2%|▎         | 5/200 [03:52<2:27:20, 45.34s/it]Evaluating:   3%|▎         | 6/200 [04:04<1:50:52, 34.29s/it]Evaluating:   4%|▎         | 7/200 [04:08<1:17:40, 24.15s/it]Evaluating:   4%|▍         | 8/200 [04:18<1:03:33, 19.86s/it]Evaluating:   4%|▍         | 9/200 [04:21<46:31, 14.61s/it]  Evaluating:   5%|▌         | 10/200 [04:30<40:30, 12.79s/it]Evaluating:   6%|▌         | 11/200 [04:33<30:54,  9.81s/it]Evaluating:   6%|▌         | 12/200 [04:42<29:41,  9.48s/it]Evaluating:   6%|▋         | 13/200 [05:42<1:17:14, 24.78s/it]Evaluating:   7%|▋         | 14/200 [06:20<1:29:12, 28.78s/it]Evaluating:   8%|▊         | 15/200 [07:04<1:42:30, 33.24s/it]Evaluating:   8%|▊         | 16/200 [07:16<1:22:46, 26.99s/it]Evaluating:   8%|▊         | 17/200 [08:04<1:41:44, 33.36s/it]Evaluating:   9%|▉         | 18/200 [08:07<1:13:32, 24.24s/it]Evaluating:  10%|▉         | 19/200 [08:10<53:55, 17.88s/it]  Evaluating:  10%|█         | 20/200 [08:18<44:36, 14.87s/it]Evaluating:  10%|█         | 21/200 [08:27<39:12, 13.14s/it]Evaluating:  11%|█         | 22/200 [09:55<1:45:21, 35.51s/it]Evaluating:  12%|█▏        | 23/200 [10:04<1:21:32, 27.64s/it]Evaluating:  12%|█▏        | 24/200 [10:19<1:10:06, 23.90s/it]Evaluating:  12%|█▎        | 25/200 [10:42<1:08:18, 23.42s/it]Evaluating:  13%|█▎        | 26/200 [10:58<1:01:49, 21.32s/it]Evaluating:  14%|█▎        | 27/200 [12:14<1:48:24, 37.60s/it]Evaluating:  14%|█▍        | 28/200 [12:39<1:36:56, 33.82s/it]Evaluating:  14%|█▍        | 29/200 [13:28<1:49:45, 38.51s/it]Evaluating:  15%|█▌        | 30/200 [13:59<1:42:16, 36.09s/it]Evaluating:  16%|█▌        | 31/200 [14:02<1:13:42, 26.17s/it]Evaluating:  16%|█▌        | 32/200 [14:27<1:12:56, 26.05s/it]Evaluating:  16%|█▋        | 33/200 [14:47<1:07:06, 24.11s/it]Evaluating:  17%|█▋        | 34/200 [15:00<57:27, 20.77s/it]  Evaluating:  18%|█▊        | 35/200 [15:34<1:08:17, 24.83s/it]Evaluating:  18%|█▊        | 36/200 [16:20<1:24:47, 31.02s/it]Evaluating:  18%|█▊        | 37/200 [16:37<1:13:19, 26.99s/it]Evaluating:  19%|█▉        | 38/200 [16:55<1:05:22, 24.22s/it]Evaluating:  20%|█▉        | 39/200 [17:53<1:32:26, 34.45s/it]Evaluating:  20%|██        | 40/200 [18:28<1:31:38, 34.37s/it]Evaluating:  20%|██        | 41/200 [20:17<2:31:00, 56.99s/it]Evaluating:  21%|██        | 42/200 [20:44<2:05:55, 47.82s/it]Evaluating:  22%|██▏       | 43/200 [20:47<1:30:07, 34.44s/it]Evaluating:  22%|██▏       | 44/200 [21:33<1:38:48, 38.00s/it]Evaluating:  22%|██▎       | 45/200 [21:45<1:17:39, 30.06s/it]Evaluating:  23%|██▎       | 46/200 [22:04<1:08:44, 26.78s/it]Evaluating:  24%|██▎       | 47/200 [22:19<59:31, 23.35s/it]  Evaluating:  24%|██▍       | 48/200 [23:23<1:29:54, 35.49s/it]Evaluating:  24%|██▍       | 49/200 [23:35<1:11:41, 28.48s/it]Evaluating:  25%|██▌       | 50/200 [24:13<1:18:08, 31.25s/it]Evaluating:  26%|██▌       | 51/200 [25:12<1:38:25, 39.64s/it]Evaluating:  26%|██▌       | 52/200 [26:04<1:47:09, 43.44s/it]Evaluating:  26%|██▋       | 53/200 [26:13<1:20:40, 32.93s/it]Evaluating:  27%|██▋       | 54/200 [26:16<58:29, 24.04s/it]  Evaluating:  28%|██▊       | 55/200 [26:27<48:16, 19.98s/it]Evaluating:  28%|██▊       | 56/200 [26:45<46:44, 19.48s/it]Evaluating:  28%|██▊       | 57/200 [27:30<1:04:38, 27.12s/it]Evaluating:  29%|██▉       | 58/200 [27:42<53:32, 22.62s/it]  Evaluating:  30%|██▉       | 59/200 [28:58<1:30:51, 38.66s/it]Evaluating:  30%|███       | 60/200 [29:01<1:05:15, 27.96s/it]Evaluating:  30%|███       | 61/200 [29:04<47:11, 20.37s/it]  Evaluating:  31%|███       | 62/200 [29:07<35:06, 15.26s/it]Evaluating:  32%|███▏      | 63/200 [29:37<44:55, 19.67s/it]Evaluating:  32%|███▏      | 64/200 [30:22<1:01:43, 27.23s/it]Evaluating:  32%|███▎      | 65/200 [30:32<49:26, 21.98s/it]  Evaluating:  33%|███▎      | 66/200 [32:20<1:46:49, 47.83s/it]Evaluating:  34%|███▎      | 67/200 [32:44<1:30:36, 40.88s/it]Evaluating:  34%|███▍      | 68/200 [32:55<1:09:46, 31.71s/it]Evaluating:  34%|███▍      | 69/200 [33:16<1:02:24, 28.59s/it]Evaluating:  35%|███▌      | 70/200 [34:05<1:15:16, 34.74s/it]Evaluating:  36%|███▌      | 71/200 [34:45<1:18:14, 36.39s/it]Evaluating:  36%|███▌      | 72/200 [35:33<1:24:45, 39.73s/it]Evaluating:  36%|███▋      | 73/200 [35:43<1:05:21, 30.88s/it]Evaluating:  37%|███▋      | 74/200 [36:06<59:52, 28.51s/it]  Evaluating:  38%|███▊      | 75/200 [36:20<50:31, 24.25s/it]Evaluating:  38%|███▊      | 76/200 [36:45<50:15, 24.32s/it]Evaluating:  38%|███▊      | 77/200 [37:48<1:13:47, 35.99s/it]Evaluating:  39%|███▉      | 78/200 [37:57<56:26, 27.75s/it]  Evaluating:  40%|███▉      | 79/200 [38:00<40:59, 20.33s/it]Evaluating:  40%|████      | 80/200 [38:24<43:00, 21.51s/it]Evaluating:  40%|████      | 81/200 [39:23<1:05:08, 32.84s/it]Evaluating:  41%|████      | 82/200 [39:43<56:57, 28.97s/it]  Evaluating:  42%|████▏     | 83/200 [40:24<1:03:24, 32.52s/it]Evaluating:  42%|████▏     | 84/200 [40:33<48:58, 25.34s/it]  Evaluating:  42%|████▎     | 85/200 [40:45<40:55, 21.36s/it]Evaluating:  43%|████▎     | 86/200 [41:01<37:53, 19.94s/it]Evaluating:  44%|████▎     | 87/200 [41:16<34:31, 18.34s/it]Evaluating:  44%|████▍     | 88/200 [41:27<30:16, 16.22s/it]Evaluating:  44%|████▍     | 89/200 [42:46<1:04:48, 35.03s/it]Evaluating:  45%|████▌     | 90/200 [42:54<49:16, 26.88s/it]  Evaluating:  46%|████▌     | 91/200 [43:06<40:49, 22.47s/it]Evaluating:  46%|████▌     | 92/200 [45:17<1:38:53, 54.94s/it]Evaluating:  46%|████▋     | 93/200 [45:44<1:22:55, 46.50s/it]Evaluating:  47%|████▋     | 94/200 [46:13<1:12:55, 41.28s/it]Evaluating:  48%|████▊     | 95/200 [46:16<52:13, 29.84s/it]  Evaluating:  48%|████▊     | 96/200 [46:19<37:45, 21.79s/it]Evaluating:  48%|████▊     | 97/200 [46:29<31:34, 18.40s/it]Evaluating:  49%|████▉     | 98/200 [46:50<32:19, 19.01s/it]Evaluating:  50%|████▉     | 99/200 [46:58<26:21, 15.66s/it]Evaluating:  50%|█████     | 100/200 [47:26<32:19, 19.40s/it]Evaluating:  50%|█████     | 101/200 [47:44<31:16, 18.95s/it]Evaluating:  51%|█████     | 102/200 [48:02<30:34, 18.72s/it]Evaluating:  52%|█████▏    | 103/200 [48:13<26:36, 16.46s/it]Evaluating:  52%|█████▏    | 104/200 [48:22<22:43, 14.20s/it]Evaluating:  52%|█████▎    | 105/200 [49:10<38:38, 24.40s/it]Evaluating:  53%|█████▎    | 106/200 [49:49<44:56, 28.69s/it]Evaluating:  54%|█████▎    | 107/200 [49:58<35:29, 22.90s/it]Evaluating:  54%|█████▍    | 108/200 [50:05<27:37, 18.02s/it]Evaluating:  55%|█████▍    | 109/200 [50:45<37:24, 24.67s/it]Evaluating:  55%|█████▌    | 110/200 [50:56<30:42, 20.47s/it]Evaluating:  56%|█████▌    | 111/200 [51:04<24:49, 16.74s/it]Evaluating:  56%|█████▌    | 112/200 [51:21<24:47, 16.91s/it]Evaluating:  56%|█████▋    | 113/200 [51:29<20:29, 14.14s/it]Evaluating:  57%|█████▋    | 114/200 [51:47<22:06, 15.42s/it]Evaluating:  57%|█████▊    | 115/200 [51:58<20:01, 14.13s/it]Evaluating:  58%|█████▊    | 116/200 [52:39<30:52, 22.05s/it]Evaluating:  58%|█████▊    | 117/200 [52:58<29:15, 21.15s/it]Evaluating:  59%|█████▉    | 118/200 [53:21<29:48, 21.81s/it]Evaluating:  60%|█████▉    | 119/200 [53:43<29:24, 21.79s/it]Evaluating:  60%|██████    | 120/200 [53:55<25:16, 18.95s/it]Evaluating:  60%|██████    | 121/200 [54:26<29:38, 22.51s/it]Evaluating:  61%|██████    | 122/200 [54:29<21:39, 16.66s/it]Evaluating:  62%|██████▏   | 123/200 [54:42<20:06, 15.67s/it]Evaluating:  62%|██████▏   | 124/200 [55:22<28:46, 22.71s/it]Evaluating:  62%|██████▎   | 125/200 [55:45<28:43, 22.98s/it]Evaluating:  63%|██████▎   | 126/200 [56:23<33:55, 27.50s/it]Evaluating:  64%|██████▎   | 127/200 [56:53<34:15, 28.16s/it]Evaluating:  64%|██████▍   | 128/200 [57:03<27:18, 22.75s/it]Evaluating:  64%|██████▍   | 129/200 [57:29<28:10, 23.80s/it]Evaluating:  65%|██████▌   | 130/200 [58:27<39:40, 34.01s/it]Evaluating:  66%|██████▌   | 131/200 [58:58<38:04, 33.11s/it]Evaluating:  66%|██████▌   | 132/200 [59:44<41:46, 36.86s/it]Evaluating:  66%|██████▋   | 133/200 [59:54<32:17, 28.92s/it]Evaluating:  67%|██████▋   | 134/200 [1:00:24<32:11, 29.27s/it]Evaluating:  68%|██████▊   | 135/200 [1:00:45<28:59, 26.76s/it]Evaluating:  68%|██████▊   | 136/200 [1:01:31<34:31, 32.36s/it]Evaluating:  68%|██████▊   | 137/200 [1:01:43<27:37, 26.31s/it]Evaluating:  69%|██████▉   | 138/200 [1:01:57<23:28, 22.72s/it]Evaluating:  70%|██████▉   | 139/200 [1:02:41<29:31, 29.04s/it]Evaluating:  70%|███████   | 140/200 [1:03:08<28:24, 28.41s/it]Evaluating:  70%|███████   | 141/200 [1:03:17<22:14, 22.62s/it]Evaluating:  71%|███████   | 142/200 [1:05:22<51:29, 53.27s/it]Evaluating:  72%|███████▏  | 143/200 [1:06:14<50:24, 53.05s/it]Evaluating:  72%|███████▏  | 144/200 [1:07:05<48:44, 52.22s/it]Evaluating:  72%|███████▎  | 145/200 [1:07:22<38:16, 41.76s/it]Evaluating:  73%|███████▎  | 146/200 [1:07:35<29:42, 33.01s/it]Evaluating:  74%|███████▎  | 147/200 [1:08:29<34:54, 39.51s/it]Evaluating:  74%|███████▍  | 148/200 [1:08:53<30:03, 34.68s/it]Evaluating:  74%|███████▍  | 149/200 [1:09:24<28:38, 33.69s/it]Evaluating:  75%|███████▌  | 150/200 [1:09:27<20:22, 24.44s/it]Evaluating:  76%|███████▌  | 151/200 [1:09:30<14:42, 18.01s/it]Evaluating:  76%|███████▌  | 152/200 [1:09:39<12:16, 15.35s/it]Evaluating:  76%|███████▋  | 153/200 [1:10:27<19:37, 25.05s/it]Evaluating:  77%|███████▋  | 154/200 [1:11:03<21:42, 28.31s/it]Evaluating:  78%|███████▊  | 155/200 [1:11:06<15:31, 20.71s/it]Evaluating:  78%|███████▊  | 156/200 [1:11:09<11:19, 15.44s/it]Evaluating:  78%|███████▊  | 157/200 [1:11:32<12:50, 17.92s/it]Evaluating:  79%|███████▉  | 158/200 [1:11:51<12:45, 18.22s/it]Evaluating:  80%|███████▉  | 159/200 [1:12:32<17:07, 25.06s/it]Evaluating:  80%|████████  | 160/200 [1:13:14<20:03, 30.08s/it]Evaluating:  80%|████████  | 161/200 [1:13:51<20:55, 32.20s/it]Evaluating:  81%|████████  | 162/200 [1:14:02<16:21, 25.83s/it]Evaluating:  82%|████████▏ | 163/200 [1:14:24<15:04, 24.45s/it]Evaluating:  82%|████████▏ | 164/200 [1:14:34<12:06, 20.17s/it]Evaluating:  82%|████████▎ | 165/200 [1:14:37<08:45, 15.02s/it]Evaluating:  83%|████████▎ | 166/200 [1:14:57<09:23, 16.58s/it]Evaluating:  84%|████████▎ | 167/200 [1:15:36<12:44, 23.18s/it]Evaluating:  84%|████████▍ | 168/200 [1:16:42<19:17, 36.17s/it]Evaluating:  84%|████████▍ | 169/200 [1:17:17<18:34, 35.94s/it]Evaluating:  85%|████████▌ | 170/200 [1:17:25<13:46, 27.54s/it]Evaluating:  86%|████████▌ | 171/200 [1:18:03<14:42, 30.44s/it]Evaluating:  86%|████████▌ | 172/200 [1:18:16<11:50, 25.39s/it]Evaluating:  86%|████████▋ | 173/200 [1:18:28<09:37, 21.39s/it]Evaluating:  87%|████████▋ | 174/200 [1:18:55<10:01, 23.14s/it]Evaluating:  88%|████████▊ | 175/200 [1:19:04<07:46, 18.66s/it]Evaluating:  88%|████████▊ | 176/200 [1:19:55<11:23, 28.48s/it]Evaluating:  88%|████████▊ | 177/200 [1:20:20<10:30, 27.39s/it]Evaluating:  89%|████████▉ | 178/200 [1:20:23<07:23, 20.17s/it]Evaluating:  90%|████████▉ | 179/200 [1:20:56<08:22, 23.91s/it]Evaluating:  90%|█████████ | 180/200 [1:22:19<13:52, 41.61s/it]Evaluating:  90%|█████████ | 181/200 [1:22:35<10:44, 33.90s/it]Evaluating:  91%|█████████ | 182/200 [1:23:05<09:51, 32.85s/it]Evaluating:  92%|█████████▏| 183/200 [1:24:09<11:56, 42.16s/it]Evaluating:  92%|█████████▏| 184/200 [1:24:53<11:24, 42.80s/it]Evaluating:  92%|█████████▎| 185/200 [1:25:15<09:08, 36.56s/it]Evaluating:  93%|█████████▎| 186/200 [1:25:45<08:03, 34.56s/it]Evaluating:  94%|█████████▎| 187/200 [1:25:54<05:47, 26.71s/it]Evaluating:  94%|█████████▍| 188/200 [1:27:04<07:56, 39.70s/it]Evaluating:  94%|█████████▍| 189/200 [1:28:49<10:55, 59.57s/it]Evaluating:  95%|█████████▌| 190/200 [1:29:04<07:40, 46.07s/it]Evaluating:  96%|█████████▌| 191/200 [1:29:07<04:59, 33.25s/it]Evaluating:  96%|█████████▌| 192/200 [1:30:10<05:35, 42.00s/it]Evaluating:  96%|█████████▋| 193/200 [1:31:23<06:00, 51.49s/it]Evaluating:  97%|█████████▋| 194/200 [1:32:24<05:24, 54.07s/it]Evaluating:  98%|█████████▊| 195/200 [1:33:19<04:31, 54.38s/it]Evaluating:  98%|█████████▊| 196/200 [1:34:16<03:41, 55.33s/it]Evaluating:  98%|█████████▊| 197/200 [1:34:26<02:05, 41.74s/it]Evaluating:  99%|█████████▉| 198/200 [1:35:04<01:21, 40.62s/it]Evaluating: 100%|█████████▉| 199/200 [1:35:37<00:38, 38.29s/it]Evaluating: 100%|██████████| 200/200 [1:37:26<00:00, 59.50s/it]Evaluating: 100%|██████████| 200/200 [1:37:26<00:00, 29.23s/it]
+
+Results saved to: outputs/grpo_eval_200.json
+
+============================================================
+Evaluation Summary: qwen3_or_debug_grpo_merged
+============================================================
+Recovery Rate: 100.0%
+RR@5:  83.0%
+RR@10: 99.0%
+RR@15: 100.0%
+RR@20: 100.0%
+Avg Steps: 3.3
+Diagnosis Accuracy: 80.0%
+Elapsed Time: 5846.6s
+============================================================

@@ -1,0 +1,157 @@
+{
+  "timestamp": "2026-01-14T07:37:56.072566",
+  "database": "outputs/experiments/2026-01-14/test_sqlite/results.db",
+  "models": {
+    "qwen3_or_debug_merged": {
+      "summary": {
+        "model_name": "qwen3_or_debug_merged",
+        "n_episodes": 5,
+        "recovery_rate": 1.0,
+        "avg_steps": 3.4,
+        "median_steps": 3.0,
+        "avg_reward": 189.6,
+        "step_efficiency": 55.76470588235294,
+        "success_avg_steps": 3.4,
+        "rr_at_5": 0.6,
+        "rr_at_10": 1.0,
+        "rr_at_15": 1.0,
+        "rr_at_20": 1.0,
+        "optimality_preservation": null,
+        "diagnosis_accuracy": 0.6153846153846154,
+        "faithfulness": 0.6153846153846154,
+        "diagnosis_precision": 1.0,
+        "agent_config": "{\"model\": \"/data/qwen3_or_debug_merged\", \"model_name\": \"qwen3_or_debug_merged\", \"dataset\": \"data/benchmarks/or_debug_bench_full\", \"limit\": 5, \"temperature\": 0.0, \"backend\": \"sglang\", \"sglang_url\": \"http://localhost:30000/v1\", \"concurrency\": 1, \"timestamp\": \"2026-01-14T07:37:40.603670\"}",
+        "elapsed_seconds": 15.398834943771362,
+        "timestamp": "2026-01-14T07:37:56.072390",
+        "avg_tokens": 2845.2,
+        "avg_input_tokens": 2063.8,
+        "avg_output_tokens": 781.4,
+        "avg_reasoning_tokens": 0.0,
+        "tokens_per_step": 836.8235294117648,
+        "token_efficiency": 0.3514691410094194,
+        "avg_api_calls": 0.0,
+        "avg_wall_clock": 6.011414051055908
+      },
+      "per_problem_results": [
+        {
+          "problem_id": "lp_typeA_002",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 6,
+          "total_reward": 174.0,
+          "diagnosed_constraints": [
+            "c_key_lower",
+            "c3",
+            "c_key_lower"
+          ],
+          "ground_truth_iis": [
+            "c3",
+            "c4",
+            "c_key_lower"
+          ],
+          "original_objective": 29.149671940865357,
+          "recovered_objective": null,
+          "total_tokens": 4868,
+          "total_input_tokens": 3647,
+          "total_output_tokens": 1221,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 9.278692483901978
+        },
+        {
+          "problem_id": "lp_typeA_003",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 6,
+          "total_reward": 204.0,
+          "diagnosed_constraints": [
+            "c_key_lower",
+            "c6",
+            "c_key_lower"
+          ],
+          "ground_truth_iis": [
+            "c6",
+            "c_key_lower"
+          ],
+          "original_objective": 57.41374073931735,
+          "recovered_objective": null,
+          "total_tokens": 5217,
+          "total_input_tokens": 3725,
+          "total_output_tokens": 1492,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 11.522143602371216
+        },
+        {
+          "problem_id": "lp_typeA_005",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 1,
+          "total_reward": 159.0,
+          "diagnosed_constraints": [
+            "c_key_upper"
+          ],
+          "ground_truth_iis": [
+            "c0",
+            "c1",
+            "c_key_upper"
+          ],
+          "original_objective": 26.92875036608909,
+          "recovered_objective": null,
+          "total_tokens": 848,
+          "total_input_tokens": 547,
+          "total_output_tokens": 301,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 2.268909454345703
+        },
+        {
+          "problem_id": "mip_typeA_000",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 3,
+          "total_reward": 202.0,
+          "diagnosed_constraints": [
+            "c_key_upper",
+            "c1"
+          ],
+          "ground_truth_iis": [
+            "c1",
+            "c2",
+            "c_key_upper"
+          ],
+          "original_objective": 59.77750230362778,
+          "recovered_objective": null,
+          "total_tokens": 2549,
+          "total_input_tokens": 1812,
+          "total_output_tokens": 737,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 5.789929628372192
+        },
+        {
+          "problem_id": "mip_typeA_004",
+          "success": true,
+          "final_status": "OPTIMAL",
+          "steps": 1,
+          "total_reward": 209.0,
+          "diagnosed_constraints": [
+            "c_key_lower"
+          ],
+          "ground_truth_iis": [
+            "c9",
+            "c_key_lower"
+          ],
+          "original_objective": 62.92457481240032,
+          "recovered_objective": null,
+          "total_tokens": 744,
+          "total_input_tokens": 588,
+          "total_output_tokens": 156,
+          "total_reasoning_tokens": 0,
+          "api_call_count": 0,
+          "wall_clock_seconds": 1.1973950862884521
+        }
+      ]
+    }
+  }
+}
