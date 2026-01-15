@@ -6,8 +6,9 @@ Documentation: docs/plan/modules/05_TRAINING.md
 
 Key Components:
     - gurobi_reward_func: Main reward function for TRL GRPOTrainer
-    - Composite reward: outcome + process + faithfulness
+    - Composite reward: outcome + process + faithfulness + PRM
     - Full Gurobi verification for accurate outcome reward
+    - PRM integration for step-level rewards (Phase 2.2)
 
 Example:
     >>> from src.training.gurobi_rewards import gurobi_reward_func
@@ -15,6 +16,9 @@ Example:
 
     # Enable full solver verification (slower but accurate)
     >>> set_use_solver_verification(True)
+
+    # Enable PRM-enhanced rewards
+    >>> set_prm_model("/data/prm_output")
 """
 
 import os
@@ -34,6 +38,10 @@ logger = logging.getLogger(__name__)
 # Global flag for solver verification mode
 _USE_SOLVER_VERIFICATION = False
 
+# Global PRM model for step-level rewards
+_PRM_MODEL = None
+_PRM_WEIGHT = 10.0  # Weight for PRM score in total reward
+
 
 def set_use_solver_verification(enabled: bool):
     """Enable/disable full Gurobi solver verification for outcome reward."""
@@ -45,6 +53,37 @@ def set_use_solver_verification(enabled: bool):
 def get_use_solver_verification() -> bool:
     """Check if solver verification is enabled."""
     return _USE_SOLVER_VERIFICATION
+
+
+def set_prm_model(model_path: str, weight: float = 10.0):
+    """
+    Load and enable PRM for step-level rewards.
+
+    Args:
+        model_path: Path to trained PRM checkpoint
+        weight: Weight for PRM score in total reward (default: 10.0)
+    """
+    global _PRM_MODEL, _PRM_WEIGHT
+    try:
+        from src.training.process_reward_model import ProcessRewardModel
+        _PRM_MODEL = ProcessRewardModel.load(model_path)
+        _PRM_WEIGHT = weight
+        logger.info(f"PRM loaded from {model_path} with weight {weight}")
+    except Exception as e:
+        logger.error(f"Failed to load PRM: {e}")
+        _PRM_MODEL = None
+
+
+def disable_prm():
+    """Disable PRM scoring."""
+    global _PRM_MODEL
+    _PRM_MODEL = None
+    logger.info("PRM disabled")
+
+
+def get_prm_model():
+    """Get the current PRM model (or None if not loaded)."""
+    return _PRM_MODEL
 
 
 # Reward configuration (matches RewardConfig in environments/reward.py)
@@ -69,6 +108,7 @@ def gurobi_reward_func(
     problem_id: Optional[List[str]] = None,
     model_file: Optional[List[str]] = None,
     iis_constraints: Optional[List] = None,  # Can be List[str] (JSON) or List[List]
+    problem_description: Optional[List[str]] = None,  # For PRM context
     **kwargs
 ) -> List[float]:
     """
@@ -77,7 +117,7 @@ def gurobi_reward_func(
     This function computes rewards by:
     1. Parsing actions from completions
     2. Applying actions to MIP models via Gurobi
-    3. Computing composite reward (outcome + process + faithfulness)
+    3. Computing composite reward (outcome + process + faithfulness + PRM)
 
     Args:
         prompts: List of input prompts (str or chat messages)
@@ -85,6 +125,7 @@ def gurobi_reward_func(
         problem_id: List of problem IDs (from dataset)
         model_file: List of MIP model file paths (from dataset)
         iis_constraints: List of current IIS constraints (from dataset)
+        problem_description: List of problem descriptions (for PRM)
         **kwargs: Additional dataset columns
 
     Returns:
@@ -110,11 +151,17 @@ def gurobi_reward_func(
                     import json
                     iis_val = json.dumps(iis_val)
 
+            # Get problem description for PRM context
+            prob_desc = None
+            if problem_description is not None and i < len(problem_description):
+                prob_desc = problem_description[i]
+
             reward = _compute_single_reward(
                 completion=completion_str,
                 problem_id=problem_id[i] if problem_id and i < len(problem_id) else None,
                 model_file=model_file[i] if model_file and i < len(model_file) else None,
                 iis_constraints=iis_val,
+                problem_description=prob_desc,
             )
             rewards.append(reward)
         except Exception as e:
@@ -129,6 +176,7 @@ def _compute_single_reward(
     problem_id: Optional[str],
     model_file: Optional[str],
     iis_constraints: Optional[str],
+    problem_description: Optional[str] = None,
 ) -> float:
     """
     Compute reward for a single completion using HYBRID strategy.
@@ -137,6 +185,7 @@ def _compute_single_reward(
     1. Solver verification (sparse, accurate) - scaled down
     2. Heuristic rewards (dense, approximate)
     3. Process rewards (targeting IIS constraints)
+    4. PRM rewards (step-level quality, if enabled)
 
     This ensures non-zero variance for gradient learning.
 
@@ -145,6 +194,7 @@ def _compute_single_reward(
         problem_id: Problem identifier
         model_file: Path to MIP model file
         iis_constraints: Current IIS constraints (JSON string)
+        problem_description: Optional problem description for PRM
 
     Returns:
         float: Composite reward with guaranteed variance
@@ -176,25 +226,30 @@ def _compute_single_reward(
         completion, iis_constraints
     )
 
-    # 6. HYBRID combination:
+    # 6. Compute PRM reward (if enabled)
+    prm_reward = _compute_prm_reward(
+        completion, iis_constraints, problem_description
+    )
+
+    # 7. HYBRID combination:
     # - If solver succeeds (+100): outcome dominates
-    # - If solver fails (-50): heuristic + process provide differentiation
+    # - If solver fails (-50): heuristic + process + PRM provide differentiation
     if outcome_reward == REWARD_CONFIG["success_reward"]:
         # Success: full outcome + bonus
-        total = outcome_reward + process_reward + faithfulness_penalty
+        total = outcome_reward + process_reward + faithfulness_penalty + prm_reward
     else:
         # Failure: scale down outcome penalty, add heuristic for differentiation
         scaled_outcome = outcome_reward * 0.5  # -25 instead of -50
-        total = scaled_outcome + heuristic_reward + process_reward + faithfulness_penalty
+        total = scaled_outcome + heuristic_reward + process_reward + faithfulness_penalty + prm_reward
 
-    # 7. Add small noise to break exact ties (ensures variance > 0)
+    # 8. Add small noise to break exact ties (ensures variance > 0)
     noise = random.uniform(-1, 1)
     total += noise
 
     logger.debug(
         f"Reward breakdown - outcome: {outcome_reward:.1f}, heuristic: {heuristic_reward:.1f}, "
         f"process: {process_reward:.1f}, faithfulness: {faithfulness_penalty:.1f}, "
-        f"noise: {noise:.2f}, total: {total:.1f}"
+        f"prm: {prm_reward:.1f}, noise: {noise:.2f}, total: {total:.1f}"
     )
 
     return total
@@ -454,6 +509,69 @@ def _compute_faithfulness_penalty(
             return REWARD_CONFIG["diagnosis_contradiction_penalty"]
 
     return 0.0  # Faithful diagnosis
+
+
+def _compute_prm_reward(
+    completion: str,
+    iis_constraints: Optional[str],
+    problem_description: Optional[str] = None
+) -> float:
+    """
+    Compute PRM-based step quality reward.
+
+    Uses the loaded Process Reward Model to evaluate reasoning quality.
+    This provides step-level signal even when outcome rewards are the same.
+
+    Args:
+        completion: Generated completion text
+        iis_constraints: Current IIS constraints (JSON string)
+        problem_description: Optional problem description for context
+
+    Returns:
+        float: PRM reward (weighted score, default range 0-10)
+    """
+    global _PRM_MODEL, _PRM_WEIGHT
+
+    if _PRM_MODEL is None:
+        return 0.0  # PRM not enabled
+
+    try:
+        # Format state text for PRM
+        iis_list = []
+        if iis_constraints:
+            import json
+            try:
+                iis_list = json.loads(iis_constraints) if isinstance(iis_constraints, str) else iis_constraints
+            except:
+                pass
+
+        iis_text = ", ".join(iis_list) if iis_list else "Unknown"
+
+        state_text = f"""## Problem
+{problem_description[:500] if problem_description else 'OR debugging problem'}...
+
+## Current State
+Solver Status: INFEASIBLE
+IIS Constraints: {iis_text}
+
+## Action to Evaluate:
+"""
+
+        # Get PRM score
+        score = _PRM_MODEL.score_step(
+            state_text=state_text,
+            action_text=completion
+        )
+
+        # Scale score to reward range [0, _PRM_WEIGHT]
+        prm_reward = score * _PRM_WEIGHT
+
+        logger.debug(f"PRM score: {score:.3f}, reward: {prm_reward:.2f}")
+        return prm_reward
+
+    except Exception as e:
+        logger.warning(f"PRM scoring error: {e}")
+        return 0.0
 
 
 # Multi-reward function variants for TRL
