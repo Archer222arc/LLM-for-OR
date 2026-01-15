@@ -29,6 +29,7 @@ Updated: 2026-01-15 (Added Type G/H/I for MDP-advantage problems)
 """
 
 import random
+import uuid
 from typing import Optional, List
 
 import gurobipy as gp
@@ -1606,8 +1607,10 @@ class SaboteurAgent:
         # G2: x >= target_val + 5 (second conflict, hidden initially)
         # Together: x <= val-5 AND x >= val+5 is impossible
 
-        g1_name = f"_cascade_upper_{target_var.VarName}"
-        g2_name = f"_cascade_lower_{target_var.VarName}"
+        # Use random suffix to prevent name-based pattern matching
+        suffix = uuid.uuid4().hex[:6]
+        g1_name = f"c_{suffix}_ub"
+        g2_name = f"c_{suffix}_lb"
 
         upper_rhs = target_val - 5
         lower_rhs = target_val + 5
@@ -1778,7 +1781,9 @@ class SaboteurAgent:
 
         # Add a symptom constraint that will be violated due to high LB
         # symptom: target_var <= target_val + small_margin
-        symptom_name = f"_symptom_constr_{target_var.VarName}"
+        # Use random suffix to prevent name-based pattern matching
+        suffix = uuid.uuid4().hex[:6]
+        symptom_name = f"constr_{suffix}"
         symptom_rhs = target_val + 5
         symptom_constr = self._model.addConstr(
             target_var <= symptom_rhs,
@@ -1941,8 +1946,10 @@ class SaboteurAgent:
         # where upper_bound is slightly above optimal, lower_bound slightly below
         margin = max(0.5, abs(target_val) * 0.1)
 
-        lower_name = f"_optimal_lower_{target_var.VarName}"
-        upper_name = f"_optimal_upper_{target_var.VarName}"
+        # Use random suffix to prevent name-based pattern matching
+        suffix = uuid.uuid4().hex[:6]
+        lower_name = f"bound_{suffix}_l"
+        upper_name = f"bound_{suffix}_u"
 
         original_lower = target_val - margin
         original_upper = target_val + margin
