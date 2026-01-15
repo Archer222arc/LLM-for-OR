@@ -131,7 +131,14 @@ def _compute_single_reward(
     iis_constraints: Optional[str],
 ) -> float:
     """
-    Compute reward for a single completion.
+    Compute reward for a single completion using HYBRID strategy.
+
+    Hybrid strategy combines:
+    1. Solver verification (sparse, accurate) - scaled down
+    2. Heuristic rewards (dense, approximate)
+    3. Process rewards (targeting IIS constraints)
+
+    This ensures non-zero variance for gradient learning.
 
     Args:
         completion: Generated completion text
@@ -140,32 +147,54 @@ def _compute_single_reward(
         iis_constraints: Current IIS constraints (JSON string)
 
     Returns:
-        float: Composite reward
+        float: Composite reward with guaranteed variance
     """
+    import random
+
     # 1. Parse action from completion
     parsed = ActionParser.parse(completion)
 
     if not parsed.is_valid:
         logger.debug(f"Invalid action: {parsed.error_message}")
-        return REWARD_CONFIG["syntax_error_reward"]
+        # Still give small differentiated rewards for partial parsing
+        base_penalty = REWARD_CONFIG["syntax_error_reward"]
+        # Add small noise to break ties
+        noise = random.uniform(-2, 2)
+        return base_penalty + noise
 
-    # 2. Compute outcome reward based on action type
+    # 2. Compute outcome reward (solver verification if enabled)
     outcome_reward = _compute_outcome_reward(parsed, model_file)
 
-    # 3. Compute process reward
+    # 3. HYBRID: Always add heuristic component for variance
+    heuristic_reward = _compute_outcome_reward_heuristic(parsed)
+
+    # 4. Compute process reward (dense signal)
     process_reward = _compute_process_reward(parsed, iis_constraints)
 
-    # 4. Compute faithfulness penalty
+    # 5. Compute faithfulness penalty
     faithfulness_penalty = _compute_faithfulness_penalty(
         completion, iis_constraints
     )
 
-    total = outcome_reward + process_reward + faithfulness_penalty
+    # 6. HYBRID combination:
+    # - If solver succeeds (+100): outcome dominates
+    # - If solver fails (-50): heuristic + process provide differentiation
+    if outcome_reward == REWARD_CONFIG["success_reward"]:
+        # Success: full outcome + bonus
+        total = outcome_reward + process_reward + faithfulness_penalty
+    else:
+        # Failure: scale down outcome penalty, add heuristic for differentiation
+        scaled_outcome = outcome_reward * 0.5  # -25 instead of -50
+        total = scaled_outcome + heuristic_reward + process_reward + faithfulness_penalty
+
+    # 7. Add small noise to break exact ties (ensures variance > 0)
+    noise = random.uniform(-1, 1)
+    total += noise
 
     logger.debug(
-        f"Reward breakdown - outcome: {outcome_reward:.1f}, "
+        f"Reward breakdown - outcome: {outcome_reward:.1f}, heuristic: {heuristic_reward:.1f}, "
         f"process: {process_reward:.1f}, faithfulness: {faithfulness_penalty:.1f}, "
-        f"total: {total:.1f}"
+        f"noise: {noise:.2f}, total: {total:.1f}"
     )
 
     return total
@@ -273,28 +302,65 @@ def _compute_outcome_reward_heuristic(parsed: ParsedAction) -> float:
     """
     Quick heuristic estimate for outcome reward (no solver execution).
 
-    Used when:
-    - Solver verification is disabled
-    - Model file is not available
-    - For fast development iteration
+    Provides differentiated rewards based on action quality:
+    - Repair actions with valid targets: highest
+    - Repair actions without targets: medium
+    - Diagnostic actions: small positive
+    - Other actions: neutral
+
+    Used for hybrid reward strategy to ensure variance.
     """
+    import random
+
     action_type = parsed.action_type
+    base_reward = 0.0
 
     if action_type == "SUBMIT":
-        return 0.0  # Neutral - actual outcome unknown
+        base_reward = 5.0  # Small positive for attempting completion
 
-    elif action_type in ["RELAX_CONSTRAINT", "DROP_CONSTRAINT"]:
+    elif action_type == "DROP_CONSTRAINT":
         if parsed.target:
-            return 20.0  # Partial credit for valid repair action
-        return 5.0
+            # Reward based on target name pattern (longer names often more specific)
+            specificity_bonus = min(len(parsed.target) * 0.5, 5.0)
+            base_reward = 25.0 + specificity_bonus
+        else:
+            base_reward = 10.0
+
+    elif action_type == "RELAX_CONSTRAINT":
+        if parsed.target and parsed.value is not None:
+            # Full specification: target + relaxation amount
+            # Prefer moderate relaxation values
+            if 0.1 <= abs(parsed.value) <= 100:
+                base_reward = 30.0
+            else:
+                base_reward = 20.0  # Extreme values less preferred
+        elif parsed.target:
+            base_reward = 15.0
+        else:
+            base_reward = 5.0
 
     elif action_type == "GET_IIS":
-        return 5.0  # Small positive for gathering info
+        base_reward = 8.0  # Gathering info is useful
 
-    elif action_type in ["CHECK_SLACK", "RESET"]:
-        return 0.0
+    elif action_type == "CHECK_SLACK":
+        if parsed.target:
+            base_reward = 6.0
+        else:
+            base_reward = 3.0
 
-    return 0.0
+    elif action_type in ["UPDATE_RHS", "UPDATE_BOUNDS"]:
+        if parsed.target:
+            base_reward = 15.0
+        else:
+            base_reward = 5.0
+
+    elif action_type == "RESET":
+        base_reward = -5.0  # Slightly discourage resets
+
+    # Add small random component for variance
+    variance_component = random.uniform(-2, 2)
+
+    return base_reward + variance_component
 
 
 def _compute_process_reward(
@@ -303,26 +369,53 @@ def _compute_process_reward(
 ) -> float:
     """
     Compute process reward for dense credit assignment.
+
+    Provides strong signal for targeting IIS constraints, which is
+    the key diagnostic insight for infeasibility repair.
     """
-    reward = REWARD_CONFIG["step_penalty"]  # Base step penalty
+    import random
+
+    reward = REWARD_CONFIG["step_penalty"]  # Base step penalty (-1)
 
     # Parse IIS constraints if provided
     current_iis = []
     if iis_constraints:
         try:
             import json
-            current_iis = json.loads(iis_constraints) if isinstance(iis_constraints, str) else iis_constraints
+            iis_data = json.loads(iis_constraints) if isinstance(iis_constraints, str) else iis_constraints
+            if isinstance(iis_data, list):
+                current_iis = [str(c).lower() for c in iis_data]
         except:
             pass
 
     # Bonus for targeting IIS constraints
-    if parsed.action_type in ["RELAX_CONSTRAINT", "DROP_CONSTRAINT"]:
-        if parsed.target and parsed.target in current_iis:
-            # Targeting an actual IIS constraint - good!
-            reward += REWARD_CONFIG["iis_reduction_reward"]
-        elif parsed.target:
-            # Targeting non-IIS constraint - suboptimal but not wrong
-            reward += 2.0
+    if parsed.action_type in ["RELAX_CONSTRAINT", "DROP_CONSTRAINT", "UPDATE_RHS"]:
+        if parsed.target:
+            target_lower = parsed.target.lower()
+            # Check if target matches any IIS constraint (case-insensitive)
+            if any(target_lower == iis_c or target_lower in iis_c or iis_c in target_lower
+                   for iis_c in current_iis):
+                # Targeting an actual IIS constraint - excellent!
+                reward += REWARD_CONFIG["iis_reduction_reward"]  # +10
+                # Bonus for DROP vs RELAX (DROP more decisive)
+                if parsed.action_type == "DROP_CONSTRAINT":
+                    reward += 5.0
+            elif current_iis:
+                # Have IIS info but targeting wrong constraint
+                reward += 1.0  # Small credit for trying
+            else:
+                # No IIS info available, give benefit of doubt
+                reward += 3.0
+        else:
+            # No target specified
+            reward -= 2.0
+
+    elif parsed.action_type == "GET_IIS":
+        # Gathering diagnostic info is always good
+        reward += 3.0
+
+    # Small random component
+    reward += random.uniform(-0.5, 0.5)
 
     return reward
 
