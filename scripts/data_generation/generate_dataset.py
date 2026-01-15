@@ -6,7 +6,7 @@ Documentation: docs/directions/A_OR_Debug_Bench/A3_Data_Generation.md
 
 This script generates synthetic OR debugging datasets by:
 1. Creating simple feasible LP/MIP optimization models
-2. Using SaboteurAgent to inject controlled errors (Type A-F)
+2. Using SaboteurAgent to inject controlled errors (Type A-I)
 3. Saving models as MPS files and metadata as JSON
 4. Generating dataset statistics and validation reports
 
@@ -14,6 +14,9 @@ Error Types:
     - A-D: Standard errors (single-fix, IIS visible)
     - E: Multi-Constraint Conflict (requires 2+ fixes)
     - F: Hidden Dependency (root cause not in IIS)
+    - G: Cascading Conflict (fixing one causes another) [MDP-advantage]
+    - H: IIS-Incomplete (IIS shows symptom, not root cause) [MDP-advantage]
+    - I: Optimal Selection (multiple fixes, one preserves objective) [MDP-advantage]
 
 Usage:
     # Generate 20 problems with standard error types
@@ -22,15 +25,18 @@ Usage:
     # Generate with hard problems (Type E/F)
     python scripts/data_generation/generate_dataset.py --error_types A,B,C,D,E,F --n_problems 60
 
-    # Generate only hard problems
-    python scripts/data_generation/generate_dataset.py --error_types E,F --n_problems 20
+    # Generate only MDP-advantage problems (Type G/H/I)
+    python scripts/data_generation/generate_dataset.py --error_types G,H,I --n_problems 30
+
+    # Generate with --include_mdp flag for all types including G/H/I
+    python scripts/data_generation/generate_dataset.py --include_mdp --n_problems 100
 
     # Validate existing dataset
     python scripts/data_generation/generate_dataset.py --validate data/synthetic/debug_bench_v1/dataset.json
 
 Author: Ruicheng Ao
 Created: 2026-01-11
-Updated: 2026-01-14 (Added Type E/F support)
+Updated: 2026-01-15 (Added Type G/H/I support for MDP-advantage problems)
 """
 
 import argparse
@@ -311,13 +317,23 @@ def generate_problem_description(
         "C": "Logic Error (Missing Term)",
         "D": "Conflicting Constraint",
         "E": "Multi-Constraint Conflict (requires 2+ fixes)",
-        "F": "Hidden Dependency (root cause not directly visible)"
+        "F": "Hidden Dependency (root cause not directly visible)",
+        "G": "Cascading Conflict (fixing one constraint causes another to conflict)",
+        "H": "IIS-Incomplete (IIS shows symptom, not root cause)",
+        "I": "Optimal Selection (multiple fixes possible, one preserves objective)"
     }
 
     error_name = error_names.get(error_type, 'Unknown')
 
-    # Type E/F are harder problems
-    if error_type in ["E", "F"]:
+    # Type E/F are harder problems, Type G/H/I are MDP-advantage problems
+    if error_type in ["G", "H", "I"]:
+        return (
+            f"Linear programming problem {problem_id} with {n_vars} variables "
+            f"and {n_constraints} constraints. Contains a {error_name} "
+            f"that makes the model infeasible. This is an MDP-advantage problem "
+            f"requiring strategic multi-step reasoning - single-step repairs will fail."
+        )
+    elif error_type in ["E", "F"]:
         return (
             f"Linear programming problem {problem_id} with {n_vars} variables "
             f"and {n_constraints} constraints. Contains a {error_name} "
@@ -590,13 +606,19 @@ def main():
         "--error_types",
         type=str,
         default="A,B,C,D",
-        help="Comma-separated error types (default: A,B,C,D). Use A,B,C,D,E,F for all types including hard problems."
+        help="Comma-separated error types (default: A,B,C,D). Use A-I for all types."
     )
 
     parser.add_argument(
         "--include_hard",
         action="store_true",
         help="Include hard problem types (E: Multi-Constraint, F: Hidden Dependency)"
+    )
+
+    parser.add_argument(
+        "--include_mdp",
+        action="store_true",
+        help="Include MDP-advantage problem types (G: Cascading, H: IIS-Incomplete, I: Optimal Selection)"
     )
 
     parser.add_argument(
@@ -655,6 +677,12 @@ def main():
     # 如果指定include_hard，添加E和F类型
     if args.include_hard and 'E' not in error_types:
         error_types.extend(['E', 'F'])
+
+    # 如果指定include_mdp，添加G, H, I类型
+    if args.include_mdp:
+        for t in ['G', 'H', 'I']:
+            if t not in error_types:
+                error_types.append(t)
 
     problem_types = args.problem_types.split(',')
 

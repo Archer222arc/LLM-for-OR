@@ -73,7 +73,7 @@ class SaboteurAgent:
         Inject a specific type of error.
 
         Args:
-            error_type: One of "A", "B", "C", "D", "E", "F"
+            error_type: One of "A", "B", "C", "D", "E", "F", "G", "H", "I"
 
         Returns:
             InjectionResult with details of the injection
@@ -85,24 +85,30 @@ class SaboteurAgent:
             "D": self.inject_type_d,
             "E": self.inject_type_e,
             "F": self.inject_type_f,
+            "G": self.inject_type_g,
+            "H": self.inject_type_h,
+            "I": self.inject_type_i,
         }
 
         if error_type not in type_map:
-            raise ValueError(f"Unknown error type: {error_type}. Must be A, B, C, D, E, or F")
+            raise ValueError(f"Unknown error type: {error_type}. Must be A-I")
 
         return type_map[error_type]()
 
-    def inject_random_error(self, include_hard: bool = False) -> InjectionResult:
+    def inject_random_error(self, include_hard: bool = False, include_mdp: bool = False) -> InjectionResult:
         """
         Inject a random error type.
 
         Args:
             include_hard: If True, include Type E and F (harder problems)
+            include_mdp: If True, include Type G, H, I (MDP-advantage problems)
 
         Returns:
             InjectionResult with details of the injection
         """
-        if include_hard:
+        if include_mdp:
+            error_type = random.choice(["A", "B", "C", "D", "E", "F", "G", "H", "I"])
+        elif include_hard:
             error_type = random.choice(["A", "B", "C", "D", "E", "F"])
         else:
             error_type = random.choice(["A", "B", "C", "D"])
@@ -116,7 +122,7 @@ class SaboteurAgent:
         selection strategies (slack-based, sensitivity analysis, etc.)
 
         Args:
-            error_type: One of "A", "B", "C", "D", "E", "F"
+            error_type: One of "A", "B", "C", "D", "E", "F", "G", "H", "I"
 
         Returns:
             InjectionResult with details of the injection
@@ -128,24 +134,30 @@ class SaboteurAgent:
             "D": self.inject_type_d_robust,
             "E": self.inject_type_e_robust,
             "F": self.inject_type_f_robust,
+            "G": self.inject_type_g_robust,
+            "H": self.inject_type_h_robust,
+            "I": self.inject_type_i_robust,
         }
 
         if error_type not in type_map:
-            raise ValueError(f"Unknown error type: {error_type}. Must be A, B, C, D, E, or F")
+            raise ValueError(f"Unknown error type: {error_type}. Must be A-I")
 
         return type_map[error_type]()
 
-    def inject_random_error_robust(self, include_hard: bool = False) -> InjectionResult:
+    def inject_random_error_robust(self, include_hard: bool = False, include_mdp: bool = False) -> InjectionResult:
         """
         Inject a random error type using robust methods.
 
         Args:
             include_hard: If True, include Type E and F (harder problems)
+            include_mdp: If True, include Type G, H, I (MDP-advantage problems)
 
         Returns:
             InjectionResult with details of the injection
         """
-        if include_hard:
+        if include_mdp:
+            error_type = random.choice(["A", "B", "C", "D", "E", "F", "G", "H", "I"])
+        elif include_hard:
             error_type = random.choice(["A", "B", "C", "D", "E", "F"])
         else:
             error_type = random.choice(["A", "B", "C", "D"])
@@ -1489,6 +1501,559 @@ class SaboteurAgent:
                 "impossible_bound": impossible_bound,
                 "root_cause_in_iis": root_cause_in_iis,
                 "reasoning_required": not root_cause_in_iis,
+            },
+            difficulty=difficulty,
+            iis_size=iis_size,
+            iis_constraints=iis_constraints,
+            iis_bounds=iis_bounds,
+            original_objective=original_objective
+        )
+
+        self._injection_history.append(result)
+        return result
+
+    # =========================================================================
+    # Type G: Cascading Conflict (fixing one causes another)
+    # =========================================================================
+
+    def inject_type_g(self) -> InjectionResult:
+        """
+        Type G: Create cascading conflict where fixing one constraint causes another.
+
+        The "obvious" fix from IIS causes a new conflict. Requires multi-step
+        reasoning to predict cascading effects.
+
+        Strategy:
+        1. Create constraint A that conflicts with existing constraint B
+        2. Dropping/relaxing A seems like fix, but reveals conflict with C
+        3. Model must predict cascade and choose correct repair strategy
+
+        Returns:
+            InjectionResult with injection details
+        """
+        return self.inject_type_g_robust()
+
+    def inject_type_g_robust(self) -> InjectionResult:
+        """
+        Type G Robust: Cascading conflict with guaranteed multi-step requirement.
+
+        Creates structure:
+        - Constraint G1: x <= small_value (will be in initial IIS)
+        - Constraint G2: x >= medium_value (hidden, activates after G1 fix)
+        - Constraint G3: x <= large_value (original bound)
+
+        Fixing G1 alone reveals G2 conflict. Must fix both G1 and G2.
+
+        Returns:
+            InjectionResult with injection details
+        """
+        # Get original objective before modification
+        original_state = self._solver.solve()
+        original_objective = original_state.objective if original_state.status == "OPTIMAL" else None
+
+        if original_state.status != "OPTIMAL":
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_G,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "Original model not optimal"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Find a variable with reasonable optimal value
+        target_var = None
+        target_val = None
+        for v in self._model.getVars():
+            try:
+                if 1 < abs(v.X) < 50:  # Reasonable range for cascade demo
+                    target_var = v
+                    target_val = v.X
+                    break
+            except gp.GurobiError:
+                pass
+
+        if target_var is None:
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_G,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "No suitable variable found for cascade"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Create cascading constraints:
+        # G1: x <= target_val - 5 (first conflict, obvious in IIS)
+        # G2: x >= target_val + 5 (second conflict, hidden initially)
+        # Together: x <= val-5 AND x >= val+5 is impossible
+
+        g1_name = f"_cascade_upper_{target_var.VarName}"
+        g2_name = f"_cascade_lower_{target_var.VarName}"
+
+        upper_rhs = target_val - 5
+        lower_rhs = target_val + 5
+
+        # Add G1 first (will show in initial IIS)
+        g1_constr = self._model.addConstr(
+            target_var <= upper_rhs,
+            name=g1_name
+        )
+
+        # Add G2 (the hidden cascade constraint)
+        g2_constr = self._model.addConstr(
+            target_var >= lower_rhs,
+            name=g2_name
+        )
+
+        self._model.update()
+        state = self._solver.solve()
+
+        if state.status not in ["INFEASIBLE", "INF_OR_UNBD"]:
+            # Clean up and fail
+            self._model.remove(g1_constr)
+            self._model.remove(g2_constr)
+            self._model.update()
+
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_G,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status=state.status,
+                ground_truth_fix="",
+                metadata={"reason": "Cascade constraints did not cause infeasibility"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Get IIS info
+        iis_constraints, iis_bounds, iis_size = self._compute_iis_info(self._model)
+        difficulty = Difficulty.HARD  # Type G is always hard
+
+        # Check which constraint appears in IIS (should be both, but model may only see one)
+        g1_in_iis = g1_name in iis_constraints
+        g2_in_iis = g2_name in iis_constraints
+
+        # Ground truth: Both constraints must be handled
+        # But the "cascade" aspect is that fixing just G1 seems right until G2 is revealed
+        fix = (
+            f"CASCADING CONFLICT: IIS may show '{g1_name}', but fixing it alone "
+            f"will reveal conflict with '{g2_name}'. Must remove BOTH constraints, "
+            f"or analyze why both exist before choosing repair."
+        )
+
+        result = InjectionResult(
+            success=True,
+            error_type=ErrorType.TYPE_G,
+            target_name=f"{g1_name},{g2_name}",
+            original_value=f"{target_var.VarName} = {target_val:.2f}",
+            modified_value=f"x <= {upper_rhs} AND x >= {lower_rhs}",
+            solver_status="INFEASIBLE",
+            ground_truth_fix=fix,
+            metadata={
+                "cascade_constraint_1": g1_name,
+                "cascade_constraint_2": g2_name,
+                "target_variable": target_var.VarName,
+                "original_value": target_val,
+                "upper_rhs": upper_rhs,
+                "lower_rhs": lower_rhs,
+                "g1_in_initial_iis": g1_in_iis,
+                "g2_in_initial_iis": g2_in_iis,
+                "requires_multi_step": True,
+                "cascade_trap": "Fixing G1 alone reveals G2",
+            },
+            difficulty=difficulty,
+            iis_size=iis_size,
+            iis_constraints=iis_constraints,
+            iis_bounds=iis_bounds,
+            original_objective=original_objective
+        )
+
+        self._injection_history.append(result)
+        return result
+
+    # =========================================================================
+    # Type H: IIS-Incomplete (IIS shows symptom, not root cause)
+    # =========================================================================
+
+    def inject_type_h(self) -> InjectionResult:
+        """
+        Type H: Create situation where IIS shows symptom, not root cause.
+
+        The constraints in IIS are "victims" of the real problem.
+        Fixing them only treats symptoms - need to find actual root cause.
+
+        Strategy:
+        1. Add derived constraint that depends on a variable bound
+        2. Tighten the variable bound (root cause)
+        3. IIS shows derived constraint, not the bound change
+
+        Returns:
+            InjectionResult with injection details
+        """
+        return self.inject_type_h_robust()
+
+    def inject_type_h_robust(self) -> InjectionResult:
+        """
+        Type H Robust: IIS-incomplete with clear symptom/root-cause separation.
+
+        Creates structure:
+        - Original: x can take values in [0, 100]
+        - Root cause: Tighten x >= 80 (not directly visible)
+        - Symptom constraint: x + y <= 50 (this shows in IIS)
+        - The IIS shows symptom, but root cause is the bound
+
+        Model must use CHECK_SLACK or other diagnosis to find root cause.
+
+        Returns:
+            InjectionResult with injection details
+        """
+        # Get original objective before modification
+        original_state = self._solver.solve()
+        original_objective = original_state.objective if original_state.status == "OPTIMAL" else None
+
+        if original_state.status != "OPTIMAL":
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_H,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "Original model not optimal"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Find a variable with moderate optimal value
+        target_var = None
+        target_val = None
+        for v in self._model.getVars():
+            try:
+                if 0 < v.X < 50 and v.LB >= 0:  # Has room to tighten LB
+                    target_var = v
+                    target_val = v.X
+                    break
+            except gp.GurobiError:
+                pass
+
+        if target_var is None:
+            # Fallback: create our own variable
+            target_var = self._model.addVar(lb=0, ub=100, name="_iis_incomplete_var")
+            self._model.update()
+            self._model.setParam('OutputFlag', 0)
+            self._model.optimize()
+            try:
+                target_val = target_var.X if self._model.Status == gp.GRB.OPTIMAL else 10
+            except:
+                target_val = 10
+
+        # Store original LB
+        original_lb = target_var.LB
+
+        # ROOT CAUSE: Tighten the lower bound dramatically
+        # If target_val = 10, set LB = 80 (impossible given other constraints)
+        new_lb = max(target_val * 5, 50)  # Make it clearly impossible
+
+        # Add a symptom constraint that will be violated due to high LB
+        # symptom: target_var <= target_val + small_margin
+        symptom_name = f"_symptom_constr_{target_var.VarName}"
+        symptom_rhs = target_val + 5
+        symptom_constr = self._model.addConstr(
+            target_var <= symptom_rhs,
+            name=symptom_name
+        )
+
+        # Apply root cause: tighten LB
+        target_var.LB = new_lb
+        self._model.update()
+
+        state = self._solver.solve()
+
+        if state.status not in ["INFEASIBLE", "INF_OR_UNBD"]:
+            # Clean up and fail
+            target_var.LB = original_lb
+            self._model.remove(symptom_constr)
+            self._model.update()
+
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_H,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status=state.status,
+                ground_truth_fix="",
+                metadata={"reason": "IIS-incomplete setup did not cause infeasibility"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Get IIS info
+        iis_constraints, iis_bounds, iis_size = self._compute_iis_info(self._model)
+        difficulty = Difficulty.HARD  # Type H is always hard
+
+        # Check what's in IIS
+        symptom_in_iis = symptom_name in iis_constraints
+        bound_in_iis = target_var.VarName in iis_bounds
+
+        # The fix is to restore the original LB, NOT to drop the symptom constraint
+        fix = (
+            f"IIS-INCOMPLETE: The symptom constraint '{symptom_name}' appears to be the problem, "
+            f"but the ROOT CAUSE is the tightened lower bound on '{target_var.VarName}' "
+            f"(changed from {original_lb} to {new_lb}). "
+            f"Restore {target_var.VarName}.LB = {original_lb}, don't just drop '{symptom_name}'."
+        )
+
+        result = InjectionResult(
+            success=True,
+            error_type=ErrorType.TYPE_H,
+            target_name=target_var.VarName,
+            original_value=f"LB = {original_lb}",
+            modified_value=f"LB = {new_lb}",
+            solver_status="INFEASIBLE",
+            ground_truth_fix=fix,
+            metadata={
+                "root_cause": f"{target_var.VarName}.LB",
+                "root_cause_type": "variable_bound",
+                "original_lb": original_lb,
+                "new_lb": new_lb,
+                "symptom_constraint": symptom_name,
+                "symptom_in_iis": symptom_in_iis,
+                "bound_in_iis": bound_in_iis,
+                "requires_diagnosis": True,
+                "wrong_fix": f"Dropping '{symptom_name}' treats symptom, not cause",
+            },
+            difficulty=difficulty,
+            iis_size=iis_size,
+            iis_constraints=iis_constraints,
+            iis_bounds=iis_bounds,
+            original_objective=original_objective
+        )
+
+        self._injection_history.append(result)
+        return result
+
+    # =========================================================================
+    # Type I: Optimal Selection (multiple fixes, one preserves optimality)
+    # =========================================================================
+
+    def inject_type_i(self) -> InjectionResult:
+        """
+        Type I: Create situation where multiple fixes work, but only one preserves optimality.
+
+        Several repair options restore feasibility, but with different
+        impacts on the objective value. Model must choose wisely.
+
+        Strategy:
+        1. Tighten a binding constraint (makes model infeasible)
+        2. Multiple relaxation amounts restore feasibility
+        3. Only the correct amount preserves original objective
+
+        Returns:
+            InjectionResult with injection details
+        """
+        return self.inject_type_i_robust()
+
+    def inject_type_i_robust(self) -> InjectionResult:
+        """
+        Type I Robust: Optimal selection with clear OP differentiation.
+
+        Creates a situation where multiple fixes restore feasibility but with
+        different impacts on the objective value. Only one fix preserves the
+        original optimal objective.
+
+        Strategy:
+        1. Create upper AND lower bounds on a variable to lock it near optimal
+        2. Tighten the upper bound below the lower bound (guaranteed infeasible)
+        3. Fixing by relaxing to different values has different OP impacts
+
+        Returns:
+            InjectionResult with injection details
+        """
+        # Get original objective before modification
+        original_state = self._solver.solve()
+        original_objective = original_state.objective if original_state.status == "OPTIMAL" else None
+
+        if original_state.status != "OPTIMAL" or original_objective is None:
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_I,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "Original model not optimal or no objective"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Find variable with positive optimal value
+        target_var = None
+        target_val = None
+        for v in self._model.getVars():
+            try:
+                if 1.0 < v.X < 100:  # Variable with positive value
+                    target_var = v
+                    target_val = v.X
+                    break
+            except gp.GurobiError:
+                pass
+
+        if target_var is None:
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_I,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "No variable with positive optimal value found"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Create a tight box around the optimal value:
+        # lower_bound <= x <= upper_bound
+        # where upper_bound is slightly above optimal, lower_bound slightly below
+        margin = max(0.5, abs(target_val) * 0.1)
+
+        lower_name = f"_optimal_lower_{target_var.VarName}"
+        upper_name = f"_optimal_upper_{target_var.VarName}"
+
+        original_lower = target_val - margin
+        original_upper = target_val + margin
+
+        # Add lower bound constraint
+        lower_constr = self._model.addConstr(
+            target_var >= original_lower,
+            name=lower_name
+        )
+
+        # Add upper bound constraint (this will be tightened)
+        upper_constr = self._model.addConstr(
+            target_var <= original_upper,
+            name=upper_name
+        )
+
+        self._model.update()
+
+        # Verify model is still optimal
+        self._model.setParam('OutputFlag', 0)
+        self._model.optimize()
+
+        if self._model.Status != gp.GRB.OPTIMAL:
+            self._model.remove(lower_constr)
+            self._model.remove(upper_constr)
+            self._model.update()
+
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_I,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "Box constraints made model infeasible"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # INJECTION: Tighten upper bound BELOW the lower bound
+        # x >= original_lower AND x <= tight_upper (where tight_upper < original_lower)
+        tight_upper = original_lower - margin * 2  # Guaranteed impossible
+
+        upper_constr.RHS = tight_upper
+        self._model.update()
+
+        state = self._solver.solve()
+
+        if state.status not in ["INFEASIBLE", "INF_OR_UNBD"]:
+            # This shouldn't happen but clean up if it does
+            self._model.remove(lower_constr)
+            self._model.remove(upper_constr)
+            self._model.update()
+
+            result = InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_I,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status=state.status,
+                ground_truth_fix="",
+                metadata={"reason": "Conflicting bounds did not cause infeasibility"},
+            )
+            self._injection_history.append(result)
+            return result
+
+        # Get IIS info
+        iis_constraints, iis_bounds, iis_size = self._compute_iis_info(self._model)
+        difficulty = Difficulty.HARD  # Type I requires reasoning about OP
+
+        # Define fix options with their OP impacts
+        fix_options = {
+            "DROP_UPPER": {
+                "action": f"DROP {upper_name}",
+                "op_impact": "OP varies (removes upper bound entirely)",
+            },
+            "DROP_LOWER": {
+                "action": f"DROP {lower_name}",
+                "op_impact": "OP = 0 (allows x to go too low, changes objective)",
+            },
+            "RELAX_LARGE": {
+                "action": f"RELAX {upper_name} to RHS = {target_val * 3}",
+                "op_impact": "OP ~ 0.5 (too loose, objective can change)",
+            },
+            "RELAX_CORRECT": {
+                "action": f"RELAX {upper_name} to RHS = {original_upper}",
+                "op_impact": "OP = 1.0 (restores original optimal box)",
+            },
+        }
+
+        fix = (
+            f"OPTIMAL SELECTION: The upper bound '{upper_name}' was tightened from "
+            f"{original_upper:.2f} to {tight_upper:.2f}, conflicting with lower bound '{lower_name}' "
+            f"({original_lower:.2f}). Multiple fixes restore feasibility:\n"
+            f"  - SUBOPTIMAL: {fix_options['DROP_LOWER']['action']} -> {fix_options['DROP_LOWER']['op_impact']}\n"
+            f"  - SUBOPTIMAL: {fix_options['RELAX_LARGE']['action']} -> {fix_options['RELAX_LARGE']['op_impact']}\n"
+            f"  - CORRECT: {fix_options['RELAX_CORRECT']['action']} -> {fix_options['RELAX_CORRECT']['op_impact']}"
+        )
+
+        result = InjectionResult(
+            success=True,
+            error_type=ErrorType.TYPE_I,
+            target_name=upper_name,
+            original_value=f"RHS = {original_upper:.2f}",
+            modified_value=f"RHS = {tight_upper:.2f}",
+            solver_status="INFEASIBLE",
+            ground_truth_fix=fix,
+            metadata={
+                "upper_constraint": upper_name,
+                "lower_constraint": lower_name,
+                "target_variable": target_var.VarName,
+                "optimal_value": target_val,
+                "original_upper": original_upper,
+                "original_lower": original_lower,
+                "tight_upper": tight_upper,
+                "original_objective": original_objective,
+                "fix_options": fix_options,
+                "requires_op_reasoning": True,
+                "best_fix": "RELAX_CORRECT",
             },
             difficulty=difficulty,
             iis_size=iis_size,

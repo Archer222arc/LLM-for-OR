@@ -36,6 +36,9 @@ class ErrorType(Enum):
     Type D: Conflict Error - Adding contradicting constraints
     Type E: Multi-Constraint Conflict - Requires fixing 2+ constraints
     Type F: Hidden Dependency - Root cause not directly in IIS
+    Type G: Cascading Conflict - Fixing one constraint causes another to conflict
+    Type H: IIS-Incomplete - IIS shows symptom, not root cause
+    Type I: Optimal Selection - Multiple fixes work, only one preserves optimality
     """
 
     TYPE_A = "A"  # Bound Error: Flip constraint sense
@@ -44,6 +47,9 @@ class ErrorType(Enum):
     TYPE_D = "D"  # Conflict Error: Add contradicting constraint
     TYPE_E = "E"  # Multi-Constraint: Multiple fixes required
     TYPE_F = "F"  # Hidden Dependency: Indirect root cause
+    TYPE_G = "G"  # Cascading Conflict: Repair causes new conflict
+    TYPE_H = "H"  # IIS-Incomplete: IIS shows symptom not root cause
+    TYPE_I = "I"  # Optimal Selection: Multiple repairs, one preserves objective
 
     @property
     def description(self) -> str:
@@ -55,6 +61,9 @@ class ErrorType(Enum):
             "D": "Conflict Error - Contradicting constraint addition",
             "E": "Multi-Constraint Conflict - Requires fixing 2+ constraints",
             "F": "Hidden Dependency - Root cause not directly visible in IIS",
+            "G": "Cascading Conflict - Fixing one constraint causes another to conflict",
+            "H": "IIS-Incomplete - IIS shows symptom constraint, not root cause",
+            "I": "Optimal Selection - Multiple fixes possible, one preserves objective",
         }
         return descriptions[self.value]
 
