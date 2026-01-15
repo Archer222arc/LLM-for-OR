@@ -5,8 +5,12 @@ Research Direction: Direction A (OR-Debug-Bench)
 Documentation: docs/directions/A_OR_Debug_Bench/A3_Data_Generation.md
 
 Key Components:
-    - ErrorType: Enum for error categories (A-D)
+    - ErrorType: Enum for error categories (A-I)
+        - A-D: Standard single-fix errors
+        - E-F: Hard problems (multi-constraint, hidden dependency)
+        - G-I: MDP-advantage problems (cascading, IIS-incomplete, optimal selection)
     - InjectionResult: Result of error injection operation
+    - Difficulty: Classification based on IIS size (easy/medium/hard)
 
 Example:
     >>> from src.data_generation.error_types import ErrorType, InjectionResult
@@ -19,6 +23,8 @@ Example:
     ...     solver_status="INFEASIBLE",
     ...     ground_truth_fix="Change constraint_1 from >= back to <="
     ... )
+
+Updated: 2026-01-15 (Added Type G/H/I for MDP-advantage problems)
 """
 
 from dataclasses import dataclass, field

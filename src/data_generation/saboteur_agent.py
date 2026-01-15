@@ -6,13 +6,16 @@ Documentation: docs/directions/A_OR_Debug_Bench/A3_Data_Generation.md
 
 Key Components:
     - SaboteurAgent: Main class for error injection
-    - Six error types:
+    - Nine error types:
         - A (bound): Flip constraint direction
         - B (variable): Change variable type
         - C (logic): Remove/modify coefficients
         - D (conflict): Add contradicting constraint
         - E (multi-constraint): Requires 2+ fixes simultaneously
         - F (hidden dependency): Root cause not directly in IIS
+        - G (cascading): Fixing one constraint reveals another conflict
+        - H (IIS-incomplete): IIS shows symptom, not root cause (bound)
+        - I (optimal selection): Multiple fixes work, one preserves objective
 
 Example:
     >>> from src.solvers import GurobiSolver
@@ -21,6 +24,8 @@ Example:
     >>> saboteur = SaboteurAgent(solver)
     >>> result = saboteur.inject_type_a()
     >>> print(f"Injection success: {result.success}")
+
+Updated: 2026-01-15 (Added Type G/H/I for MDP-advantage problems)
 """
 
 import random
@@ -37,11 +42,16 @@ class SaboteurAgent:
     Injects controlled errors into feasible optimization models.
 
     The Saboteur Agent transforms feasible models into infeasible/unbounded
-    ones by injecting one of four error types:
+    ones by injecting one of nine error types:
     - Type A: Flip constraint direction (≤ ↔ ≥)
     - Type B: Change variable type (INTEGER ↔ CONTINUOUS)
     - Type C: Remove terms from constraint expressions
     - Type D: Add contradicting constraints
+    - Type E: Multi-constraint conflict (requires 2+ fixes)
+    - Type F: Hidden dependency (root cause not in IIS)
+    - Type G: Cascading conflict (fixing one reveals another)
+    - Type H: IIS-incomplete (bound is root cause, constraint is symptom)
+    - Type I: Optimal selection (multiple fixes, one preserves objective)
 
     Attributes:
         _solver: The GurobiSolver instance to modify
