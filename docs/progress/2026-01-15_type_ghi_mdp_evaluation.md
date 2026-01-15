@@ -137,6 +137,9 @@ Meanwhile, SFT remains stable (95.0% → 96.0% → 94.4%).
 3. **Investigate process reward models** - may need intermediate step feedback
 4. **Scale exploration** - try different model sizes or more training data
 
+> **Follow-up**: See [2026-01-15_randomized_naming_experiment.md](2026-01-15_randomized_naming_experiment.md)
+> for results of the randomized constraint naming experiment.
+
 ---
 
 ## Files

@@ -1,0 +1,33 @@
+============================================================
+Dataset Report: or_debug_bench_mdp_v2
+============================================================
+
+Created: 2026-01-15T16:56:02.873920
+Total Problems: 90
+Failed: 0
+Use Robust Methods: True
+
+Success Rates by Type:
+  Type G: 100.0% (30/30)
+  Type H: 100.0% (30/30)
+  Type I: 100.0% (30/30)
+
+Error Type Distribution:
+  Type G: 30
+  Type H: 30
+  Type I: 30
+
+Difficulty Distribution:
+  easy: 0 (0.0%)
+  hard: 90 (100.0%)
+  medium: 0 (0.0%)
+
+Initial Status Distribution:
+  INFEASIBLE: 90
+
+IIS Size:
+  min=1, max=2, avg=1.7
+
+Problem Size:
+  Variables: min=5, max=15, avg=8.7
+  Constraints: min=6, max=16, avg=10.0

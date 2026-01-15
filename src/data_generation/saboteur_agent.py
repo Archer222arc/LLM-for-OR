@@ -17,6 +17,13 @@ Key Components:
         - H (IIS-incomplete): IIS shows symptom, not root cause (bound)
         - I (optimal selection): Multiple fixes work, one preserves objective
 
+Constraint Naming (Anti-Pattern-Matching):
+    Type G/H/I use randomized UUID-based constraint names to prevent
+    models from pattern-matching on predictable naming:
+    - Type G: c_{6hex}_ub, c_{6hex}_lb (e.g., c_53e476_ub)
+    - Type H: constr_{6hex} (e.g., constr_113e75)
+    - Type I: bound_{6hex}_l, bound_{6hex}_u (e.g., bound_3f48c5_l)
+
 Example:
     >>> from src.solvers import GurobiSolver
     >>> from src.data_generation import SaboteurAgent
@@ -25,7 +32,7 @@ Example:
     >>> result = saboteur.inject_type_a()
     >>> print(f"Injection success: {result.success}")
 
-Updated: 2026-01-15 (Added Type G/H/I for MDP-advantage problems)
+Updated: 2026-01-15 (UUID-based randomized constraint naming for Type G/H/I)
 """
 
 import random
