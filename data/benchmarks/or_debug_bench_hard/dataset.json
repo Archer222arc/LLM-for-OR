@@ -1,0 +1,2756 @@
+{
+  "dataset_name": "or_debug_bench_hard",
+  "description": "Synthetic OR debugging benchmark generated with SaboteurAgent (robust methods)",
+  "created_at": "2026-01-15T05:56:07.564257",
+  "num_problems": 100,
+  "num_failed": 0,
+  "error_types": [
+    "E",
+    "F"
+  ],
+  "problem_types": [
+    "lp",
+    "mip"
+  ],
+  "seed": 2026,
+  "use_robust": true,
+  "success_by_type": {
+    "E": 50,
+    "F": 50
+  },
+  "fail_by_type": {
+    "E": 0,
+    "F": 0
+  },
+  "success_rates": {
+    "E": 1.0,
+    "F": 1.0
+  },
+  "difficulty_distribution": {
+    "easy": 0,
+    "medium": 0,
+    "hard": 100
+  },
+  "problems": [
+    {
+      "problem_id": "lp_typeE_000",
+      "model_file": "models/lp_typeE_000.mps",
+      "problem_nl": "Linear programming problem lp_typeE_000 with 9 variables and 12 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x2_x3 AND _multi_constr_lower_x2_x3. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x2_x3,_multi_constr_lower_x2_x3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 60.28544896820545,
+      "n_variables": 9,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_multi_constr_upper_x2_x3",
+        "_multi_constr_lower_x2_x3"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.364729"
+    },
+    {
+      "problem_id": "mip_typeE_001",
+      "model_file": "models/mip_typeE_001.mps",
+      "problem_nl": "Linear programming problem mip_typeE_001 with 15 variables and 10 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x3_x5 AND _multi_constr_lower_x3_x5. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x3_x5,_multi_constr_lower_x3_x5",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 103.79504149284948,
+      "n_variables": 15,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_multi_constr_lower_x3_x5"
+      ],
+      "iis_bounds": [
+        "x3",
+        "x5"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.368832"
+    },
+    {
+      "problem_id": "mip_typeE_002",
+      "model_file": "models/mip_typeE_002.mps",
+      "problem_nl": "Linear programming problem mip_typeE_002 with 9 variables and 10 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 58.75215998014701,
+      "n_variables": 9,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.371562"
+    },
+    {
+      "problem_id": "mip_typeE_003",
+      "model_file": "models/mip_typeE_003.mps",
+      "problem_nl": "Linear programming problem mip_typeE_003 with 11 variables and 11 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 80.23839159272256,
+      "n_variables": 11,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.375097"
+    },
+    {
+      "problem_id": "mip_typeE_004",
+      "model_file": "models/mip_typeE_004.mps",
+      "problem_nl": "Linear programming problem mip_typeE_004 with 10 variables and 9 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x2 AND _multi_constr_lower_x0_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x2,_multi_constr_lower_x0_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 66.23411804057861,
+      "n_variables": 10,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x2",
+        "_multi_constr_lower_x0_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.377991"
+    },
+    {
+      "problem_id": "mip_typeE_005",
+      "model_file": "models/mip_typeE_005.mps",
+      "problem_nl": "Linear programming problem mip_typeE_005 with 14 variables and 12 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 95.2221759831994,
+      "n_variables": 14,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.383210"
+    },
+    {
+      "problem_id": "lp_typeE_006",
+      "model_file": "models/lp_typeE_006.mps",
+      "problem_nl": "Linear programming problem lp_typeE_006 with 7 variables and 11 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 30.797637269505852,
+      "n_variables": 7,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.384749"
+    },
+    {
+      "problem_id": "lp_typeE_007",
+      "model_file": "models/lp_typeE_007.mps",
+      "problem_nl": "Linear programming problem lp_typeE_007 with 9 variables and 11 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x3 AND _multi_constr_lower_x0_x3. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x3,_multi_constr_lower_x0_x3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 46.65618934459507,
+      "n_variables": 9,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x3"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x3"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.386409"
+    },
+    {
+      "problem_id": "lp_typeE_008",
+      "model_file": "models/lp_typeE_008.mps",
+      "problem_nl": "Linear programming problem lp_typeE_008 with 5 variables and 10 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x2_x3 AND _multi_constr_lower_x2_x3. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x2_x3,_multi_constr_lower_x2_x3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 32.303350064453134,
+      "n_variables": 5,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_multi_constr_upper_x2_x3",
+        "_multi_constr_lower_x2_x3"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.387674"
+    },
+    {
+      "problem_id": "lp_typeE_009",
+      "model_file": "models/lp_typeE_009.mps",
+      "problem_nl": "Linear programming problem lp_typeE_009 with 9 variables and 10 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x3 AND _multi_constr_lower_x0_x3. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x3,_multi_constr_lower_x0_x3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 50.818486679683744,
+      "n_variables": 9,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x3",
+        "_multi_constr_lower_x0_x3"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.389235"
+    },
+    {
+      "problem_id": "lp_typeE_010",
+      "model_file": "models/lp_typeE_010.mps",
+      "problem_nl": "Linear programming problem lp_typeE_010 with 5 variables and 8 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 21.955629814239607,
+      "n_variables": 5,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.390352"
+    },
+    {
+      "problem_id": "lp_typeE_011",
+      "model_file": "models/lp_typeE_011.mps",
+      "problem_nl": "Linear programming problem lp_typeE_011 with 5 variables and 7 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 29.12993590177099,
+      "n_variables": 5,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.391399"
+    },
+    {
+      "problem_id": "lp_typeE_012",
+      "model_file": "models/lp_typeE_012.mps",
+      "problem_nl": "Linear programming problem lp_typeE_012 with 6 variables and 8 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 35.85730933635512,
+      "n_variables": 6,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.392575"
+    },
+    {
+      "problem_id": "lp_typeE_013",
+      "model_file": "models/lp_typeE_013.mps",
+      "problem_nl": "Linear programming problem lp_typeE_013 with 7 variables and 12 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 40.89049774948708,
+      "n_variables": 7,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_multi_constr_upper_x1_x2",
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.394107"
+    },
+    {
+      "problem_id": "lp_typeE_014",
+      "model_file": "models/lp_typeE_014.mps",
+      "problem_nl": "Linear programming problem lp_typeE_014 with 9 variables and 9 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x3 AND _multi_constr_lower_x0_x3. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x3,_multi_constr_lower_x0_x3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 57.008526523516174,
+      "n_variables": 9,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x3",
+        "_multi_constr_lower_x0_x3"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.395530"
+    },
+    {
+      "problem_id": "mip_typeE_015",
+      "model_file": "models/mip_typeE_015.mps",
+      "problem_nl": "Linear programming problem mip_typeE_015 with 12 variables and 12 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 79.49463168614368,
+      "n_variables": 12,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.398789"
+    },
+    {
+      "problem_id": "lp_typeE_016",
+      "model_file": "models/lp_typeE_016.mps",
+      "problem_nl": "Linear programming problem lp_typeE_016 with 8 variables and 11 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 44.386820628684816,
+      "n_variables": 8,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_multi_constr_upper_x1_x2",
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.400358"
+    },
+    {
+      "problem_id": "lp_typeE_017",
+      "model_file": "models/lp_typeE_017.mps",
+      "problem_nl": "Linear programming problem lp_typeE_017 with 6 variables and 8 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 25.71863891673402,
+      "n_variables": 6,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.401554"
+    },
+    {
+      "problem_id": "lp_typeE_018",
+      "model_file": "models/lp_typeE_018.mps",
+      "problem_nl": "Linear programming problem lp_typeE_018 with 7 variables and 9 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 37.8020276812317,
+      "n_variables": 7,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_multi_constr_upper_x1_x2",
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.402863"
+    },
+    {
+      "problem_id": "mip_typeE_019",
+      "model_file": "models/mip_typeE_019.mps",
+      "problem_nl": "Linear programming problem mip_typeE_019 with 8 variables and 15 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x2 AND _multi_constr_lower_x0_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x2,_multi_constr_lower_x0_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 55.47107588431223,
+      "n_variables": 8,
+      "n_constraints": 15,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x2"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x2"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.405735"
+    },
+    {
+      "problem_id": "lp_typeE_020",
+      "model_file": "models/lp_typeE_020.mps",
+      "problem_nl": "Linear programming problem lp_typeE_020 with 8 variables and 7 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x2_x5 AND _multi_constr_lower_x2_x5. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x2_x5,_multi_constr_lower_x2_x5",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 40.5295865790771,
+      "n_variables": 8,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_multi_constr_upper_x2_x5",
+        "_multi_constr_lower_x2_x5"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.406926"
+    },
+    {
+      "problem_id": "lp_typeE_021",
+      "model_file": "models/lp_typeE_021.mps",
+      "problem_nl": "Linear programming problem lp_typeE_021 with 7 variables and 9 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 44.41405527227001,
+      "n_variables": 7,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.408230"
+    },
+    {
+      "problem_id": "lp_typeE_022",
+      "model_file": "models/lp_typeE_022.mps",
+      "problem_nl": "Linear programming problem lp_typeE_022 with 7 variables and 8 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 34.5845675732,
+      "n_variables": 7,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_multi_constr_upper_x1_x2",
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.409466"
+    },
+    {
+      "problem_id": "lp_typeE_023",
+      "model_file": "models/lp_typeE_023.mps",
+      "problem_nl": "Linear programming problem lp_typeE_023 with 8 variables and 12 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 45.8689130036385,
+      "n_variables": 8,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.411084"
+    },
+    {
+      "problem_id": "mip_typeE_024",
+      "model_file": "models/mip_typeE_024.mps",
+      "problem_nl": "Linear programming problem mip_typeE_024 with 13 variables and 11 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 87.21481645977269,
+      "n_variables": 13,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.414487"
+    },
+    {
+      "problem_id": "lp_typeE_025",
+      "model_file": "models/lp_typeE_025.mps",
+      "problem_nl": "Linear programming problem lp_typeE_025 with 6 variables and 11 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 34.526399667360685,
+      "n_variables": 6,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.415895"
+    },
+    {
+      "problem_id": "mip_typeE_026",
+      "model_file": "models/mip_typeE_026.mps",
+      "problem_nl": "Linear programming problem mip_typeE_026 with 12 variables and 11 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x3 AND _multi_constr_lower_x1_x3. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x3,_multi_constr_lower_x1_x3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 74.48512153390088,
+      "n_variables": 12,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_multi_constr_upper_x1_x3",
+        "_multi_constr_lower_x1_x3"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.419699"
+    },
+    {
+      "problem_id": "lp_typeE_027",
+      "model_file": "models/lp_typeE_027.mps",
+      "problem_nl": "Linear programming problem lp_typeE_027 with 8 variables and 10 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x3 AND _multi_constr_lower_x0_x3. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x3,_multi_constr_lower_x0_x3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 47.07133731005746,
+      "n_variables": 8,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x3",
+        "_multi_constr_lower_x0_x3"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.421202"
+    },
+    {
+      "problem_id": "lp_typeE_028",
+      "model_file": "models/lp_typeE_028.mps",
+      "problem_nl": "Linear programming problem lp_typeE_028 with 8 variables and 12 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x3 AND _multi_constr_lower_x0_x3. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x3,_multi_constr_lower_x0_x3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 43.082427050426865,
+      "n_variables": 8,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x3"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x3"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.422819"
+    },
+    {
+      "problem_id": "lp_typeE_029",
+      "model_file": "models/lp_typeE_029.mps",
+      "problem_nl": "Linear programming problem lp_typeE_029 with 9 variables and 8 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 49.796455502154636,
+      "n_variables": 9,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.424104"
+    },
+    {
+      "problem_id": "lp_typeE_030",
+      "model_file": "models/lp_typeE_030.mps",
+      "problem_nl": "Linear programming problem lp_typeE_030 with 8 variables and 7 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 48.73759761323623,
+      "n_variables": 8,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_multi_constr_upper_x1_x2",
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.425281"
+    },
+    {
+      "problem_id": "lp_typeE_031",
+      "model_file": "models/lp_typeE_031.mps",
+      "problem_nl": "Linear programming problem lp_typeE_031 with 8 variables and 7 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 55.36090410053776,
+      "n_variables": 8,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.426424"
+    },
+    {
+      "problem_id": "mip_typeE_032",
+      "model_file": "models/mip_typeE_032.mps",
+      "problem_nl": "Linear programming problem mip_typeE_032 with 8 variables and 16 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 39.8404216206133,
+      "n_variables": 8,
+      "n_constraints": 16,
+      "iis_constraints": [
+        "_multi_constr_upper_x1_x2",
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.430226"
+    },
+    {
+      "problem_id": "lp_typeE_033",
+      "model_file": "models/lp_typeE_033.mps",
+      "problem_nl": "Linear programming problem lp_typeE_033 with 9 variables and 10 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x4_x5 AND _multi_constr_lower_x4_x5. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x4_x5,_multi_constr_lower_x4_x5",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 54.8602580105793,
+      "n_variables": 9,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_multi_constr_lower_x4_x5"
+      ],
+      "iis_bounds": [
+        "x4",
+        "x5"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.431751"
+    },
+    {
+      "problem_id": "lp_typeE_034",
+      "model_file": "models/lp_typeE_034.mps",
+      "problem_nl": "Linear programming problem lp_typeE_034 with 5 variables and 8 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x2 AND _multi_constr_lower_x0_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x2,_multi_constr_lower_x0_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 22.327917061107993,
+      "n_variables": 5,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x2",
+        "_multi_constr_lower_x0_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.432893"
+    },
+    {
+      "problem_id": "mip_typeE_035",
+      "model_file": "models/mip_typeE_035.mps",
+      "problem_nl": "Linear programming problem mip_typeE_035 with 10 variables and 9 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 58.45199660382141,
+      "n_variables": 10,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.435989"
+    },
+    {
+      "problem_id": "lp_typeE_036",
+      "model_file": "models/lp_typeE_036.mps",
+      "problem_nl": "Linear programming problem lp_typeE_036 with 9 variables and 12 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 64.26560053256425,
+      "n_variables": 9,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.437731"
+    },
+    {
+      "problem_id": "lp_typeE_037",
+      "model_file": "models/lp_typeE_037.mps",
+      "problem_nl": "Linear programming problem lp_typeE_037 with 10 variables and 7 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 56.91273017590729,
+      "n_variables": 10,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.439003"
+    },
+    {
+      "problem_id": "lp_typeE_038",
+      "model_file": "models/lp_typeE_038.mps",
+      "problem_nl": "Linear programming problem lp_typeE_038 with 5 variables and 9 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x2 AND _multi_constr_lower_x0_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x2,_multi_constr_lower_x0_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 30.567528517855266,
+      "n_variables": 5,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x2",
+        "_multi_constr_lower_x0_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.440175"
+    },
+    {
+      "problem_id": "mip_typeE_039",
+      "model_file": "models/mip_typeE_039.mps",
+      "problem_nl": "Linear programming problem mip_typeE_039 with 8 variables and 15 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 46.44630245818658,
+      "n_variables": 8,
+      "n_constraints": 15,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.444007"
+    },
+    {
+      "problem_id": "mip_typeE_040",
+      "model_file": "models/mip_typeE_040.mps",
+      "problem_nl": "Linear programming problem mip_typeE_040 with 12 variables and 10 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x3 AND _multi_constr_lower_x1_x3. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x3,_multi_constr_lower_x1_x3",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 79.06397744054263,
+      "n_variables": 12,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_multi_constr_lower_x1_x3"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x3"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.446575"
+    },
+    {
+      "problem_id": "lp_typeE_041",
+      "model_file": "models/lp_typeE_041.mps",
+      "problem_nl": "Linear programming problem lp_typeE_041 with 6 variables and 7 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 29.762105373446857,
+      "n_variables": 6,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.447674"
+    },
+    {
+      "problem_id": "mip_typeE_042",
+      "model_file": "models/mip_typeE_042.mps",
+      "problem_nl": "Linear programming problem mip_typeE_042 with 11 variables and 11 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 67.08870823941398,
+      "n_variables": 11,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_multi_constr_upper_x1_x2",
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.450509"
+    },
+    {
+      "problem_id": "mip_typeE_043",
+      "model_file": "models/mip_typeE_043.mps",
+      "problem_nl": "Linear programming problem mip_typeE_043 with 9 variables and 11 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x2 AND _multi_constr_lower_x0_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x2,_multi_constr_lower_x0_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 55.85325043055156,
+      "n_variables": 9,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x2",
+        "_multi_constr_lower_x0_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.453944"
+    },
+    {
+      "problem_id": "mip_typeE_044",
+      "model_file": "models/mip_typeE_044.mps",
+      "problem_nl": "Linear programming problem mip_typeE_044 with 8 variables and 10 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 55.62399820617952,
+      "n_variables": 8,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.457070"
+    },
+    {
+      "problem_id": "lp_typeE_045",
+      "model_file": "models/lp_typeE_045.mps",
+      "problem_nl": "Linear programming problem lp_typeE_045 with 8 variables and 7 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x1_x2 AND _multi_constr_lower_x1_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x1_x2,_multi_constr_lower_x1_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 50.385126089569965,
+      "n_variables": 8,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_multi_constr_lower_x1_x2"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.458247"
+    },
+    {
+      "problem_id": "lp_typeE_046",
+      "model_file": "models/lp_typeE_046.mps",
+      "problem_nl": "Linear programming problem lp_typeE_046 with 8 variables and 7 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x2 AND _multi_constr_lower_x0_x2. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x2,_multi_constr_lower_x0_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 42.92941147988433,
+      "n_variables": 8,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x2",
+        "_multi_constr_lower_x0_x2"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.459417"
+    },
+    {
+      "problem_id": "mip_typeE_047",
+      "model_file": "models/mip_typeE_047.mps",
+      "problem_nl": "Linear programming problem mip_typeE_047 with 15 variables and 10 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 106.39067596605602,
+      "n_variables": 15,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.462966"
+    },
+    {
+      "problem_id": "mip_typeE_048",
+      "model_file": "models/mip_typeE_048.mps",
+      "problem_nl": "Linear programming problem mip_typeE_048 with 8 variables and 9 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x5 AND _multi_constr_lower_x0_x5. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x5,_multi_constr_lower_x0_x5",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 58.35343992142869,
+      "n_variables": 8,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_multi_constr_lower_x0_x5"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x5"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.465159"
+    },
+    {
+      "problem_id": "lp_typeE_049",
+      "model_file": "models/lp_typeE_049.mps",
+      "problem_nl": "Linear programming problem lp_typeE_049 with 8 variables and 12 constraints. Contains a Multi-Constraint Conflict (requires 2+ fixes) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "E",
+      "error_description": "",
+      "ground_truth_fix": "Remove BOTH constraints: _multi_constr_upper_x0_x1 AND _multi_constr_lower_x0_x1. Fixing only one will not restore feasibility.",
+      "target_name": "_multi_constr_upper_x0_x1,_multi_constr_lower_x0_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 44.25260437360418,
+      "n_variables": 8,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_multi_constr_upper_x0_x1",
+        "_multi_constr_lower_x0_x1"
+      ],
+      "iis_bounds": [],
+      "iis_size": 2,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.466797"
+    },
+    {
+      "problem_id": "lp_typeF_050",
+      "model_file": "models/lp_typeF_050.mps",
+      "problem_nl": "Linear programming problem lp_typeF_050 with 9 variables and 8 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 52.970173233053515,
+      "n_variables": 9,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.468130"
+    },
+    {
+      "problem_id": "mip_typeF_051",
+      "model_file": "models/mip_typeF_051.mps",
+      "problem_nl": "Linear programming problem mip_typeF_051 with 11 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 330.0, but _hidden_aux_x1 is linked to x1 (optimal value ~14.00). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 72.5624748447853,
+      "n_variables": 11,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.472293"
+    },
+    {
+      "problem_id": "lp_typeF_052",
+      "model_file": "models/lp_typeF_052.mps",
+      "problem_nl": "Linear programming problem lp_typeF_052 with 7 variables and 9 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 42.92328784969871,
+      "n_variables": 7,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.473627"
+    },
+    {
+      "problem_id": "lp_typeF_053",
+      "model_file": "models/lp_typeF_053.mps",
+      "problem_nl": "Linear programming problem lp_typeF_053 with 7 variables and 10 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 212.25443206931342, but _hidden_aux_x0 is linked to x0 (optimal value ~8.11). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 42.66780813278378,
+      "n_variables": 7,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "c2",
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6"
+      ],
+      "iis_size": 9,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.475024"
+    },
+    {
+      "problem_id": "lp_typeF_054",
+      "model_file": "models/lp_typeF_054.mps",
+      "problem_nl": "Linear programming problem lp_typeF_054 with 6 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 107.85882925908126, but _hidden_aux_x0 is linked to x0 (optimal value ~2.89). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 41.46379103813013,
+      "n_variables": 6,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.476441"
+    },
+    {
+      "problem_id": "mip_typeF_055",
+      "model_file": "models/mip_typeF_055.mps",
+      "problem_nl": "Linear programming problem mip_typeF_055 with 8 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 350.0, but _hidden_aux_x1 is linked to x1 (optimal value ~15.00). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 50.55328791514577,
+      "n_variables": 8,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.479129"
+    },
+    {
+      "problem_id": "lp_typeF_056",
+      "model_file": "models/lp_typeF_056.mps",
+      "problem_nl": "Linear programming problem lp_typeF_056 with 7 variables and 9 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 187.28694917140902, but _hidden_aux_x0 is linked to x0 (optimal value ~6.86). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 35.7806098633596,
+      "n_variables": 7,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "c1",
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6"
+      ],
+      "iis_size": 9,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.480457"
+    },
+    {
+      "problem_id": "lp_typeF_057",
+      "model_file": "models/lp_typeF_057.mps",
+      "problem_nl": "Linear programming problem lp_typeF_057 with 5 variables and 12 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x2' which requires _hidden_aux_x2 >= 250.0, but _hidden_aux_x2 is linked to x2 (optimal value ~10.00). Remove or relax '_hidden_root_x2'.",
+      "target_name": "_hidden_root_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 24.069382980705733,
+      "n_variables": 5,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_hidden_link_x2",
+        "_hidden_root_x2"
+      ],
+      "iis_bounds": [
+        "x2"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.481866"
+    },
+    {
+      "problem_id": "lp_typeF_058",
+      "model_file": "models/lp_typeF_058.mps",
+      "problem_nl": "Linear programming problem lp_typeF_058 with 7 variables and 8 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 170.75515393325628, but _hidden_aux_x0 is linked to x0 (optimal value ~6.04). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 43.14398093264135,
+      "n_variables": 7,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "c1",
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6"
+      ],
+      "iis_size": 9,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.483099"
+    },
+    {
+      "problem_id": "lp_typeF_059",
+      "model_file": "models/lp_typeF_059.mps",
+      "problem_nl": "Linear programming problem lp_typeF_059 with 6 variables and 10 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 225.76347663858553, but _hidden_aux_x1 is linked to x1 (optimal value ~8.79). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 32.52368534641134,
+      "n_variables": 6,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "c0",
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x2",
+        "x3",
+        "x4",
+        "x5"
+      ],
+      "iis_size": 8,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.484424"
+    },
+    {
+      "problem_id": "lp_typeF_060",
+      "model_file": "models/lp_typeF_060.mps",
+      "problem_nl": "Linear programming problem lp_typeF_060 with 6 variables and 10 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 32.34635160379433,
+      "n_variables": 6,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.485769"
+    },
+    {
+      "problem_id": "mip_typeF_061",
+      "model_file": "models/mip_typeF_061.mps",
+      "problem_nl": "Linear programming problem mip_typeF_061 with 15 variables and 16 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 350.0, but _hidden_aux_x1 is linked to x1 (optimal value ~15.00). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 85.55095156538214,
+      "n_variables": 15,
+      "n_constraints": 16,
+      "iis_constraints": [
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.489896"
+    },
+    {
+      "problem_id": "mip_typeF_062",
+      "model_file": "models/mip_typeF_062.mps",
+      "problem_nl": "Linear programming problem mip_typeF_062 with 12 variables and 16 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 290.0, but _hidden_aux_x0 is linked to x0 (optimal value ~12.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 69.30575243386855,
+      "n_variables": 12,
+      "n_constraints": 16,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.494576"
+    },
+    {
+      "problem_id": "mip_typeF_063",
+      "model_file": "models/mip_typeF_063.mps",
+      "problem_nl": "Linear programming problem mip_typeF_063 with 15 variables and 12 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 350.0, but _hidden_aux_x1 is linked to x1 (optimal value ~15.00). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 83.2575530240293,
+      "n_variables": 15,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.498453"
+    },
+    {
+      "problem_id": "lp_typeF_064",
+      "model_file": "models/lp_typeF_064.mps",
+      "problem_nl": "Linear programming problem lp_typeF_064 with 6 variables and 12 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 131.44799050624576, but _hidden_aux_x0 is linked to x0 (optimal value ~4.07). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 21.593647272097677,
+      "n_variables": 6,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.499990"
+    },
+    {
+      "problem_id": "lp_typeF_065",
+      "model_file": "models/lp_typeF_065.mps",
+      "problem_nl": "Linear programming problem lp_typeF_065 with 5 variables and 10 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 20.104108201484483,
+      "n_variables": 5,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.501298"
+    },
+    {
+      "problem_id": "lp_typeF_066",
+      "model_file": "models/lp_typeF_066.mps",
+      "problem_nl": "Linear programming problem lp_typeF_066 with 10 variables and 8 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 71.76104683165039, but _hidden_aux_x0 is linked to x0 (optimal value ~1.09). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 50.4747257670021,
+      "n_variables": 10,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.502679"
+    },
+    {
+      "problem_id": "lp_typeF_067",
+      "model_file": "models/lp_typeF_067.mps",
+      "problem_nl": "Linear programming problem lp_typeF_067 with 6 variables and 7 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 37.168318222207034,
+      "n_variables": 6,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.503766"
+    },
+    {
+      "problem_id": "lp_typeF_068",
+      "model_file": "models/lp_typeF_068.mps",
+      "problem_nl": "Linear programming problem lp_typeF_068 with 8 variables and 7 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 50.54567072447012,
+      "n_variables": 8,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.504953"
+    },
+    {
+      "problem_id": "lp_typeF_069",
+      "model_file": "models/lp_typeF_069.mps",
+      "problem_nl": "Linear programming problem lp_typeF_069 with 7 variables and 8 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 139.3343003984843, but _hidden_aux_x0 is linked to x0 (optimal value ~4.47). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 41.73495734746058,
+      "n_variables": 7,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "c1",
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6"
+      ],
+      "iis_size": 9,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.506175"
+    },
+    {
+      "problem_id": "lp_typeF_070",
+      "model_file": "models/lp_typeF_070.mps",
+      "problem_nl": "Linear programming problem lp_typeF_070 with 7 variables and 9 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 30.31842645072908,
+      "n_variables": 7,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.507470"
+    },
+    {
+      "problem_id": "lp_typeF_071",
+      "model_file": "models/lp_typeF_071.mps",
+      "problem_nl": "Linear programming problem lp_typeF_071 with 6 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 211.03557509329033, but _hidden_aux_x1 is linked to x1 (optimal value ~8.05). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 34.718934981656304,
+      "n_variables": 6,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "c0",
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x2",
+        "x3",
+        "x4",
+        "x5"
+      ],
+      "iis_size": 8,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.508919"
+    },
+    {
+      "problem_id": "lp_typeF_072",
+      "model_file": "models/lp_typeF_072.mps",
+      "problem_nl": "Linear programming problem lp_typeF_072 with 10 variables and 10 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 66.98020692052029,
+      "n_variables": 10,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.510486"
+    },
+    {
+      "problem_id": "lp_typeF_073",
+      "model_file": "models/lp_typeF_073.mps",
+      "problem_nl": "Linear programming problem lp_typeF_073 with 9 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 47.18750677085895,
+      "n_variables": 9,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.512092"
+    },
+    {
+      "problem_id": "lp_typeF_074",
+      "model_file": "models/lp_typeF_074.mps",
+      "problem_nl": "Linear programming problem lp_typeF_074 with 8 variables and 10 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 236.6168084921374, but _hidden_aux_x0 is linked to x0 (optimal value ~9.33). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 47.62375596001204,
+      "n_variables": 8,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "c0",
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7"
+      ],
+      "iis_size": 10,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.513603"
+    },
+    {
+      "problem_id": "mip_typeF_075",
+      "model_file": "models/mip_typeF_075.mps",
+      "problem_nl": "Linear programming problem mip_typeF_075 with 9 variables and 14 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 210.0, but _hidden_aux_x0 is linked to x0 (optimal value ~8.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 58.805988346293965,
+      "n_variables": 9,
+      "n_constraints": 14,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.517105"
+    },
+    {
+      "problem_id": "mip_typeF_076",
+      "model_file": "models/mip_typeF_076.mps",
+      "problem_nl": "Linear programming problem mip_typeF_076 with 12 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 130.0, but _hidden_aux_x1 is linked to x1 (optimal value ~4.00). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 82.09694409626363,
+      "n_variables": 12,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.520525"
+    },
+    {
+      "problem_id": "lp_typeF_077",
+      "model_file": "models/lp_typeF_077.mps",
+      "problem_nl": "Linear programming problem lp_typeF_077 with 6 variables and 8 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 188.2210986711654, but _hidden_aux_x0 is linked to x0 (optimal value ~6.91). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 39.02134202141585,
+      "n_variables": 6,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "c_key_upper",
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5"
+      ],
+      "iis_size": 8,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.521732"
+    },
+    {
+      "problem_id": "mip_typeF_078",
+      "model_file": "models/mip_typeF_078.mps",
+      "problem_nl": "Linear programming problem mip_typeF_078 with 12 variables and 9 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 350.0, but _hidden_aux_x0 is linked to x0 (optimal value ~15.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 61.77733717061143,
+      "n_variables": 12,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.524947"
+    },
+    {
+      "problem_id": "lp_typeF_079",
+      "model_file": "models/lp_typeF_079.mps",
+      "problem_nl": "Linear programming problem lp_typeF_079 with 10 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x2' which requires _hidden_aux_x2 >= 250.0, but _hidden_aux_x2 is linked to x2 (optimal value ~10.00). Remove or relax '_hidden_root_x2'.",
+      "target_name": "_hidden_root_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 55.983707316803745,
+      "n_variables": 10,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_hidden_link_x2",
+        "_hidden_root_x2"
+      ],
+      "iis_bounds": [
+        "x2"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.526652"
+    },
+    {
+      "problem_id": "mip_typeF_080",
+      "model_file": "models/mip_typeF_080.mps",
+      "problem_nl": "Linear programming problem mip_typeF_080 with 12 variables and 12 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 350.0, but _hidden_aux_x0 is linked to x0 (optimal value ~15.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 77.83221055274178,
+      "n_variables": 12,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.529796"
+    },
+    {
+      "problem_id": "mip_typeF_081",
+      "model_file": "models/mip_typeF_081.mps",
+      "problem_nl": "Linear programming problem mip_typeF_081 with 9 variables and 16 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 350.0, but _hidden_aux_x0 is linked to x0 (optimal value ~15.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 53.98364711170099,
+      "n_variables": 9,
+      "n_constraints": 16,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.534194"
+    },
+    {
+      "problem_id": "lp_typeF_082",
+      "model_file": "models/lp_typeF_082.mps",
+      "problem_nl": "Linear programming problem lp_typeF_082 with 9 variables and 7 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 58.25580081855741,
+      "n_variables": 9,
+      "n_constraints": 7,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.535421"
+    },
+    {
+      "problem_id": "lp_typeF_083",
+      "model_file": "models/lp_typeF_083.mps",
+      "problem_nl": "Linear programming problem lp_typeF_083 with 6 variables and 8 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 244.8171639100101, but _hidden_aux_x0 is linked to x0 (optimal value ~9.74). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 35.83852292663154,
+      "n_variables": 6,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "c1",
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5"
+      ],
+      "iis_size": 8,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.536646"
+    },
+    {
+      "problem_id": "lp_typeF_084",
+      "model_file": "models/lp_typeF_084.mps",
+      "problem_nl": "Linear programming problem lp_typeF_084 with 8 variables and 9 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 48.50412115243479,
+      "n_variables": 8,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.537995"
+    },
+    {
+      "problem_id": "mip_typeF_085",
+      "model_file": "models/mip_typeF_085.mps",
+      "problem_nl": "Linear programming problem mip_typeF_085 with 15 variables and 14 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 350.0, but _hidden_aux_x1 is linked to x1 (optimal value ~15.00). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 88.22295039777119,
+      "n_variables": 15,
+      "n_constraints": 14,
+      "iis_constraints": [
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.542196"
+    },
+    {
+      "problem_id": "lp_typeF_086",
+      "model_file": "models/lp_typeF_086.mps",
+      "problem_nl": "Linear programming problem lp_typeF_086 with 7 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 199.11339956118408, but _hidden_aux_x0 is linked to x0 (optimal value ~7.46). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 44.74227647342747,
+      "n_variables": 7,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "c_key_upper",
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6"
+      ],
+      "iis_size": 9,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.543682"
+    },
+    {
+      "problem_id": "lp_typeF_087",
+      "model_file": "models/lp_typeF_087.mps",
+      "problem_nl": "Linear programming problem lp_typeF_087 with 6 variables and 12 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 247.95224900428, but _hidden_aux_x0 is linked to x0 (optimal value ~9.90). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 32.02018499851831,
+      "n_variables": 6,
+      "n_constraints": 12,
+      "iis_constraints": [
+        "c3",
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5"
+      ],
+      "iis_size": 8,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.545215"
+    },
+    {
+      "problem_id": "lp_typeF_088",
+      "model_file": "models/lp_typeF_088.mps",
+      "problem_nl": "Linear programming problem lp_typeF_088 with 7 variables and 10 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 38.50866267674878,
+      "n_variables": 7,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.546600"
+    },
+    {
+      "problem_id": "lp_typeF_089",
+      "model_file": "models/lp_typeF_089.mps",
+      "problem_nl": "Linear programming problem lp_typeF_089 with 9 variables and 9 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 50.94765166780849,
+      "n_variables": 9,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.548001"
+    },
+    {
+      "problem_id": "lp_typeF_090",
+      "model_file": "models/lp_typeF_090.mps",
+      "problem_nl": "Linear programming problem lp_typeF_090 with 5 variables and 8 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 137.40783452433058, but _hidden_aux_x0 is linked to x0 (optimal value ~4.37). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 29.498271019038803,
+      "n_variables": 5,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "c_key_upper",
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x1",
+        "x2",
+        "x3",
+        "x4"
+      ],
+      "iis_size": 7,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.549185"
+    },
+    {
+      "problem_id": "lp_typeF_091",
+      "model_file": "models/lp_typeF_091.mps",
+      "problem_nl": "Linear programming problem lp_typeF_091 with 7 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 33.195520209324215,
+      "n_variables": 7,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.550653"
+    },
+    {
+      "problem_id": "mip_typeF_092",
+      "model_file": "models/mip_typeF_092.mps",
+      "problem_nl": "Linear programming problem mip_typeF_092 with 14 variables and 14 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 250.0, but _hidden_aux_x1 is linked to x1 (optimal value ~10.00). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 89.22184397976953,
+      "n_variables": 14,
+      "n_constraints": 14,
+      "iis_constraints": [
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "mip",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.554465"
+    },
+    {
+      "problem_id": "lp_typeF_093",
+      "model_file": "models/lp_typeF_093.mps",
+      "problem_nl": "Linear programming problem lp_typeF_093 with 9 variables and 10 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 72.76633770844036, but _hidden_aux_x1 is linked to x1 (optimal value ~1.14). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 52.51834651122534,
+      "n_variables": 9,
+      "n_constraints": 10,
+      "iis_constraints": [
+        "c1",
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7",
+        "x8"
+      ],
+      "iis_size": 11,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.556023"
+    },
+    {
+      "problem_id": "lp_typeF_094",
+      "model_file": "models/lp_typeF_094.mps",
+      "problem_nl": "Linear programming problem lp_typeF_094 with 7 variables and 8 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 160.5799607181774, but _hidden_aux_x0 is linked to x0 (optimal value ~5.53). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 44.445877721921875,
+      "n_variables": 7,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.557313"
+    },
+    {
+      "problem_id": "lp_typeF_095",
+      "model_file": "models/lp_typeF_095.mps",
+      "problem_nl": "Linear programming problem lp_typeF_095 with 9 variables and 8 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 148.22990721847555, but _hidden_aux_x1 is linked to x1 (optimal value ~4.91). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 58.779301239827134,
+      "n_variables": 9,
+      "n_constraints": 8,
+      "iis_constraints": [
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x1"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.558639"
+    },
+    {
+      "problem_id": "lp_typeF_096",
+      "model_file": "models/lp_typeF_096.mps",
+      "problem_nl": "Linear programming problem lp_typeF_096 with 5 variables and 9 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x2' which requires _hidden_aux_x2 >= 171.69200058275123, but _hidden_aux_x2 is linked to x2 (optimal value ~6.08). Remove or relax '_hidden_root_x2'.",
+      "target_name": "_hidden_root_x2",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 21.507254094862784,
+      "n_variables": 5,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "c0",
+        "_hidden_link_x2",
+        "_hidden_root_x2"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x1",
+        "x3",
+        "x4"
+      ],
+      "iis_size": 7,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.559846"
+    },
+    {
+      "problem_id": "lp_typeF_097",
+      "model_file": "models/lp_typeF_097.mps",
+      "problem_nl": "Linear programming problem lp_typeF_097 with 7 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 42.06092953008362,
+      "n_variables": 7,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.561331"
+    },
+    {
+      "problem_id": "lp_typeF_098",
+      "model_file": "models/lp_typeF_098.mps",
+      "problem_nl": "Linear programming problem lp_typeF_098 with 5 variables and 9 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x1' which requires _hidden_aux_x1 >= 202.57427116312553, but _hidden_aux_x1 is linked to x1 (optimal value ~7.63). Remove or relax '_hidden_root_x1'.",
+      "target_name": "_hidden_root_x1",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 30.868311824676972,
+      "n_variables": 5,
+      "n_constraints": 9,
+      "iis_constraints": [
+        "c_key_upper",
+        "_hidden_link_x1",
+        "_hidden_root_x1"
+      ],
+      "iis_bounds": [
+        "x0",
+        "x2",
+        "x3",
+        "x4"
+      ],
+      "iis_size": 7,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.562524"
+    },
+    {
+      "problem_id": "lp_typeF_099",
+      "model_file": "models/lp_typeF_099.mps",
+      "problem_nl": "Linear programming problem lp_typeF_099 with 10 variables and 11 constraints. Contains a Hidden Dependency (root cause not directly visible) that makes the model infeasible. This is a challenging problem requiring multi-step reasoning to diagnose and fix.",
+      "error_type": "F",
+      "error_description": "",
+      "ground_truth_fix": "The root cause is constraint '_hidden_root_x0' which requires _hidden_aux_x0 >= 250.0, but _hidden_aux_x0 is linked to x0 (optimal value ~10.00). Remove or relax '_hidden_root_x0'.",
+      "target_name": "_hidden_root_x0",
+      "target_type": "constraint",
+      "initial_status": "INFEASIBLE",
+      "original_status": "OPTIMAL",
+      "original_objective": 59.405149535925,
+      "n_variables": 10,
+      "n_constraints": 11,
+      "iis_constraints": [
+        "_hidden_link_x0",
+        "_hidden_root_x0"
+      ],
+      "iis_bounds": [
+        "x0"
+      ],
+      "iis_size": 3,
+      "difficulty": "hard",
+      "problem_type": "lp",
+      "use_robust": true,
+      "created_at": "2026-01-15T05:56:07.564201"
+    }
+  ]
+}

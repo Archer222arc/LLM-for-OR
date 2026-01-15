@@ -1,0 +1,31 @@
+============================================================
+Dataset Report: or_debug_bench_hard
+============================================================
+
+Created: 2026-01-15T05:56:07.564257
+Total Problems: 100
+Failed: 0
+Use Robust Methods: True
+
+Success Rates by Type:
+  Type E: 100.0% (50/50)
+  Type F: 100.0% (50/50)
+
+Error Type Distribution:
+  Type E: 50
+  Type F: 50
+
+Difficulty Distribution:
+  easy: 0 (0.0%)
+  hard: 100 (100.0%)
+  medium: 0 (0.0%)
+
+Initial Status Distribution:
+  INFEASIBLE: 100
+
+IIS Size:
+  min=2, max=11, avg=3.5
+
+Problem Size:
+  Variables: min=5, max=15, avg=8.5
+  Constraints: min=7, max=16, avg=10.1
