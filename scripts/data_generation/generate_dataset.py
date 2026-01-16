@@ -31,12 +31,17 @@ Usage:
     # Generate with --include_mdp flag for all types including G/H/I
     python scripts/data_generation/generate_dataset.py --include_mdp --n_problems 100
 
+    # Generate difficulty-stratified benchmarks (Phase 3+)
+    python scripts/data_generation/generate_dataset.py --difficulty easy --n_problems 500 --output data/benchmarks/or_debug_bench_easy
+    python scripts/data_generation/generate_dataset.py --difficulty medium --n_problems 500 --output data/benchmarks/or_debug_bench_medium
+    python scripts/data_generation/generate_dataset.py --difficulty difficult --n_problems 500 --output data/benchmarks/or_debug_bench_difficult
+
     # Validate existing dataset
     python scripts/data_generation/generate_dataset.py --validate data/synthetic/debug_bench_v1/dataset.json
 
 Author: Ruicheng Ao
 Created: 2026-01-11
-Updated: 2026-01-15 (Added Type G/H/I support for MDP-advantage problems)
+Updated: 2026-01-16 (Added --difficulty flag for stratified benchmark generation)
 """
 
 import argparse
@@ -53,6 +58,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from src.data_generation import SaboteurAgent, ErrorType, Difficulty, ProblemValidator
+from src.data_generation.difficulty_generator import DifficultyConfig, classify_problem_difficulty
 from src.solvers import GurobiSolver
 
 
@@ -354,7 +360,8 @@ def generate_dataset(
     output_dir: str,
     problem_types: List[str],
     seed: int,
-    use_robust: bool = True
+    use_robust: bool = True,
+    difficulty_config: "DifficultyConfig" = None
 ) -> Dict:
     """
     批量生成数据集
@@ -366,6 +373,7 @@ def generate_dataset(
         problem_types: 问题类型列表 (lp/mip)
         seed: 随机种子
         use_robust: 是否使用robust注入方法 (default: True)
+        difficulty_config: Optional difficulty configuration for IIS size control
 
     Returns:
         数据集字典
@@ -401,9 +409,14 @@ def generate_dataset(
         # 选择问题类型（70% LP, 30% MIP）
         problem_type = np.random.choice(problem_types, p=[0.7, 0.3])
 
-        # 对于Type D，随机选择目标IIS大小以控制难度
+        # 确定目标IIS大小（基于难度配置或默认行为）
         target_iis_size = None
-        if error_type == "D":
+        if difficulty_config:
+            # Use difficulty-specific IIS range
+            iis_min, iis_max = difficulty_config.iis_range
+            target_iis_size = np.random.randint(iis_min, iis_max + 1)
+        elif error_type == "D":
+            # 对于Type D，随机选择目标IIS大小以控制难度
             # 30% easy (2), 45% medium (4), 25% hard (6)
             target_iis_size = np.random.choice([2, 4, 6], p=[0.3, 0.45, 0.25])
 
@@ -446,6 +459,7 @@ def generate_dataset(
         difficulty_counts[diff] = difficulty_counts.get(diff, 0) + 1
 
     # 构建数据集
+    difficulty_level = difficulty_config.level.value if difficulty_config else None
     dataset = {
         "dataset_name": output_path.name,
         "description": "Synthetic OR debugging benchmark generated with SaboteurAgent (robust methods)",
@@ -456,6 +470,8 @@ def generate_dataset(
         "problem_types": problem_types,
         "seed": seed,
         "use_robust": use_robust,
+        "difficulty_level": difficulty_level,
+        "difficulty_iis_range": list(difficulty_config.iis_range) if difficulty_config else None,
         "success_by_type": success_by_type,
         "fail_by_type": fail_by_type,
         "success_rates": success_rates,
@@ -661,6 +677,16 @@ def main():
         help="Disable robust injection methods"
     )
 
+    parser.add_argument(
+        "--difficulty",
+        type=str,
+        choices=["easy", "medium", "difficult"],
+        default=None,
+        help="Generate problems of specified difficulty level. "
+             "Overrides --error_types with difficulty-appropriate types. "
+             "(easy: A-C, IIS 1-2; medium: D-F, IIS 3-5; difficult: E,G-I, IIS 5-10)"
+    )
+
     args = parser.parse_args()
 
     # 验证模式
@@ -672,17 +698,28 @@ def main():
     use_robust = not args.no_robust
 
     # 生成模式
-    error_types = args.error_types.split(',')
+    difficulty_config = None
+    if args.difficulty:
+        # Use difficulty-stratified generation
+        difficulty_config = DifficultyConfig.get_config(args.difficulty)
+        error_types = difficulty_config.error_types
+        print(f"Using difficulty level: {args.difficulty}")
+        print(f"  Error types: {error_types}")
+        print(f"  IIS range: {difficulty_config.iis_range}")
+        print(f"  Expected SFT RR@5: {difficulty_config.expected_rr5[0]*100:.0f}%-{difficulty_config.expected_rr5[1]*100:.0f}%")
+        print()
+    else:
+        error_types = args.error_types.split(',')
 
-    # 如果指定include_hard，添加E和F类型
-    if args.include_hard and 'E' not in error_types:
-        error_types.extend(['E', 'F'])
+        # 如果指定include_hard，添加E和F类型
+        if args.include_hard and 'E' not in error_types:
+            error_types.extend(['E', 'F'])
 
-    # 如果指定include_mdp，添加G, H, I类型
-    if args.include_mdp:
-        for t in ['G', 'H', 'I']:
-            if t not in error_types:
-                error_types.append(t)
+        # 如果指定include_mdp，添加G, H, I类型
+        if args.include_mdp:
+            for t in ['G', 'H', 'I']:
+                if t not in error_types:
+                    error_types.append(t)
 
     problem_types = args.problem_types.split(',')
 
@@ -692,7 +729,8 @@ def main():
         output_dir=args.output,
         problem_types=problem_types,
         seed=args.seed,
-        use_robust=use_robust
+        use_robust=use_robust,
+        difficulty_config=difficulty_config
     )
 
     print()

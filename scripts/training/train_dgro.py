@@ -26,12 +26,12 @@ Technical Reference:
     - HA-DW (arXiv 2601.08521): Dynamic advantage weights
 
 Example:
-    >>> # Basic DGRO training
+    >>> # Basic DGRO training (Phase 3+ with efficiency reward)
     >>> python scripts/training/train_dgro.py \\
     ...     --model /data/qwen3_or_debug_merged \\
     ...     --dataset data/training/grpo_prompts.jsonl \\
     ...     --output /data/dgro_output \\
-    ...     --beta-kl 0.001 --beta-reward 2.0
+    ...     --beta-kl 0.001 --beta-reward 0.5 --use-efficiency-reward
 
     >>> # Curriculum DGRO with PRM
     >>> python scripts/training/train_dgro.py \\
@@ -40,7 +40,7 @@ Example:
     ...     --benchmark data/benchmarks/or_debug_bench_holdout \\
     ...     --output /data/dgro_curriculum_output \\
     ...     --prm-path /data/prm_output \\
-    ...     --beta-kl 0.001 --beta-reward 2.0 --temperature 1.0
+    ...     --beta-kl 0.001 --beta-reward 0.5 --temperature 1.0 --use-efficiency-reward
 """
 
 import argparse
@@ -68,6 +68,8 @@ from src.training.gurobi_rewards import (
     gurobi_reward_func,
     set_use_solver_verification,
     set_prm_model,
+    set_use_efficiency_reward,
+    compute_efficiency_reward,
 )
 
 logging.basicConfig(level=logging.INFO)
@@ -381,8 +383,8 @@ def parse_args():
         help="KL penalty coefficient (lower = more exploration, default: 0.001)"
     )
     parser.add_argument(
-        "--beta-reward", type=float, default=2.0,
-        help="Reward scaling factor (higher = amplify variance, default: 2.0)"
+        "--beta-reward", type=float, default=0.5,
+        help="Reward scaling factor (higher = amplify variance, default: 0.5)"
     )
     parser.add_argument(
         "--min-variance", type=float, default=0.01,
@@ -430,6 +432,12 @@ def parse_args():
         help="Enable full Gurobi solver verification"
     )
 
+    # Efficiency reward (Phase 3+)
+    parser.add_argument(
+        "--use-efficiency-reward", action="store_true",
+        help="Enable efficiency reward to prevent over-exploration (Phase 3+)"
+    )
+
     # LoRA config
     parser.add_argument("--lora-r", type=int, default=16)
     parser.add_argument("--lora-alpha", type=int, default=32)
@@ -459,6 +467,7 @@ def main():
     print(f"  Num generations: {args.num_generations}")
     print(f"  PRM path: {args.prm_path or 'None'}")
     print(f"  Solver verification: {args.use_solver_verification}")
+    print(f"  Efficiency reward: {args.use_efficiency_reward}")
     print("=" * 70)
 
     # Load dataset
@@ -483,6 +492,12 @@ def main():
     if args.use_solver_verification:
         set_use_solver_verification(True)
         print("\n[INFO] Full Gurobi solver verification ENABLED")
+
+    # Enable efficiency reward if requested (Phase 3+)
+    if args.use_efficiency_reward:
+        set_use_efficiency_reward(True)
+        print("\n[INFO] Efficiency reward ENABLED (Phase 3+)")
+        print("  - ≤2 steps: +10, 3-5 steps: +5, >5 steps: -2 per extra step")
 
     # Load PRM if specified
     if args.prm_path:
@@ -580,6 +595,7 @@ def main():
             "min_variance": args.min_variance,
             "use_kalman_baseline": args.use_kalman_baseline,
             "adaptive_beta": args.adaptive_beta,
+            "use_efficiency_reward": args.use_efficiency_reward,
         },
         "training_config": {
             "temperature": args.temperature,

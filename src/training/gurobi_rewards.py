@@ -9,6 +9,7 @@ Key Components:
     - Composite reward: outcome + process + faithfulness + PRM
     - Full Gurobi verification for accurate outcome reward
     - PRM integration for step-level rewards (Phase 2.2)
+    - Efficiency reward: step-count based reward to prevent over-exploration (Phase 3+)
 
 Example:
     >>> from src.training.gurobi_rewards import gurobi_reward_func
@@ -19,6 +20,9 @@ Example:
 
     # Enable PRM-enhanced rewards
     >>> set_prm_model("/data/prm_output")
+
+    # Enable efficiency reward (Phase 3+)
+    >>> set_use_efficiency_reward(True)
 """
 
 import os
@@ -572,6 +576,75 @@ IIS Constraints: {iis_text}
     except Exception as e:
         logger.warning(f"PRM scoring error: {e}")
         return 0.0
+
+
+# === Efficiency Reward (Phase 3+) ===
+# Prevents over-exploration by rewarding faster solutions
+
+_USE_EFFICIENCY_REWARD = False
+
+
+def set_use_efficiency_reward(enabled: bool):
+    """Enable/disable efficiency reward for preventing over-exploration."""
+    global _USE_EFFICIENCY_REWARD
+    _USE_EFFICIENCY_REWARD = enabled
+    logger.info(f"Efficiency reward {'enabled' if enabled else 'disabled'}")
+
+
+def get_use_efficiency_reward() -> bool:
+    """Check if efficiency reward is enabled."""
+    return _USE_EFFICIENCY_REWARD
+
+
+def compute_efficiency_reward(steps: int) -> float:
+    """
+    Compute efficiency reward based on number of steps taken.
+
+    Reward schedule (designed to prevent over-exploration):
+        - ≤2 steps: +10 (quick solve, excellent)
+        - 3-5 steps: +5 (reasonable effort)
+        - >5 steps: -2 per step beyond 5 (over-exploration penalty)
+
+    Args:
+        steps: Number of steps taken to solve the problem
+
+    Returns:
+        float: Efficiency reward
+    """
+    if steps <= 2:
+        return 10.0
+    elif steps <= 5:
+        return 5.0
+    else:
+        # Penalty for over-exploration: -2 per step beyond 5
+        excess_steps = steps - 5
+        return -2.0 * excess_steps
+
+
+def efficiency_reward(
+    completions: List[str],
+    step_counts: Optional[List[int]] = None,
+    **kwargs
+) -> List[float]:
+    """
+    Efficiency reward function for TRL GRPOTrainer.
+
+    Args:
+        completions: List of generated completions
+        step_counts: List of step counts for each completion
+
+    Returns:
+        List[float]: Efficiency rewards for each completion
+    """
+    if not _USE_EFFICIENCY_REWARD or step_counts is None:
+        return [0.0] * len(completions)
+
+    rewards = []
+    for i, _ in enumerate(completions):
+        steps = step_counts[i] if i < len(step_counts) else 5  # Default to medium
+        reward = compute_efficiency_reward(steps)
+        rewards.append(reward)
+    return rewards
 
 
 # Multi-reward function variants for TRL
