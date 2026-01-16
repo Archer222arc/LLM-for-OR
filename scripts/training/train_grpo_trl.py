@@ -3,7 +3,12 @@
 GRPO training script using HuggingFace TRL with Gurobi rewards.
 
 Research Direction: Direction A (OR-Debug-Bench)
-Documentation: docs/plan/modules/05_TRAINING.md
+Documentation: docs/progress/2026-01-15_phase2_grpo_improvements.md
+
+Key Components:
+    - GRPOTrainer: TRL trainer for Group Relative Policy Optimization
+    - gurobi_reward_func: Gurobi solver-based reward computation
+    - LoraConfig: Parameter-efficient fine-tuning configuration
 
 Usage:
     CUDA_VISIBLE_DEVICES=0,1 python scripts/training/train_grpo_trl.py

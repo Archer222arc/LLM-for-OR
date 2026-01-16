@@ -1,15 +1,20 @@
 #!/home/Archer/miniforge3/bin/python
 """
-Merge GRPO LoRA adapter with base SFT model.
+Merge GRPO/DGRO LoRA adapter with base SFT model.
 
 Research Direction: Direction A (OR-Debug-Bench)
-Documentation: docs/plan/modules/05_TRAINING.md
+Documentation: docs/progress/2026-01-15_phase2_grpo_improvements.md
 
-Usage:
-    python scripts/training/merge_grpo_adapter.py \
-        --base_model /data/qwen3_or_debug_merged \
-        --adapter /data/grpo_output/final \
-        --output /data/qwen3_or_debug_grpo_merged
+Key Components:
+    - AutoModelForCausalLM: Load base Qwen3-8B model with bfloat16
+    - PeftModel: Load LoRA adapter from checkpoint directory
+    - merge_and_unload: Merge adapter weights into base model
+
+Example:
+    >>> python scripts/training/merge_grpo_adapter.py \\
+    ...     --base /data/qwen3_or_debug_merged \\
+    ...     --adapter /data/dgro_output/final \\
+    ...     --output /data/qwen3_dgro_merged
 """
 
 import argparse

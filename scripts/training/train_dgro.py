@@ -112,6 +112,9 @@ class DGRORewardWrapper:
         self.use_kalman_baseline = use_kalman_baseline
         self.kalman_gain = kalman_gain
 
+        # TRL GRPOTrainer compatibility
+        self.__name__ = "dgro_reward"
+
         # Running statistics
         self.reward_history = []
         self.variance_history = []

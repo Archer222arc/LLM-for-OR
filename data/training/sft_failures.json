@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "source_db": "outputs/experiments/2026-01-15/sft_full_holdout/results.db",
+    "model": "qwen3_or_debug_merged",
+    "max_steps": 20,
+    "slow_threshold": 5,
+    "include_slow_success": true,
+    "timestamp": "2026-01-15T19:52:05.243227"
+  },
+  "summary": {
+    "total_failures": 1,
+    "patterns": {
+      "total_failures": 1,
+      "failure_type_distribution": {
+        "partial_diagnosis": 1
+      },
+      "error_type_distribution": {},
+      "error_type_failure_rate": {},
+      "avg_iis_size": 1.0,
+      "max_iis_size": 1,
+      "min_iis_size": 1,
+      "avg_steps_at_failure": 7.0,
+      "iis_size_percentiles": {
+        "p25": 1,
+        "p50": 1,
+        "p75": 1
+      }
+    }
+  },
+  "weakness_profile": {
+    "target_iis_size": {
+      "min": 1,
+      "prefer_large": true
+    },
+    "target_error_types": [],
+    "avoid_error_types": [],
+    "constraint_patterns": [
+      "_saboteur_conflict"
+    ]
+  },
+  "failures": [
+    {
+      "problem_id": "mip_typeD_3862",
+      "final_status": "INFEASIBLE",
+      "steps": 7,
+      "diagnosed_constraints": [
+        "c7",
+        "c7",
+        "_saboteur_conflict_c7"
+      ],
+      "ground_truth_iis": [
+        "_saboteur_conflict_c7"
+      ],
+      "total_reward": -42.0,
+      "failure_type": "partial_diagnosis",
+      "error_type": null,
+      "iis_size": 1
+    }
+  ],
+  "problem_ids": [
+    "mip_typeD_3862"
+  ]
+}
