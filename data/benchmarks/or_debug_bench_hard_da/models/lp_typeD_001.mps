@@ -1,0 +1,95 @@
+* Signature: 0xad3a91c68ab3b746
+NAME lp_typeD_001
+OBJSENSE MAX
+ROWS
+ N  OBJ
+ L  c0      
+ L  c1      
+ L  c2      
+ G  c3      
+ G  c4      
+ G  c5      
+ L  c_key_upper
+ G  c_key_lower
+ G  _chain_constr_1
+ G  _chain_constr_2
+ G  _chain_constr_3
+ G  _chain_cycle
+COLUMNS
+    x0        OBJ       1.2807280875294822e+00
+    x0        c0        1.7023508876265252e+00
+    x0        c1        1.7626553378000904e+00
+    x0        c2        1.1981784177953496e+00
+    x0        c3        1.9611729399380080e+00
+    x0        c4        1.8907003248892511e+00
+    x0        c5        6.5706957346292638e-01
+    x0        c_key_upper  1.1764910099618244e+00
+    x0        c_key_lower  1.1764910099618244e+00
+    x1        OBJ       1.3164448905825448e+00
+    x1        c0        1.8559256166883453e+00
+    x1        c1        8.4704954186943360e-01
+    x1        c2        1.2910251210199732e+00
+    x1        c3        1.0904523919694433e+00
+    x1        c4        1.1560909490521383e+00
+    x1        c5        1.4198811239166715e+00
+    x1        c_key_upper  1.9932490198252881e+00
+    x1        c_key_lower  1.9932490198252881e+00
+    x2        OBJ       6.0396962778563135e-01
+    x2        c0        1.6709998681854703e+00
+    x2        c1        1.7690830497240451e+00
+    x2        c2        1.2420481064687929e+00
+    x2        c3        1.2645930899448439e+00
+    x2        c4        7.2517920776600242e-01
+    x2        c5        1.40715646717824
+    x2        c_key_upper  1.0329238750298742e+00
+    x2        c_key_lower  1.0329238750298742e+00
+    x3        OBJ       1.0730290815835986e+00
+    x3        c0        1.8124638221474387e+00
+    x3        c1        1.7928744328646065e+00
+    x3        c2        1.6982598399962803e+00
+    x3        c3        1.9630231464758452e+00
+    x3        c4        1.9598121854347665e+00
+    x3        c5        6.0317384218898051e-01
+    x3        c_key_upper  1.1760299277894857e+00
+    x3        c_key_lower  1.1760299277894857e+00
+    x4        OBJ       6.8898796758453884e-01
+    x4        c0        1.3007601768163388e+00
+    x4        c1        1.0574976226836641e+00
+    x4        c2        1.7591367206000630e+00
+    x4        c3        8.3479233404364273e-01
+    x4        c4        5.7514847569209981e-01
+    x4        c5        1.2301709464701815e+00
+    x4        c_key_upper  1.5250002870366117e+00
+    x4        c_key_lower  1.5250002870366117e+00
+    _chain_var_0  _chain_constr_1  -1
+    _chain_var_0  _chain_cycle  1
+    _chain_var_1  _chain_constr_1  1
+    _chain_var_1  _chain_constr_2  -1
+    _chain_var_2  _chain_constr_2  1
+    _chain_var_2  _chain_constr_3  -1
+    _chain_var_3  _chain_constr_3  1
+    _chain_var_3  _chain_cycle  -1
+RHS
+    RHS1      c0        3.5204759285877238e+01
+    RHS1      c1        41.8052169334185
+    RHS1      c2        2.8789113547869007e+01
+    RHS1      c3        7.9537002349551233e+00
+    RHS1      c4        8.5988129073678152e+00
+    RHS1      c5        7.1240138891401292e+00
+    RHS1      c_key_upper  3.4518470598215423e+01
+    RHS1      c_key_lower  1.7259235299107711e+01
+    RHS1      _chain_constr_1  10
+    RHS1      _chain_constr_2  10
+    RHS1      _chain_constr_3  10
+    RHS1      _chain_cycle  10
+BOUNDS
+ UP BND1      x0        10
+ UP BND1      x1        10
+ UP BND1      x2        10
+ UP BND1      x3        10
+ UP BND1      x4        10
+ UP BND1      _chain_var_0  100
+ UP BND1      _chain_var_1  100
+ UP BND1      _chain_var_2  100
+ UP BND1      _chain_var_3  100
+ENDATA
