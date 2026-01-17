@@ -58,7 +58,14 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from src.data_generation import SaboteurAgent, ErrorType, Difficulty, ProblemValidator
-from src.data_generation.difficulty_generator import DifficultyConfig, classify_problem_difficulty
+from src.data_generation.difficulty_generator import (
+    DifficultyConfig,
+    classify_problem_difficulty,
+    PerTypeDifficultyConfig,
+    get_per_type_config,
+    get_all_per_type_combinations,
+    get_benchmark_name,
+)
 from src.solvers import GurobiSolver
 
 
@@ -606,6 +613,306 @@ def validate_dataset(dataset_path: str):
     print("  ✓ Validation complete")
 
 
+def generate_per_type_problem(
+    problem_idx: int,
+    error_type: str,
+    difficulty: str,
+    output_dir: Path,
+    seed: int,
+    problem_type: str = "lp"
+) -> Dict:
+    """
+    Generate a single problem with per-type difficulty configuration.
+
+    Args:
+        problem_idx: Problem index
+        error_type: Error type code (A, B, C, D)
+        difficulty: Difficulty level (easy, medium, hard)
+        output_dir: Output directory
+        seed: Random seed
+        problem_type: Problem type (lp/mip)
+
+    Returns:
+        Problem metadata dictionary
+    """
+    # Get per-type config
+    config = get_per_type_config(error_type, difficulty)
+
+    # Generate problem_id
+    problem_id = f"{problem_type}_type{error_type}_{difficulty}_{problem_idx:03d}"
+
+    # Create base model
+    np.random.seed(seed)
+    if problem_type == "lp":
+        n_vars = np.random.randint(5, 11)
+        n_constraints = np.random.randint(3, 9)
+        model = create_simple_lp(n_vars, n_constraints, seed, problem_id)
+    else:  # mip
+        n_vars = np.random.randint(8, 16)
+        n_constraints = np.random.randint(5, 13)
+        n_integer = max(1, int(n_vars * np.random.uniform(0.3, 0.5)))
+        model = create_simple_mip(n_vars, n_constraints, n_integer, seed, problem_id)
+
+    # Verify original model is feasible
+    solver = GurobiSolver.from_model(model)
+    original_state = solver.solve()
+
+    if original_state.status != "OPTIMAL":
+        return None
+
+    # Use SaboteurAgent with per-type difficulty
+    saboteur = SaboteurAgent(solver, seed=seed + 1000)
+
+    try:
+        result = saboteur.inject_with_per_type_difficulty(error_type, difficulty)
+    except ValueError as e:
+        print(f"  Warning: {e}")
+        return None
+
+    if not result.success:
+        return None
+
+    # Save MPS file
+    models_dir = output_dir / "models"
+    models_dir.mkdir(parents=True, exist_ok=True)
+    model_file = models_dir / f"{problem_id}.mps"
+    solver._model.write(str(model_file))
+
+    # Generate problem description
+    problem_nl = generate_problem_description(
+        problem_id, error_type, n_vars,
+        len(solver.get_all_constraints())
+    )
+
+    # Get IIS info
+    iis_constraints = result.iis_constraints if result.iis_constraints else []
+    iis_bounds = result.iis_bounds if result.iis_bounds else []
+    iis_size = result.iis_size
+
+    # Build metadata
+    metadata = {
+        "problem_id": problem_id,
+        "model_file": str(model_file.relative_to(output_dir)),
+        "problem_nl": problem_nl,
+        "error_type": error_type,
+        "per_type_difficulty": difficulty,
+        "difficulty_config": {
+            "num_constraints": config.num_constraints,
+            "num_variables": config.num_variables,
+            "obfuscation": config.obfuscation,
+            "chaining": config.chaining,
+            "cascading": config.cascading,
+        },
+        "ground_truth_fix": result.ground_truth_fix,
+        "target_name": result.target_name,
+        "initial_status": result.solver_status,
+        "original_status": original_state.status,
+        "original_objective": result.original_objective,
+        "n_variables": n_vars,
+        "n_constraints": len(solver.get_all_constraints()),
+        "iis_constraints": iis_constraints,
+        "iis_bounds": iis_bounds,
+        "iis_size": iis_size,
+        "difficulty": result.difficulty.value if result.difficulty else "medium",
+        "problem_type": problem_type,
+        "created_at": datetime.now().isoformat()
+    }
+
+    return metadata
+
+
+def generate_per_type_dataset(
+    error_type: str,
+    difficulty: str,
+    n_problems: int,
+    output_dir: str,
+    seed: int
+) -> Dict:
+    """
+    Generate a per-type difficulty dataset.
+
+    Args:
+        error_type: Error type code (A, B, C, D)
+        difficulty: Difficulty level (easy, medium, hard)
+        n_problems: Number of problems
+        output_dir: Output directory
+        seed: Random seed
+
+    Returns:
+        Dataset dictionary
+    """
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    config = get_per_type_config(error_type, difficulty)
+
+    print(f"Generating {n_problems} Type {error_type} {difficulty} problems...")
+    print(f"  Config: constraints={config.num_constraints}, obfuscation={config.obfuscation}")
+    print(f"  Expected SFT RR@5: {config.expected_sft_rr5[0]*100:.0f}%-{config.expected_sft_rr5[1]*100:.0f}%")
+    print(f"  Output: {output_dir}")
+    print()
+
+    problems = []
+    failed = 0
+
+    for i in range(n_problems):
+        # 70% LP, 30% MIP
+        problem_type = np.random.choice(["lp", "mip"], p=[0.7, 0.3])
+
+        print(f"[{i+1}/{n_problems}] Generating {problem_type.upper()} Type {error_type} {difficulty}...", end=" ")
+
+        try:
+            metadata = generate_per_type_problem(
+                i, error_type, difficulty, output_path,
+                seed=seed + i,
+                problem_type=problem_type
+            )
+
+            if metadata is None:
+                print("FAILED")
+                failed += 1
+            else:
+                problems.append(metadata)
+                print(f"OK (IIS={metadata['iis_size']})")
+
+        except Exception as e:
+            print(f"ERROR: {e}")
+            failed += 1
+
+    # Build dataset
+    dataset = {
+        "dataset_name": output_path.name,
+        "description": f"Per-type difficulty benchmark: Type {error_type} {difficulty}",
+        "created_at": datetime.now().isoformat(),
+        "error_type": error_type,
+        "per_type_difficulty": difficulty,
+        "difficulty_config": {
+            "num_constraints": config.num_constraints,
+            "num_variables": config.num_variables,
+            "obfuscation": config.obfuscation,
+            "chaining": config.chaining,
+            "cascading": config.cascading,
+            "expected_sft_rr5": list(config.expected_sft_rr5),
+        },
+        "num_problems": len(problems),
+        "num_failed": failed,
+        "seed": seed,
+        "problems": problems
+    }
+
+    # Save dataset.json
+    dataset_file = output_path / "dataset.json"
+    with open(dataset_file, 'w', encoding='utf-8') as f:
+        json.dump(dataset, f, indent=2)
+
+    print()
+    print(f"✓ Dataset saved to {dataset_file}")
+    print(f"✓ Successfully generated: {len(problems)}")
+    print(f"✗ Failed: {failed}")
+
+    # Generate report
+    generate_report(dataset, output_path)
+
+    return dataset
+
+
+def generate_all_per_type_benchmarks(
+    n_problems_per_type: int,
+    base_output_dir: str,
+    seed: int,
+    error_types: List[str] = None,
+    difficulties: List[str] = None
+):
+    """
+    Generate all per-type difficulty benchmarks.
+
+    Args:
+        n_problems_per_type: Problems per type-difficulty combination
+        base_output_dir: Base output directory
+        seed: Random seed
+        error_types: Error types to generate (default: A, B, C, D)
+        difficulties: Difficulty levels (default: easy, medium, hard)
+    """
+    if error_types is None:
+        error_types = ["A", "B", "C", "D"]
+    if difficulties is None:
+        difficulties = ["easy", "medium", "hard"]
+
+    base_path = Path(base_output_dir)
+    base_path.mkdir(parents=True, exist_ok=True)
+
+    print("=" * 60)
+    print("Generating All Per-Type Difficulty Benchmarks")
+    print("=" * 60)
+    print(f"  Error types: {error_types}")
+    print(f"  Difficulties: {difficulties}")
+    print(f"  Problems per combination: {n_problems_per_type}")
+    print(f"  Total benchmarks: {len(error_types) * len(difficulties)}")
+    print(f"  Total problems: {len(error_types) * len(difficulties) * n_problems_per_type}")
+    print("=" * 60)
+    print()
+
+    all_results = []
+
+    for error_type in error_types:
+        for difficulty in difficulties:
+            benchmark_name = get_benchmark_name(error_type, difficulty)
+            output_dir = base_path / benchmark_name
+
+            print(f"\n{'='*40}")
+            print(f"Generating: {benchmark_name}")
+            print(f"{'='*40}")
+
+            try:
+                dataset = generate_per_type_dataset(
+                    error_type=error_type,
+                    difficulty=difficulty,
+                    n_problems=n_problems_per_type,
+                    output_dir=str(output_dir),
+                    seed=seed + hash(benchmark_name) % 10000
+                )
+                all_results.append({
+                    "benchmark": benchmark_name,
+                    "status": "success",
+                    "problems": dataset["num_problems"],
+                    "failed": dataset["num_failed"],
+                })
+            except Exception as e:
+                print(f"ERROR generating {benchmark_name}: {e}")
+                all_results.append({
+                    "benchmark": benchmark_name,
+                    "status": "failed",
+                    "error": str(e),
+                })
+
+    # Save summary
+    summary = {
+        "generated_at": datetime.now().isoformat(),
+        "base_output_dir": str(base_path),
+        "n_problems_per_type": n_problems_per_type,
+        "error_types": error_types,
+        "difficulties": difficulties,
+        "results": all_results,
+    }
+
+    summary_file = base_path / "generation_summary.json"
+    with open(summary_file, 'w') as f:
+        json.dump(summary, f, indent=2)
+
+    print()
+    print("=" * 60)
+    print("Generation Summary")
+    print("=" * 60)
+    for r in all_results:
+        status = "✓" if r["status"] == "success" else "✗"
+        if r["status"] == "success":
+            print(f"  {status} {r['benchmark']}: {r['problems']} problems ({r['failed']} failed)")
+        else:
+            print(f"  {status} {r['benchmark']}: {r.get('error', 'Unknown error')}")
+
+    print(f"\nSummary saved to: {summary_file}")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Generate synthetic OR debugging dataset"
@@ -687,6 +994,49 @@ def main():
              "(easy: A-C, IIS 1-2; medium: D-F, IIS 3-5; difficult: E,G-I, IIS 5-10)"
     )
 
+    # Phase 4: Per-Type Difficulty Arguments
+    parser.add_argument(
+        "--per_type",
+        action="store_true",
+        help="Generate per-type difficulty benchmark. Requires --type and --per_type_difficulty."
+    )
+
+    parser.add_argument(
+        "--type",
+        type=str,
+        choices=["A", "B", "C", "D"],
+        default=None,
+        help="Error type for per-type difficulty generation."
+    )
+
+    parser.add_argument(
+        "--per_type_difficulty",
+        type=str,
+        choices=["easy", "medium", "hard"],
+        default=None,
+        help="Difficulty level for per-type generation (easy/medium/hard)."
+    )
+
+    parser.add_argument(
+        "--generate_all_per_type",
+        action="store_true",
+        help="Generate all per-type difficulty benchmarks (4 types x 3 difficulties = 12 benchmarks)."
+    )
+
+    parser.add_argument(
+        "--per_type_types",
+        type=str,
+        default="A,B,C,D",
+        help="Comma-separated error types for --generate_all_per_type (default: A,B,C,D)."
+    )
+
+    parser.add_argument(
+        "--per_type_difficulties",
+        type=str,
+        default="easy,medium,hard",
+        help="Comma-separated difficulties for --generate_all_per_type (default: easy,medium,hard)."
+    )
+
     args = parser.parse_args()
 
     # 验证模式
@@ -696,6 +1046,38 @@ def main():
 
     # 确定是否使用robust方法
     use_robust = not args.no_robust
+
+    # Phase 4: Generate all per-type benchmarks
+    if args.generate_all_per_type:
+        error_types = args.per_type_types.split(',')
+        difficulties = args.per_type_difficulties.split(',')
+        generate_all_per_type_benchmarks(
+            n_problems_per_type=args.n_problems,
+            base_output_dir=args.output,
+            seed=args.seed,
+            error_types=error_types,
+            difficulties=difficulties
+        )
+        return
+
+    # Phase 4: Single per-type difficulty generation
+    if args.per_type:
+        if not args.type or not args.per_type_difficulty:
+            print("Error: --per_type requires --type and --per_type_difficulty")
+            print("Example: --per_type --type A --per_type_difficulty hard")
+            return
+
+        benchmark_name = get_benchmark_name(args.type, args.per_type_difficulty)
+        output_dir = Path(args.output) / benchmark_name if args.output == "data/synthetic/debug_bench_v1" else args.output
+
+        generate_per_type_dataset(
+            error_type=args.type,
+            difficulty=args.per_type_difficulty,
+            n_problems=args.n_problems,
+            output_dir=str(output_dir),
+            seed=args.seed
+        )
+        return
 
     # 生成模式
     difficulty_config = None

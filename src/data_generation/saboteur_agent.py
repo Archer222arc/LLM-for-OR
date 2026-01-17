@@ -43,6 +43,7 @@ import gurobipy as gp
 
 from src.solvers import GurobiSolver
 from .error_types import ErrorType, InjectionResult, Difficulty
+from .difficulty_generator import PerTypeDifficultyConfig, get_per_type_config
 
 
 class SaboteurAgent:
@@ -2122,3 +2123,446 @@ class SaboteurAgent:
     def model(self) -> gp.Model:
         """Access the underlying Gurobi model."""
         return self._model
+
+    # =========================================================================
+    # Phase 4: Per-Type Difficulty Injection Methods
+    # =========================================================================
+
+    def inject_with_per_type_difficulty(
+        self,
+        error_type: str,
+        difficulty: str
+    ) -> InjectionResult:
+        """
+        Inject error with per-type difficulty configuration.
+
+        This method uses the PerTypeDifficultyConfig to control the
+        complexity of the injected error based on the specified difficulty.
+
+        Args:
+            error_type: Error type code (A, B, C, D)
+            difficulty: Difficulty level (easy, medium, hard)
+
+        Returns:
+            InjectionResult with injection details
+
+        Raises:
+            ValueError: If error type or difficulty is not supported
+        """
+        # Get the per-type configuration
+        config = get_per_type_config(error_type, difficulty)
+
+        # Dispatch to type-specific method
+        type_methods = {
+            "A": self._inject_type_a_with_difficulty,
+            "B": self._inject_type_b_with_difficulty,
+            "C": self._inject_type_c_with_difficulty,
+            "D": self._inject_type_d_with_difficulty,
+        }
+
+        if error_type.upper() not in type_methods:
+            raise ValueError(
+                f"Per-type difficulty not yet supported for Type {error_type}. "
+                f"Supported types: {list(type_methods.keys())}"
+            )
+
+        return type_methods[error_type.upper()](config)
+
+    def _inject_type_a_with_difficulty(
+        self,
+        config: PerTypeDifficultyConfig
+    ) -> InjectionResult:
+        """
+        Type A with per-type difficulty: Constraint direction flips.
+
+        Easy: Single flip, obvious naming
+        Medium: Multiple flips with interdependencies
+        Hard: Many flips with obfuscated names and deep dependencies
+        """
+        # Get original state
+        original_state = self._solver.solve()
+        original_objective = original_state.objective if original_state.status == "OPTIMAL" else None
+
+        num_flips = config.num_constraints
+        use_obfuscation = config.obfuscation
+
+        # Find inequality constraints sorted by slack (tightest first)
+        constrs = [c for c in self._model.getConstrs() if c.Sense != gp.GRB.EQUAL]
+
+        if len(constrs) < num_flips:
+            return InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_A,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": f"Not enough constraints for {num_flips} flips"},
+            )
+
+        # Sort by slack
+        slack_info = {}
+        for c in constrs:
+            try:
+                slack_info[c.ConstrName] = abs(c.Slack)
+            except gp.GurobiError:
+                slack_info[c.ConstrName] = float('inf')
+
+        candidates = sorted(constrs, key=lambda c: slack_info.get(c.ConstrName, float('inf')))
+
+        # Flip the top num_flips constraints
+        flipped_constrs = []
+        flipped_info = []
+
+        for target in candidates[:num_flips]:
+            original_sense = target.Sense
+            original_sense_str = "<=" if original_sense == gp.GRB.LESS_EQUAL else ">="
+
+            if original_sense == gp.GRB.LESS_EQUAL:
+                target.Sense = gp.GRB.GREATER_EQUAL
+                new_sense_str = ">="
+            else:
+                target.Sense = gp.GRB.LESS_EQUAL
+                new_sense_str = "<="
+
+            flipped_constrs.append(target.ConstrName)
+            flipped_info.append({
+                "constraint": target.ConstrName,
+                "original": original_sense_str,
+                "modified": new_sense_str,
+            })
+
+        self._model.update()
+        state = self._solver.solve()
+
+        if state.status not in ["INFEASIBLE", "INF_OR_UNBD"]:
+            # Revert changes
+            for target in candidates[:num_flips]:
+                if target.Sense == gp.GRB.LESS_EQUAL:
+                    target.Sense = gp.GRB.GREATER_EQUAL
+                else:
+                    target.Sense = gp.GRB.LESS_EQUAL
+            self._model.update()
+
+            return InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_A,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status=state.status,
+                ground_truth_fix="",
+                metadata={"reason": f"Flipping {num_flips} constraints did not cause infeasibility"},
+            )
+
+        # Get IIS info
+        iis_constraints, iis_bounds, iis_size = self._compute_iis_info(self._model)
+        difficulty_enum = Difficulty.from_iis_size(iis_size)
+
+        fix_parts = [f"Restore {info['constraint']} from {info['modified']} to {info['original']}"
+                     for info in flipped_info]
+        fix = "; ".join(fix_parts)
+
+        result = InjectionResult(
+            success=True,
+            error_type=ErrorType.TYPE_A,
+            target_name=",".join(flipped_constrs),
+            original_value=str([info["original"] for info in flipped_info]),
+            modified_value=str([info["modified"] for info in flipped_info]),
+            solver_status="INFEASIBLE",
+            ground_truth_fix=fix,
+            metadata={
+                "num_flips": num_flips,
+                "difficulty_config": config.difficulty,
+                "obfuscation": use_obfuscation,
+                "flipped_info": flipped_info,
+            },
+            difficulty=difficulty_enum,
+            iis_size=iis_size,
+            iis_constraints=iis_constraints,
+            iis_bounds=iis_bounds,
+            original_objective=original_objective,
+        )
+
+        self._injection_history.append(result)
+        return result
+
+    def _inject_type_b_with_difficulty(
+        self,
+        config: PerTypeDifficultyConfig
+    ) -> InjectionResult:
+        """
+        Type B with per-type difficulty: Variable type modifications.
+
+        Easy: Single variable change
+        Medium: Multiple variables with dependent bounds
+        Hard: Chained variable bounds with hidden dependencies
+        """
+        # Get original state
+        original_state = self._solver.solve()
+        original_objective = original_state.objective if original_state.status == "OPTIMAL" else None
+
+        num_vars = config.num_variables
+        use_chaining = config.chaining
+
+        # Find suitable variables
+        int_vars = [v for v in self._model.getVars()
+                    if v.VType in [gp.GRB.INTEGER, gp.GRB.BINARY] or v.UB > 1]
+
+        if len(int_vars) < num_vars:
+            return InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_B,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": f"Not enough variables for {num_vars} modifications"},
+            )
+
+        modified_vars = []
+        forcing_constrs = []
+
+        for i, target in enumerate(int_vars[:num_vars]):
+            original_vtype = target.VType
+            original_ub = target.UB
+
+            # Change to binary and add forcing constraint
+            target.VType = gp.GRB.BINARY
+            target.UB = 1
+            target.LB = 0
+
+            forcing_value = 2 + i  # Increasing forcing values for chaining
+            forcing_name = f"_force_{target.VarName}_{config.difficulty}"
+            self._model.addConstr(target >= forcing_value, name=forcing_name)
+
+            modified_vars.append({
+                "variable": target.VarName,
+                "original_vtype": "I" if original_vtype == gp.GRB.INTEGER else "C",
+                "original_ub": original_ub,
+                "forcing_constraint": forcing_name,
+            })
+            forcing_constrs.append(forcing_name)
+
+        self._model.update()
+        state = self._solver.solve()
+
+        if state.status not in ["INFEASIBLE", "INF_OR_UNBD"]:
+            # Clean up
+            for name in forcing_constrs:
+                try:
+                    constr = self._model.getConstrByName(name)
+                    if constr:
+                        self._model.remove(constr)
+                except:
+                    pass
+            self._model.update()
+
+            return InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_B,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status=state.status,
+                ground_truth_fix="",
+                metadata={"reason": f"Modifying {num_vars} variables did not cause infeasibility"},
+            )
+
+        # Get IIS info
+        iis_constraints, iis_bounds, iis_size = self._compute_iis_info(self._model)
+        difficulty_enum = Difficulty.from_iis_size(iis_size)
+
+        fix_parts = [f"Restore {info['variable']} to {info['original_vtype']}, UB={info['original_ub']}, remove {info['forcing_constraint']}"
+                     for info in modified_vars]
+        fix = "; ".join(fix_parts)
+
+        result = InjectionResult(
+            success=True,
+            error_type=ErrorType.TYPE_B,
+            target_name=",".join([info["variable"] for info in modified_vars]),
+            original_value=str([info["original_vtype"] for info in modified_vars]),
+            modified_value="B (binary)",
+            solver_status="INFEASIBLE",
+            ground_truth_fix=fix,
+            metadata={
+                "num_variables": num_vars,
+                "difficulty_config": config.difficulty,
+                "chaining": use_chaining,
+                "modified_vars": modified_vars,
+                "forcing_constraints": forcing_constrs,
+            },
+            difficulty=difficulty_enum,
+            iis_size=iis_size,
+            iis_constraints=iis_constraints,
+            iis_bounds=iis_bounds,
+            original_objective=original_objective,
+        )
+
+        self._injection_history.append(result)
+        return result
+
+    def _inject_type_c_with_difficulty(
+        self,
+        config: PerTypeDifficultyConfig
+    ) -> InjectionResult:
+        """
+        Type C with per-type difficulty: Coefficient modifications.
+
+        Easy: Single coefficient removal
+        Medium: Multiple coefficient changes with interaction
+        Hard: Complex cascading coefficient changes
+        """
+        # Get original state
+        original_state = self._solver.solve()
+        original_objective = original_state.objective if original_state.status == "OPTIMAL" else None
+
+        if original_state.status != "OPTIMAL":
+            return InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_C,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": "Original model not optimal"},
+            )
+
+        num_changes = config.num_constraints
+        modification_type = config.params.get("modification_type", "removal")
+
+        # Find constraints with multiple terms
+        constr_candidates = []
+        for c in self._model.getConstrs():
+            row = self._model.getRow(c)
+            if row.size() >= 2:
+                try:
+                    dual = abs(c.Pi)
+                except gp.GurobiError:
+                    dual = 0
+                constr_candidates.append((c, dual))
+
+        constr_candidates.sort(key=lambda x: x[1], reverse=True)
+
+        if len(constr_candidates) < num_changes:
+            return InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_C,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status="FAILED",
+                ground_truth_fix="",
+                metadata={"reason": f"Not enough constraints for {num_changes} changes"},
+            )
+
+        modified_coeffs = []
+
+        for constr, _ in constr_candidates[:num_changes]:
+            row = self._model.getRow(constr)
+            if row.size() == 0:
+                continue
+
+            # Get first term
+            var = row.getVar(0)
+            original_coeff = row.getCoeff(0)
+
+            if modification_type == "removal":
+                new_coeff = 0.0
+            elif modification_type == "sign_flip":
+                new_coeff = -original_coeff
+            else:  # scale
+                new_coeff = original_coeff * 10
+
+            self._model.chgCoeff(constr, var, new_coeff)
+
+            modified_coeffs.append({
+                "constraint": constr.ConstrName,
+                "variable": var.VarName,
+                "original_coeff": original_coeff,
+                "new_coeff": new_coeff,
+            })
+
+        self._model.update()
+        state = self._solver.solve()
+
+        if state.status not in ["INFEASIBLE", "INF_OR_UNBD"]:
+            # Revert changes
+            for info in modified_coeffs:
+                constr = self._model.getConstrByName(info["constraint"])
+                var = self._model.getVarByName(info["variable"])
+                if constr and var:
+                    self._model.chgCoeff(constr, var, info["original_coeff"])
+            self._model.update()
+
+            return InjectionResult(
+                success=False,
+                error_type=ErrorType.TYPE_C,
+                target_name="",
+                original_value="",
+                modified_value="",
+                solver_status=state.status,
+                ground_truth_fix="",
+                metadata={"reason": f"Coefficient changes did not cause infeasibility"},
+            )
+
+        # Get IIS info
+        iis_constraints, iis_bounds, iis_size = self._compute_iis_info(self._model)
+        difficulty_enum = Difficulty.from_iis_size(iis_size)
+
+        fix_parts = [f"Restore {info['variable']} in {info['constraint']} from {info['new_coeff']} to {info['original_coeff']}"
+                     for info in modified_coeffs]
+        fix = "; ".join(fix_parts)
+
+        result = InjectionResult(
+            success=True,
+            error_type=ErrorType.TYPE_C,
+            target_name=",".join([info["constraint"] for info in modified_coeffs]),
+            original_value=str([info["original_coeff"] for info in modified_coeffs]),
+            modified_value=str([info["new_coeff"] for info in modified_coeffs]),
+            solver_status="INFEASIBLE",
+            ground_truth_fix=fix,
+            metadata={
+                "num_changes": num_changes,
+                "difficulty_config": config.difficulty,
+                "modification_type": modification_type,
+                "modified_coeffs": modified_coeffs,
+            },
+            difficulty=difficulty_enum,
+            iis_size=iis_size,
+            iis_constraints=iis_constraints,
+            iis_bounds=iis_bounds,
+            original_objective=original_objective,
+        )
+
+        self._injection_history.append(result)
+        return result
+
+    def _inject_type_d_with_difficulty(
+        self,
+        config: PerTypeDifficultyConfig
+    ) -> InjectionResult:
+        """
+        Type D with per-type difficulty: Contradicting constraints.
+
+        Easy: Single direct conflict (IIS size ~2)
+        Medium: Multiple RHS conflicts (IIS size ~4)
+        Hard: Cascading chain conflicts (IIS size ~6+)
+        """
+        # Get original state
+        original_state = self._solver.solve()
+        original_objective = original_state.objective if original_state.status == "OPTIMAL" else None
+
+        target_iis_size = config.params.get("target_iis_size", 2)
+        conflict_type = config.params.get("conflict_type", "simple")
+        chain_length = config.params.get("chain_length", 0)
+
+        if conflict_type == "cascade" and chain_length > 0:
+            # Use chain conflict method
+            return self._inject_chain_conflict(chain_length, original_objective)
+        else:
+            # Use simple or multi conflict
+            return self.inject_type_d_robust(target_iis_size=target_iis_size)
