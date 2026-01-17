@@ -150,9 +150,32 @@ Phase 4 implements DAPO-style improvements to make RL training surpass SFT basel
 
 1. ✅ ~~Complete remaining ablation experiments~~ - ALL 5 COMPLETE
 2. ✅ ~~Analyze ablation results~~ - run_2_asym_clip selected
-3. 🔄 Run curriculum training with asym_clip config
+3. 🔄 **Run curriculum training with asym_clip config** - VM Prompt Ready
+   - See: `docs/prompts/phase4_curriculum_training.md`
+   - Estimated: ~4 hours (4 stages × 2 epochs)
 4. ⏳ Final evaluation on all benchmarks
 5. ⏳ Generate paper figures
+
+---
+
+## VM Automation Prompt
+
+Curriculum training prompt created at:
+```
+docs/prompts/phase4_curriculum_training.md
+```
+
+Key command to run on VM:
+```bash
+python scripts/training/curriculum_scheduler.py \
+    --model /data/qwen3_or_debug_merged \
+    --benchmarks_dir data/benchmarks/per_type \
+    --output /data/curriculum_output \
+    --best_config run_2_asym_clip \
+    --num_stages 4 \
+    --epochs_per_stage 2 \
+    --use_composite_reward
+```
 
 ---
 
